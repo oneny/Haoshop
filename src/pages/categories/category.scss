@@ -5,6 +5,8 @@
   padding: 2rem 4rem;
   display: flex;
   width: 100vw;
+  position: relative;
+  z-index: 10;
 
   .filter-wrapper {
     display: flex;
@@ -79,7 +81,7 @@
 
 @media screen and (max-width: $sm) {
   .categories-container {
-    
+    margin-top: 0;
     .products-wrapper {
       
       grid-template-columns: repeat(2, 1fr);

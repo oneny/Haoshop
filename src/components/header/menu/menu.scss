@@ -1,0 +1,21 @@
+@import '../../../../variable.scss';
+
+.menu-container {
+  max-width: 0;
+  height: calc(100vh - $headerHeight);
+  position: relative;
+  z-index: 9999;
+  transition: max-width 0.5s linear;
+
+  &.menuOpen {
+    max-width: 100vw;
+    background-color: aqua;
+  }
+}
+
+// @media screen and (max-width: $lg) {
+//   .menu-container {
+//     max-width: 0;
+//     padding: 0;
+//   }
+// }

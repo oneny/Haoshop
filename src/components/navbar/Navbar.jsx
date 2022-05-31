@@ -37,60 +37,7 @@ function Navbar() {
 
   return (
     <>
-      <div className="navbar-container">
-        <div className="navbar-wrapper">
-          <div className="navbar-items">
-            <div className="navbar-item" onClick={onClickNavigate("/categories/all")}>
-              CATEGORY
-            </div>
-            <div className="navbar-item" onClick={onClickNavigate("/brands")}>
-              BRANDS
-            </div>
-          </div>
-          <div className={`navbar-items-lg ${menuOpen ? "opened" : ""}`}>
-            <div onClick={onClickMenuOpen} className="menuOpen-btn">
-              <span className="menuLine"></span>
-              <span className="menuLine"></span>
-              <span className="menuLine"></span>
-            </div>
-          </div>
-
-          <div className="navbar-items">
-            <div className="navbar-item" onClick={onClickSearchOpen}>
-              SEARCH
-            </div>
-            {user ? (
-              <div className="navbar-item" onClick={onClickLogout}>
-                SIGNOUT
-              </div>  
-            ) : (
-              <div className="navbar-item" onClick={onClickNavigate("/signin")}>
-                SIGNIN
-              </div>
-            )}
-            <div className="navbar-item" onClick={onClickNavigate("/cart")}>
-              CART
-              {cartItems.length > 0 ? (
-                <div className="navbar-item-cart-counter">&nbsp;{cartItems.length}</div>
-              ) : (
-                null 
-              )}
-            </div>
-            <div className="navbar-item" onClick={onClickNavigate("/contact")}>
-              CONTACT
-            </div>
-          </div>
-          <div className="navbar-items-lg">
-            <div className="search-icon-wrapper" onClick={onClickSearchOpen}>
-              <SearchIcon className="search-icon" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="search-container">
-        {searchOpen && <Search />}
-      </div>
-      {menuOpen && <Menu />}
+      
     </>
   )
 }
