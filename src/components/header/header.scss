@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Sansita:wght@400;700&display=swap');
+@import '../../../variable.scss';
+
+$logo-font: 'Sansita', sans-serif;
+
+.header-container {
+  height: $headerHeight;
+  width: 100vw;
+  position: relative;
+  .logo-wrapper {
+    font-size: calc(0.8rem + 0.5vw);
+    position: absolute;
+    z-index: 20;
+    height: max-content;
+    width: max-content;
+    left: 50%;
+    top: 48%;
+    transform: translate(-50%, -50%);
+    h1 {
+      cursor: pointer;
+      font-family: $logo-font;
+    }
+  }
+}
