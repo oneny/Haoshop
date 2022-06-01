@@ -1,15 +1,14 @@
-import { useState, callback, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { signin } from '../../slice/authSlice';
-import useInput from '../../utils/useInput';
 
 function Signin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [email, onChangeEmail] = useInput("");
-  const [password, onChangePassword] = useInput("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const token = localStorage.getItem("token");
 
   const login = useCallback((e) => {
@@ -21,9 +20,17 @@ function Signin() {
     dispatch(signin(user));
   }, [email, password]);
 
-  const onClickNavigate = useCallback((page) => () => {
+  const onClickNavigate = (page) => () => {
     navigate(page)
-  }, [])
+  };
+
+  const onChangeEmail = (e) => {
+    setEmail(e.target.value);
+  }
+
+  const onChangePassword = (e) => {
+    setPassword(e.target.value);
+  };
 
   if (token) {
     navigate(-1);

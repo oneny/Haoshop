@@ -1,17 +1,40 @@
-@import '../../../../variable.scss';
+@import "../../../index.scss";
 
 .menu-container {
   max-width: 0;
-  height: calc(100vh - $headerHeight);
-  position: relative;
-  z-index: 9999;
-  transition: max-width 0.5s linear;
+  overflow: hidden;
+}
 
-  &.menuOpen {
-    max-width: 100vw;
-    background-color: aqua;
+@media screen and (max-width: $lg) {
+    .menu-container {
+    max-width: 0;
+    overflow: hidden;
+    height: calc(100vh - $headerHeight);
+    position: relative;
+    z-index: 1001;
+    transition: max-width 0.2s ease-out;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    font-size: 1.4rem;
+
+    .menu-items {
+      padding: 2rem;
+      .menu-item {
+        padding: 1.5rem 6rem;
+        margin: 1rem 0;
+        cursor: pointer;
+      }
+    }
+
+    &.menuOpen {
+      max-width: 100vw;
+    }
   }
 }
+
+
 
 // @media screen and (max-width: $lg) {
 //   .menu-container {

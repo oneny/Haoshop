@@ -1,8 +1,10 @@
 import React from 'react'
 
+import "./search.scss";
+
 function Search() {
   return (
-    <div>Search</div>
+    <div className="search-container">Search</div>
   )
 }
 

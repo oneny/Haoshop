@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Sansita:wght@400;700&display=swap');
-@import '../../../variable.scss';
+@import "../../index.scss";
 
 $logo-font: 'Sansita', sans-serif;
 
@@ -9,9 +9,10 @@ $logo-font: 'Sansita', sans-serif;
   position: relative;
 
   .logo-wrapper {
-    font-size: calc(0.8rem + 0.5vw);
+    // font-size: calc(0.8rem + 0.5vw);
+    font-size: 1.4rem;
     position: absolute;
-    z-index: 20;
+    z-index: 10;
     height: max-content;
     width: max-content;
     left: 50%;
@@ -26,7 +27,7 @@ $logo-font: 'Sansita', sans-serif;
   .navbar-container {
     font-size: 1.6rem;
     position: relative;
-    z-index: 10;
+    z-index: 8;
     height: 100%;
     margin: 0 2rem;
   
@@ -40,7 +41,7 @@ $logo-font: 'Sansita', sans-serif;
         display: flex;
         align-items: center;
         height: inherit;
-        column-gap: 15px;
+        column-gap: 1.5rem;
   
         &-lg {
           display: none;
@@ -86,19 +87,20 @@ $logo-font: 'Sansita', sans-serif;
               justify-content: space-between;
               align-items: center;
               cursor: pointer;
+              
               .menuLine {
                 width: inherit;
                 border: 0.5px solid #000;
                 opacity: 1;
                 position: relative;
-                transition: all 0.2s linear;
+                transition: opacity 0.2s linear;
                 &:nth-child(2)::before {
                   content: '';
                   width: 100%;
                   height: inherit;
                   border: 0;
                   position: absolute;
-                  transition: all 0.2s linear;
+                  transition: transform 0.2s linear;
                 }
                 &:nth-child(2)::after {
                   content: '';
@@ -106,7 +108,7 @@ $logo-font: 'Sansita', sans-serif;
                   height: inherit;
                   border: 0;
                   position: absolute;
-                  transition: all 0.2s linear;
+                  transition: transform 0.2s linear;
                 }
               }
             }
@@ -120,7 +122,7 @@ $logo-font: 'Sansita', sans-serif;
                   }
                   &:nth-child(2) {
                     border: 0;
-                    transition: all 3s;
+                    transition: opacity 3s;
                   }
                   &:nth-child(2)::before {
                     content: '';
@@ -147,6 +149,34 @@ $logo-font: 'Sansita', sans-serif;
 
               .search-icon {
                 font-size: 2.3rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $sm) {
+  .header-container {
+  
+    .logo-wrapper {
+      font-size: 1.1rem;
+    }
+
+    .navbar-container {
+      .navbar-wrapper {
+        .navbar-items {
+          &-lg {
+            .menuOpen-btn {
+              width: 1.4rem;
+              height: 1.2rem;
+            }
+
+            .search-icon-wrapper {
+              .search-icon {
+                font-size: 2rem;
               }
             }
           }

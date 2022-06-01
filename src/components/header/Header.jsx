@@ -29,7 +29,7 @@ function Header() {
 
   const onClickMenuOpen = useCallback(() => {
     setMenuOpen(!menuOpen);
-  }, [menuOpen])
+  }, [menuOpen]);
 
   const onClickSearchOpen = useCallback(() => {
     setSearchOpen(!searchOpen);
@@ -91,7 +91,7 @@ function Header() {
         </div>
       </div>
       {searchOpen && <Search />}
-      {menuOpen && <Menu menuOpen={menuOpen} />}
+      <Menu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
     </div>
   );
 }
