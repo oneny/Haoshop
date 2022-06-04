@@ -33,7 +33,7 @@ function Signin() {
   };
 
   if (token) {
-    navigate(-1);
+    navigate("/");
   }
 
   return (

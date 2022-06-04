@@ -6,14 +6,13 @@ import Filter4Icon from "@mui/icons-material/Filter4";
 import Filter3Icon from "@mui/icons-material/Filter3";
 import Filter2Icon from "@mui/icons-material/Filter2";
 import Filter1Icon from "@mui/icons-material/Filter1";
+import AppsOutlinedIcon from "@mui/icons-material/AppsOutlined";
+import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 
 import "./category.scss";
 import { getProductsByCategories } from "../../slice/productSlice";
 import Sidebar from "../../components/sidebar/Sidebar";
-import {
-  createLinearCategory,
-  categoryToggle,
-} from "../../slice/categorySlice";
+import { createLinearCategory, categoryToggle } from "../../slice/categorySlice";
 import Product from "../../components/product/Product";
 import Pagination from '../../components/pagination/Pagination';
 
@@ -26,10 +25,11 @@ function Category() {
   const [currentPage, setCurrentPage] = useState(_currentPage);
   const [sort, setSort] = useState(_sort);
   const [brands, setBrands] = useState(_brands);
-  const [selectedGrid, setSelectedGrid] = useState(false);
   const currentCategory = [];
   let cids = [];
-
+  
+  const [selectedGrid, setSelectedGrid] = useState(false);
+  
   // path="/:slug/:cid"
   if (params.cid === "all") {
     cids = [];
@@ -69,17 +69,13 @@ function Category() {
     dispatch(categoryToggle()); // 카테고리 토글
   };
 
-  const setSelectedGridTrue = () => {
-    if (selectedGrid) setSelectedGrid((prev) => !prev);
-  };
-
-  const setSelectedGridFalse = () => {
-    if (!selectedGrid) setSelectedGrid((prev) => !prev);
+  const handleGridColums = (boolean) => () => {
+    setSelectedGrid(boolean);
   };
 
   return (
     <>
-      <main className="categories-container">
+      <main className="category-container">
         <Sidebar
           brandData={brandData}
           brands={brands}
@@ -88,14 +84,15 @@ function Category() {
           categoryOpen={categoryOpen}
           categoryToggleHandler={categoryToggleHandler}
         />
-        <section className="products-container">
-          <div className="filter-wrapper">
-            <div className="filter-items">
-              <div className="filter-item" onClick={categoryToggleHandler}>
+        <section>
+          <div className="top">
+            <div className="top-left">
+              <div className="filter" onClick={categoryToggleHandler}>
                 <FormatAlignLeftIcon className="filter-icon" />
                 <span>FILTER</span>
               </div>
-              <div className="filter-sort">
+
+              <div className="sort">
                 <select onChange={onChangeSort}>
                   <option defaultValue hidden>
                     SORT
@@ -106,25 +103,16 @@ function Category() {
                 </select>
               </div>
             </div>
-            <div className="filter-items">
-              <div className="filter-grid" onClick={setSelectedGridFalse}>
-                <Filter1Icon className="filter-icon" />
-              </div>
-              <div className="filter-grid" onClick={setSelectedGridTrue}>
-                <Filter2Icon className="filter-icon" />
-              </div>
-              <div className="filter-grid" onClick={setSelectedGridFalse}>
-                <Filter2Icon className="filter-icon" />
-              </div>
-              <div className="filter-grid" onClick={setSelectedGridTrue}>
-                <Filter3Icon className="filter-icon" />
-              </div>
-              <div className="filter-grid" onClick={setSelectedGridFalse}>
-                <Filter3Icon className="filter-icon" />
-              </div>
-              <div className="filter-grid" onClick={setSelectedGridTrue}>
-                <Filter4Icon className="filter-icon" />
-              </div>
+
+            <div className="top-right">
+              <GridViewRoundedIcon
+                className={`grid-icon ${selectedGrid && "selected"}`}
+                onClick={handleGridColums(true)}
+              />
+              <AppsOutlinedIcon
+                className={`grid-icon ${!selectedGrid && "selected"}`}
+                onClick={handleGridColums(false)}
+              />
             </div>
           </div>
           <div className={`products-wrapper ${selectedGrid ? "selected" : ""}`}>

@@ -48,7 +48,7 @@ function Sidebar({
                 value={brand._id}
                 onChange={(e) => handleCheck(e)}
               />
-              <span>{brand._id}</span>
+              <span >{brand._id}</span>
             </div>
           ))}
         </div>
