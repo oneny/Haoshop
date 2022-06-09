@@ -5,13 +5,10 @@ import "./pagination.scss";
 
 function Pagination({ perPage, setCurrentPage }) {
   const { total, _currentPage } = useSelector((store) => store.product);
-  // const pages = [];
 
-  const pagesLength = total % perPage === 0 ? (total / perPage) : (total / perPage) + 1;
   const pages = [];
-  // const pages = Array(pagesLength).fill(0).map((v, i) => i + 1);
-  for (let i = 1; i <= pagesLength; i++)
-    pages.push(i);
+
+  for (let i = 1; i <= Math.ceil(total / perPage); i++) pages.push(i);
 
   console.log(pages);
 

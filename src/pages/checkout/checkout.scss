@@ -1,0 +1,58 @@
+@import "../../variable.scss";
+
+.checkout-container {
+  width: 100vw;
+  padding: 15rem 0;
+  font-size: 1.4rem;
+
+  .checkout-title {
+    width: 48%;
+    margin: 0 auto;
+    padding: 1rem 0;
+    border-bottom: 1px solid $line-color;
+  }
+
+  .checkout-wrapper {
+    height: 100%;
+    width: 48%;
+    margin: auto;
+
+    &-product {
+      display: flex;
+      flex-direction: column;
+
+      .product-title {
+        padding: 1rem 0.5rem;
+        border-bottom: 1px solid $line-color;
+      }
+    }
+
+    &-buyer {
+      @extend .checkout-wrapper-product;
+
+      .buyer-title {
+        @extend .product-title;
+        border-bottom: 2px solid $line-color;
+      }
+
+      .buyer-info {
+        padding: 1rem 0.5rem;
+      }
+    }
+    
+  }
+}
+
+@media screen and (max-width: $md){
+  .checkout-container {
+    padding: 5rem 0;
+    
+    .checkout-title {
+      width: 90%; 
+    }
+
+    .checkout-wrapper {
+      width: 90%;
+    }
+  }
+}

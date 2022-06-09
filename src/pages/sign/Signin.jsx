@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import "./signin.scss";
 import { signin } from '../../slice/authSlice';
 
 function Signin() {
@@ -38,16 +39,25 @@ function Signin() {
 
   return (
     <div className="signinForm-container">
+      <div className="signinForm-title">
+        <h2>SIGN IN</h2>
+      </div>
       <div className="signinForm-wrapper">
-        <form onSubmit={login}>
-          <input type="email" placeholder='Email' onChange={onChangeEmail} />
-          <input type="password" placeholder='Password' onChange={onChangePassword} />
+        <form onSubmit={login} className="signinForm">
+          <div className="form-box">
+            <input type="email" placeholder='Email' onChange={onChangeEmail} />
+            <label for="email">Email</label>
+          </div>
+          <div className="form-box">
+            <input type="password" placeholder='Password' onChange={onChangePassword} />
+            <label for="email">Password</label>
+          </div>
           <button type="submit">로그인</button>
         </form>
       </div>
       <div className="navigate-wrapper">
-        <button onClick={onClickNavigate("/signup")}>회원가입</button>
-        <button onClick={onClickNavigate("/signup")}>비밀번호 찾기</button>
+        <div className="navigate-item" onClick={onClickNavigate("/signup")}>회원가입</div>
+        <div className="navigate-item" onClick={onClickNavigate("/signup")}>비밀번호 찾기</div>
       </div>
     </div>
   )
