@@ -26,7 +26,9 @@ export const upsertAddress = createAsyncThunk( // 사용자 주소록 업데이�
   "user/upsertAddress",
   async (address, thunkAPI) => {
     try {
-      const user = JSON.parser(localStorage.getItem("user")); // 로컬 스토리지로부터 파싱
+      const user = JSON.parse(localStorage.getItem("user")); // 로컬 스토리지로부터 파싱
+      console.log('user', user);
+      console.log('address', address);
       const res = await axios.patch(`/address`, { user, address });
       return res.data; // 업데이트한 userAddress 값 반환
     } catch (err) {

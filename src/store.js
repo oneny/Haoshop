@@ -17,6 +17,8 @@ import modalReducer from "./slice/modalSlice";
 import cartReducer from "./slice/cartSlice";
 import productReducer from "./slice/productSlice";
 import userReducer from "./slice/userSlice";
+import brandReducer from "./slice/brandSlice";
+import lookbookReducer from './slice/lookbookSlice';
 
 const persistConfig = {
   key: "root",
@@ -31,6 +33,8 @@ const rootReducer = combineReducers({
   modal: modalReducer,
   product: productReducer,
   user: userReducer,
+  brand: brandReducer,
+  lookbook: lookbookReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

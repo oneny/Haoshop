@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./product.scss";
@@ -17,11 +17,24 @@ function Product({ product }) {
       onClick={onClickNavigate(`/products/${product._id}`)}
     >
       <img src={publicURL(product.productImgs[0].fileName)} alt="" />
-      <p><b>{product.brand}</b></p>
-      <p>{product.name}</p>
-      <p>₩{product.price}</p>
+      <p>
+        <b>{product.brand}</b>
+      </p>
+      <p>
+        {product.name} {product.color && `(${product.color})`}
+      </p>
+      <p>
+        <span className={`${product.discountPrice}` > 0 && "hasDiscount"}>
+          ₩{product.price}
+        </span>
+        {product.discountPrice && (
+          <span className="discount">
+            ₩{product.price - product.discountPrice}
+          </span>
+        )}
+      </p>
     </div>
-  )
+  );
 }
 
 export default Product;

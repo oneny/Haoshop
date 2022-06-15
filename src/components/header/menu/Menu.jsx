@@ -42,9 +42,14 @@ function Menu({ menuOpen, setMenuOpen }) {
           SIGNOUT
         </div>  
       ) : (
-        <div className="menu-item" onClick={onClickNavigate("/signin")}>
-          SIGNIN
-        </div>
+        <>
+          <div className="menu-item" onClick={onClickNavigate("/signin")}>
+            SIGNIN
+          </div>
+          <div className="menu-item" onClick={onClickNavigate("/signup")}>
+            SIGNUP
+          </div>
+        </>
       )}
       <div className="menu-item" onClick={onClickNavigate("/cart")}>
         CART

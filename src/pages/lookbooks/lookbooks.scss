@@ -1,17 +1,40 @@
+@import "../../variable.scss";
+
 .lookbooks-container {
   margin-top: 2rem;
-  padding: 5rem 14rem;
+  padding: 5rem 12rem;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 5rem;
   font-size: 1.4rem;
 
   .lookbooks-items {
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
 
     > img {
       width: 100%;
     }
+  }
+}
+
+@media screen and (max-width: $lg) {
+  .lookbooks-container {
+    padding: 5rem 10rem;
+    grid-template-columns: repeat(3, 1fr); 
+  }
+}
+
+@media screen and (max-width: $md) {
+  .lookbooks-container {
+    padding: 3rem 6rem;
+    grid-template-columns: repeat(2, 1fr); 
+  }
+}
+
+@media screen and (max-width: $sm) {
+  .lookbooks-container {
+    padding: 3rem 2rem;
+    grid-template-columns: 1fr; 
   }
 }

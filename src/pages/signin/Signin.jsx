@@ -40,17 +40,17 @@ function Signin() {
   return (
     <div className="signinForm-container">
       <div className="signinForm-title">
-        <h2>SIGN IN</h2>
+        <h3>SIGN IN</h3>
       </div>
       <div className="signinForm-wrapper">
         <form onSubmit={login} className="signinForm">
           <div className="form-box">
             <input type="email" placeholder='Email' onChange={onChangeEmail} />
-            <label for="email">Email</label>
+            <label htmlFor="email">Email</label>
           </div>
           <div className="form-box">
             <input type="password" placeholder='Password' onChange={onChangePassword} />
-            <label for="email">Password</label>
+            <label htmlFor="email">Password</label>
           </div>
           <button type="submit">로그인</button>
         </form>

@@ -1,12 +1,14 @@
 @import "../../variable.scss";
 
 .cartItem-wrapper {
-  border-top: 1px solid $line-color;
   border-bottom: 1px solid $line-color;
   
   .cartItem-name {
     border-bottom: 1px solid $line-color;
     padding: 1rem;
+    > h3 {
+      font-weight: 600;
+    }
   }
   .cartItem-info {
     display: flex;

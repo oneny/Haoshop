@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import AddressForm from "./AddressForm";
+import AddressForm from "./AddressForm2";
 
 function AddressList({ setConfirmedAddress }) {
   const { addresses } = useSelector((store) => store.user);

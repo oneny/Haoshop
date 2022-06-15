@@ -1,11 +1,12 @@
-import React, { useCallback, useState } from "react"
+import React, { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from "@mui/icons-material/Search";
 
-import './header.scss';
+import "./header.scss";
 import { clearFeatures } from "../../slice/productSlice";
 import { signout } from "../../slice/authSlice";
+import BrandSidebar from "../brandsidebar/BrandSidebar";
 import Search from "./search/Search";
 import Menu from "./menu/Menu";
 
@@ -16,12 +17,15 @@ function Header() {
   const { cartItems } = useSelector((store) => store.cart);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [isHovering, setIsHovering] = useState(0);
 
-  const onClickNavigate = useCallback((cate) => () => {
-    if (cate === "/categories/all" || "/brands")
-      dispatch(clearFeatures());
-    navigate(cate);
-  }, []);
+  const onClickNavigate = useCallback(
+    (cate) => () => {
+      if (cate === "/categories/all" || "/brands") dispatch(clearFeatures());
+      navigate(cate);
+    },
+    []
+  );
 
   const onClickLogout = useCallback(() => {
     dispatch(signout());
@@ -43,11 +47,28 @@ function Header() {
       <div className="navbar-container">
         <div className="navbar-wrapper">
           <div className="navbar-items">
-            <div className="navbar-item" onClick={onClickNavigate("/categories/all")}>
+            <div
+              className="navbar-item"
+              onClick={onClickNavigate("/categories/all")}
+              onMouseOver={() => setIsHovering(0)}
+            >
               CATEGORY
             </div>
-            <div className="navbar-item" onClick={onClickNavigate("/brands")}>
+            <div className="navbar-item" onMouseOver={() => setIsHovering(1)}>
               BRANDS
+            </div>
+            <div
+              className="navbar-item"
+              onClick={onClickNavigate("/lookbooks")}
+              onMouseOver={() => setIsHovering(0)}
+            >
+              LOOKBOOK
+            </div>
+            <div
+              className="navbar-item"
+              onClick={onClickNavigate("/collections")}
+            >
+              COLLECTION
             </div>
           </div>
           <div className={`navbar-items-lg ${menuOpen ? "opened" : ""}`}>
@@ -65,19 +86,24 @@ function Header() {
             {user ? (
               <div className="navbar-item" onClick={onClickLogout}>
                 SIGNOUT
-              </div>  
-            ) : (
-              <div className="navbar-item" onClick={onClickNavigate("/signin")}>
-                SIGNIN
               </div>
+            ) : (
+              <>
+                <div className="navbar-item" onClick={onClickNavigate("/signin")}>
+                  SIGNIN
+                </div>
+                <div className="navbar-item" onClick={onClickNavigate("/signup")}>
+                  SIGNUP
+                </div>
+              </>
             )}
             <div className="navbar-item" onClick={onClickNavigate("/cart")}>
               CART
               {cartItems.length > 0 ? (
-                <div className="navbar-item-cart-counter">&nbsp;{cartItems.length}</div>
-              ) : (
-                null 
-              )}
+                <div className="navbar-item-cart-counter">
+                  &nbsp;{cartItems.length}
+                </div>
+              ) : null}
             </div>
             <div className="navbar-item" onClick={onClickNavigate("/contact")}>
               CONTACT
@@ -90,6 +116,14 @@ function Header() {
           </div>
         </div>
       </div>
+
+      {isHovering ? (
+        <BrandSidebar
+          onMouseOver={() => setIsHovering(1)}
+          onMouseOut={() => setIsHovering(0)}
+          setIsHovering={setIsHovering}
+        />
+      ) : null}
       {searchOpen && <Search />}
       <Menu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
     </div>

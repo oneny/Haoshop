@@ -1,11 +1,36 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from '../utils/axiosInstance';
-import { clearCart } from './cartSlice';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "../utils/axiosInstance";
+import { clearCart } from "./cartSlice";
 
 const initialState = {
   isLoading: false,
+  matchResult: "",
   error: null,
-}
+};
+
+export const matchEmail = createAsyncThunk(
+  "/auth/matchEmail",
+  async (email, thunkAPI) => {
+    try {
+      const res = await axios.get(`/auth/${email}`);
+      return res.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const signup = createAsyncThunk(
+  "/user/signup",
+  async (user, thunkAPI) => {
+    try {
+      const res = await axios.post(`/auth/signup`, user);
+      return res.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
 
 export const signin = createAsyncThunk(
   "auth/signin",
@@ -39,6 +64,28 @@ const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    // auth/matchEmail
+    [matchEmail.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [matchEmail.fulfilled]: (state, action) => {
+      state.matchResult = action.payload.msg;
+      state.isLoading = false;
+    },
+    [matchEmail.rejected]: (state) => {
+      state.isLoading = false;
+    },
+    // auth/signup
+    [signup.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [signup.fulfilled]: (state) => {
+      state.isLoading = false;
+    },
+    [signup.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload.error;
+    },
     // auth/signin
     [signin.pending]: (state) => {
       state.isLoading = true;

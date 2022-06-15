@@ -4,8 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import AppsOutlinedIcon from "@mui/icons-material/AppsOutlined";
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 
-import "./brands.scss";
-import Paging from "../../components/paging/Paging";
+import "./brand.scss";
+import Paging from "../../components/pagination/Pagination";
 import Product from "../../components/product/Product";
 import BrandSidebar from "../../components/brandsidebar/BrandSidebar";
 import { getBrand } from "../../slice/brandSlice";
@@ -46,11 +46,10 @@ function Brand() {
   };
 
   return (
+    <>
     <div className="brands-container">
-      <BrandSidebar />
-
       <div className="brands-wrapper">
-        {brand.banners && (
+        {brand?.banners && (
           <div className="brands-img">
             <img
               src={publicURL(brand?.banners[0].img)}
@@ -100,14 +99,14 @@ function Brand() {
             ))}
           </div>
       </div>
-
-      <Paging
-        total={total}
-        perPage={perPage}
-        setCurrentPage={setCurrentPage}
-        currentPage={currentPage}
-      />
     </div>
+    <Pagination
+    total={total}
+    perPage={perPage}
+    setCurrentPage={setCurrentPage}
+    currentPage={currentPage}
+  />
+  </>
   );
 }
 

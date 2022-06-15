@@ -1,16 +1,24 @@
+@import "../../variable.scss";
+
 .products-items {
   width: 100%;
   height: inherit;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   text-transform: uppercase;
   cursor: pointer;
-
-  p > b:first-child {
-    font-size: 1.4rem;
-  }
+  line-height: 1.8rem;
 
   img {
     width: 100%;
     height: auto;
+  }
+
+  .hasDiscount {
+    text-decoration: line-through;
+    color: #898989;
+  }
+
+  .discount {
+    margin-left: 0.5rem;
   }
 }

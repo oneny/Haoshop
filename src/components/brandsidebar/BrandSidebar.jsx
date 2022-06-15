@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import "./brandsidebar.scss";
 import { getBrands } from "../../slice/brandSlice";
 
-function BrandSidebar() {
+function BrandSidebar({ onMouseOver, onMouseOut, setIsHovering }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { brands } = useSelector((store) => store.brand);
 
@@ -20,18 +21,30 @@ function BrandSidebar() {
   }, []);
 
   return (
-    <div className="brandsidebar-container">
+    <div
+      className="brandsidebar-container"
+      onMouseOver={onMouseOver}
+      onMouseOut={onMouseOut}
+    >
       {brandList?.map((brand) => (
         <div key={brand} className="brandsidebar-wrapper">
-          <div className="brandsidebar-initial"><b>{brand}</b></div>
+          <div className="brandsidebar-initial">
+            <b>{brand}</b>
+          </div>
           <div className="brandsidebar-items">
-            {brands?.map((_brand) => (
+            {brands?.map(
+              (_brand) =>
                 _brand.name.slice(0, 1) === brand && (
                   <div key={_brand.name} className="brand-item">
-                    <Link to={`/brands/${_brand.name}`}>{_brand.name}</Link>
+                    <div onClick={() => {
+                      navigate(`/brands/${_brand.name}`);
+                      setIsHovering(false);
+                    }}>
+                      {_brand.name}
+                    </div>
                   </div>
                 )
-            ))}
+            )}
           </div>
         </div>
       ))}
