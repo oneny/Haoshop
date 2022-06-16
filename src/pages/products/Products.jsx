@@ -181,8 +181,9 @@ function Products() {
             </div>
           )}
         </div>
-        <div className="product-right-item">
-          <button onClick={addCart}>카트 담기</button>
+        <div className="product-right-button">
+          <button className="purchase">바로 구매</button>
+          <button className="cart" onClick={addCart}>카트 담기</button>
         </div>
       </div>
     </div>
