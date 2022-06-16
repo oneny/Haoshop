@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+
+import "./product.scss";
 import { addItem } from "../../slice/cartSlice";
 import { getProduct } from "../../slice/productSlice";
 import publicURL from "../../utils/publicURL";
@@ -11,82 +15,118 @@ function Products() {
   const params = useParams();
   const { product, relatedProducts } = useSelector((store) => store.product);
   const [size, setSize] = useState("");
-  const [src, setSrc] = useState(publicURL(product?.productImgs[0]?.fileName));
+  const [qty, setQty] = useState(1);
+  const [src, setSrc] = useState("");
+  const [isDescOpen, setIsDescOpen] = useState(false);
 
-  console.log("src", src);
-
-  console.log("product", product);
+  const toKRW = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
 
   useEffect(() => {
     dispatch(getProduct(params.id));
   }, [params]);
 
   const addCart = () => {
-    if (!size) return alert("사이즈를 입력하셔야 합니다.");
+    if (!size) return alert("사이즈를 선택하셔야 합니다.");
+
+    console.log(product.price * (1 - product?.discountPrice / 100));
     dispatch(
       addItem({
         _id: product._id,
         name: product.name,
         img: product.productImgs[0].fileName,
-        prict: product.price,
+        price: product.price * (1 - product?.discountPrice / 100),
         size,
-        qty: 1,
+        qty,
       })
     );
     const navi = window.confirm("장바구니로 이동하시겠습니까?");
     if (navi) navigate("/cart");
   };
 
+  const otherColors = relatedProducts?.filter((v) => v._id !== product._id);
+
   return (
-    <>
-      <div className="product">
-        <div className="product-left">
-          <div className="product-left-item">
-            <div>
-              {product?.productImgs?.map((productImg, i) => (
-                <div
-                  key={i}
-                  onClick={() => setSrc(publicURL(productImg.fileName))}
-                >
-                  <img
-                    src={publicURL(productImg.fileName)}
-                    alt=""
-                    width="50"
-                    heigth="50"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="product-left-item">
-            <div className="img-wrapper">
-              <img src={src} alt="" width="500" height="500" />
-            </div>
-          </div>
-        </div>
-        <div className="product-right">
-          <div className="product-right-item">
+    <div className="product">
+      <div className="product-left">
+        <div className="product-left-img">
+          {product?.productImgs?.map((productImg, i) => (
             <div
-              className="brand-button"
-              onClick={() => navigate(`/brands/${product.brand.toUpperCase()}`)}
+              key={i}
+              className="img-wrapper"
+              onClick={() => setSrc(publicURL(productImg.fileName))}
             >
-              브랜드 홈 바로가기
+              <img src={publicURL(productImg.fileName)} alt="" />
             </div>
-          </div>
-          <div className="product-right-item"></div>
+          ))}
+        </div>
+        <div className="product-left-mainImg">
+          <img
+            src={src || publicURL(product?.productImgs[0]?.fileName)}
+            alt=""
+          />
         </div>
       </div>
-      <div>
-        <p>제품명 {product?.name}</p>
-        <p>상세정보 {product?.description}</p>
-        <p>가격 {product?.price}</p>
-        <p>할인가 {product?.discountPrice}</p>
-        <p>색상 {product?.color}</p>
-
-        <div>
-          <select onChange={(e) => setSize(e.target.value)}>
+      <div className="product-right">
+        <div
+          className="brand-button"
+          onClick={() => navigate(`/brands/${product.brand.toLowerCase()}`)}
+        >
+          브랜드 홈 바로가기
+        </div>
+        <div className="product-right-brand">{product?.brand}</div>
+        <div className="product-right-name">
+          {product?.name} ({product?.color})
+        </div>
+        <div className={"product-right-price"}>
+          <p className={`${product?.discountPrice ? "hasDiscount" : ""}`}>
+            ₩ {toKRW(product?.price)}
+          </p>
+          <p>
+            ₩ {toKRW(product?.price * (1 - product?.discountPrice / 100))}{" "}
+            <span>{product?.discountPrice}%</span>
+          </p>
+        </div>
+        <div className="product-right-desc">
+          <div
+            className="descMenu"
+            onClick={() => setIsDescOpen((prev) => !prev)}
+          >
+            <p>제품 상세정보</p>
+            <p>
+              {isDescOpen ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
+            </p>
+          </div>
+          <div className={`desc ${isDescOpen ? "descOpen" : ""}`}>
+            {product?.description}
+          </div>
+        </div>
+        <div className="product-right-color">
+          <p>COLOR</p>
+          <div className="color-wrapper">
+            {otherColors?.map((relatedProduct, i) => (
+              <Link
+                className="img-wrapper"
+                to={`/products/${relatedProduct._id}`}
+                key={i}
+              >
+                <img
+                  src={publicURL(relatedProduct.productImgs[0].fileName)}
+                  alt="relatedProduct"
+                />
+              </Link>
+            ))}
+          </div>
+        </div>
+        <div className="product-right-size">
+          <p>SIZE</p>
+          <select
+            onChange={(e) => setSize(e.target.value)}
+            className="selection"
+          >
             <option defaultValue hidden>
-              Size Option
+              - [필수] OPTIONS -
             </option>
             {product?.stock?.map((s) => (
               <option value={s.size} disabled={s.qty === 0} key={s._id}>
@@ -95,10 +135,57 @@ function Products() {
               </option>
             ))}
           </select>
+          {size && (
+            <div className="selection-info">
+              <div>{size}</div>
+              <div className="selection-info-qty">
+                <div className="qty">
+                  <button
+                    onClick={() => {
+                      if (qty <= 1) {
+                        alert("최소 주문수량은 1개 입니다.");
+                        return setQty(1);
+                      }
+                      setQty((prev) => --prev);
+                    }}
+                  >
+                    -
+                  </button>
+                  <input
+                    type="number"
+                    min={0}
+                    value={qty}
+                    onChange={(e) => setQty(e.target.value)}
+                    onBlur={(e) => {
+                      if (e.target.value <= 1) {
+                        alert("최소 주문수량은 1개 입니다.");
+                        return setQty(1);
+                      }
+                    }}
+                  />
+                  <button
+                    onClick={() => {
+                      setQty((prev) => ++prev);
+                    }}
+                  >
+                    +
+                  </button>
+                </div>
+                <div className="price">
+                  ₩{" "}
+                  {toKRW(
+                    product?.price * (1 - product?.discountPrice / 100) * qty
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-        <button onClick={addCart}>카트 담기</button>
+        <div className="product-right-item">
+          <button onClick={addCart}>카트 담기</button>
+        </div>
       </div>
-    </>
+    </div>
   );
 }
 

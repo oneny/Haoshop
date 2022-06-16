@@ -24,7 +24,7 @@ function Product({ product }) {
         {product.name} {product.color && `(${product.color})`}
       </p>
       <p>
-        <span className={`${product.discountPrice}` > 0 && "hasDiscount"}>
+        <span className={`${product.discountPrice}` > 0 ? "hasDiscount" : ""}>
           ₩{product.price}
         </span>
         {product.discountPrice && (

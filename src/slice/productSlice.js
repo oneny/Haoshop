@@ -2,14 +2,14 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../utils/axiosInstance';
 
 const initialState = {
+  relatedProducts:[],
   product: {},
   products: [],
   brandData: [],
-  brandAll: [],
   total: 0,
   perPage: 20,
   _currentPage: 1,
-  _sort: "timestamps",
+  _sort: "latest",
   _brands: [], // checked brands
   _brand: "", // 브랜드 영역에서 사용
   isLoading: false,
@@ -34,18 +34,6 @@ export const getProductsByBrand = createAsyncThunk(
     try {
       const res = await axios.post(`/products/brand`, payload);
       thunkAPI.dispatch(saveFeatures(payload));
-      return res.data;
-    } catch (err) {
-      return thunkAPI.rejectWithValue(err.response.data);
-    }
-  }
-);
-
-export const getBrands = createAsyncThunk(
-  "product/getBrands",
-  async (id, thunkAPI) => {
-    try {
-      const res = await axios.get(`/products/brands`);
       return res.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
@@ -109,23 +97,13 @@ const productSlice = createSlice({
     [getProductsByBrand.rejected]: (state) => {
       state.isLoading = false;
     },
-    // product/getBrands
-    [getBrands.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [getBrands.fulfilled]: (state, action) => {
-      state.brandAll = action.payload.brandAll;
-      state.isLoading = false;
-    },
-    [getBrands.rejected]: (state) => {
-      state.isLoading = false;
-    },
     // product/getProduct
     [getProduct.pending]: (state) => {
       state.isLoading = true;
     },
     [getProduct.fulfilled]: (state, action) => {
       state.product = action.payload.product;
+      state.relatedProducts = action.payload.relatedProducts;
       state.isLoading = false;
     },
     [getProduct.rejected]: (state, action) => {

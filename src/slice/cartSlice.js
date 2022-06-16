@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from '../utils/axiosInstance';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "../utils/axiosInstance";
 
 const initialState = {
   cartItems: [],
@@ -26,11 +26,13 @@ export const addCartItems = createAsyncThunk(
       user = user._id;
 
       // product -> products의 _id, quantity -> default: 1
-      cartItems = cartItems.map((cartItem) => (
-         { product: cartItem._id, quantity: cartItem.qty }
-      ));
-      
-      console.log('{user, cartItems}', { user, cartItems });
+      cartItems = cartItems.map((cartItem) => ({
+        product: cartItem._id,
+        quantity: cartItem.qty,
+        size: cartItem.size,
+      }));
+
+      console.log("{user, cartItems}", { user, cartItems });
       const res = await axios.post("/carts", { user, cartItems });
       if (res.status === 201) thunkAPI.dispatch(getCartItems(user));
 
@@ -51,7 +53,7 @@ export const updateCartItems = createAsyncThunk(
       cartItems = cartItems.map((cartItem) => {
         return { product: cartItem._id, quantity: cartItem.qty };
       });
-
+      console.log("{user, cartItems}22", { user, cartItems });
       const res = await axios.put("/carts", { user, cartItems });
       // if (res.status === 201) thunkAPI.dispatch(getCartItems());
 
@@ -62,33 +64,44 @@ export const updateCartItems = createAsyncThunk(
   }
 );
 
-const cartSlice  = createSlice({
+const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
     addItem: (state, action) => {
       const cartItem = state.cartItems.find(
-        (item) => item._id === action.payload._id
+        (item) =>
+          item._id === action.payload._id && item.size === action.payload.size
       );
+      console.log("cartItem", cartItem);
+      console.log("state", action);
       cartItem
-        ? (cartItem.qty += 1) // 같은 상품을 카트 담기 하는 경우
+        ? (cartItem.qty += action.payload.qty) // 같은 상품을 카트 담기 하는 경우
         : (state.cartItems = [...state.cartItems, action.payload]); // 새로운 상품 카트 담기
     },
     clearCart: (state) => {
       state.cartItems = [];
     },
     removeItem: (state, action) => {
-      const _id = action.payload;
-      state.cartItems = state.cartItems.filter((item) => item._id !== _id);
+      const { _id, size } = action.payload;
+      console.log(_id, size);
+      state.cartItems = state.cartItems.filter((item) => {
+        if (item._id === _id) return item.size !== size;
+        else return item._id !== _id;
+      });
     },
     increaseQty: (state, action) => {
-      const _id = action.payload;
-      const cartItem = state.cartItems.find((item) => item._id === _id);
+      const { _id, size } = action.payload;
+      const cartItem = state.cartItems.find(
+        (item) => item._id === _id && item.size === size
+      );
       cartItem.qty += 1;
     },
     decreaseQty: (state, action) => {
-      const _id = action.payload;
-      const cartItem = state.cartItems.find((item) => item._id === _id);
+      const { _id, size } = action.payload;
+      const cartItem = state.cartItems.find(
+        (item) => item._id === _id && item.size === size
+      );
       cartItem.qty -= 1;
     },
   },
@@ -135,8 +148,9 @@ export const selectTotalQty = (store) =>
   store.cart.cartItems.reduce((totalQty, item) => totalQty + item.qty, 0);
 
 export const selectTotalPrice = (state) =>
-state.cart.cartItems.reduce(
-  (totalPrice, item) => totalPrice + item.price * item.qty, 0
-);
+  state.cart.cartItems.reduce(
+    (totalPrice, item) => totalPrice + item.price * item.qty,
+    0
+  );
 
 export default cartSlice.reducer;

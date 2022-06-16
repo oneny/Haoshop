@@ -7,7 +7,6 @@ import "./masthead.scss";
 function Masthead({ scrollY }) {
   const navigate = useNavigate();
   const refContainer = useRef(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   let progress = 0;
   const { current: elContainer } = refContainer;
@@ -18,21 +17,23 @@ function Masthead({ scrollY }) {
     console.log("progress", progress);
   }
 
+  let currentIndex = 0;
+
   useEffect(() => {
-    console.log('hi');
     const slide = setInterval(() => {
-      console.log('hi11');
-      let index = currentIndex + 1;
       document
         .getElementsByClassName("masthead-slide")
         [currentIndex].classList.remove("active");
-      setCurrentIndex((prev) => prev++);
-      console.log('index', index);
+      console.log('currentIndex', currentIndex);
+      currentIndex++;
+      if (currentIndex > 4) currentIndex = 0;
       console.log(currentIndex);
       document
         .getElementsByClassName("masthead-slide")
         [currentIndex].classList.add("active");
     }, 4500);
+
+    return () => { clearInterval(slide) }
   }, [currentIndex]);
 
   return (
