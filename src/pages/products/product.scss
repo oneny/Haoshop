@@ -243,7 +243,9 @@ input[type="number"]::-webkit-inner-spin-button {
     }
 
     &-right {
-      width: 100%;
+      width: 80%;
+      margin: 0 auto;
+      margin-top: 3rem;
     }
   }
 }
@@ -252,6 +254,7 @@ input[type="number"]::-webkit-inner-spin-button {
   .product {
     margin-top: 1rem;
     flex-direction: column;
+    font-size: 1rem;
 
     &-left {
       width: 100%;
@@ -270,6 +273,42 @@ input[type="number"]::-webkit-inner-spin-button {
       &-mainImg {
         width: 80%;
         margin: 0 auto;
+      }
+    }
+
+    &-right {
+      row-gap: 1rem;
+
+      .brand-button {
+        padding: 0.3rem 0.5rem;
+        font-size: 1rem;
+      }
+
+      &-brand {
+        font-size: 1rem;
+        font-weight: bold;
+      }
+  
+      &-name {
+        font-size: 1.3rem;
+      }
+  
+      &-price {
+        font-size: 1.3rem;
+      }
+
+      &-size {
+        .selection {
+          padding: 0.5rem 0.3rem;
+          font-size: 1rem;
+        }
+      }
+
+      &-button {
+        .purchase {
+          font-size: 1rem;
+          padding: 0.5rem;
+        }
       }
     }
   }
