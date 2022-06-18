@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import CloseIcon from "@mui/icons-material/Close";
 
 import "./product.scss";
 import { addItem } from "../../slice/cartSlice";
@@ -18,6 +19,7 @@ function Products() {
   const [qty, setQty] = useState(1);
   const [src, setSrc] = useState("");
   const [isDescOpen, setIsDescOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const toKRW = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -27,10 +29,30 @@ function Products() {
     dispatch(getProduct(params.id));
   }, [params]);
 
+  useEffect(() => {
+    setSrc(publicURL(product?.productImgs[0]?.fileName));
+  }, [product]);
+
+  console.log("hi");
+  useEffect(() => {
+    if (isCartOpen) {
+      const closeCartModal = setTimeout(() => {
+        setIsCartOpen(false);
+      }, 4000);
+      return () => {
+        clearTimeout(closeCartModal);
+      };
+    }
+  }, [isCartOpen]);
+
   const addCart = () => {
     if (!size) return alert("사이즈를 선택하셔야 합니다.");
 
-    console.log(product.price * (1 - product?.discountPrice / 100));
+    const item = product.stock.find((v) => v.size === size);
+    if (item?.qty < qty) {
+      return alert(`${item.qty}개 이상으로 재고가 부족합니다.`);
+    }
+
     dispatch(
       addItem({
         _id: product._id,
@@ -41,8 +63,7 @@ function Products() {
         qty,
       })
     );
-    const navi = window.confirm("장바구니로 이동하시겠습니까?");
-    if (navi) navigate("/cart");
+    return setIsCartOpen(true);
   };
 
   const otherColors = relatedProducts?.filter((v) => v._id !== product._id);
@@ -62,12 +83,10 @@ function Products() {
           ))}
         </div>
         <div className="product-left-mainImg">
-          <img
-            src={src || publicURL(product?.productImgs[0]?.fileName)}
-            alt=""
-          />
+          <img src={src} alt="" />
         </div>
       </div>
+
       <div className="product-right">
         <div
           className="brand-button"
@@ -83,10 +102,12 @@ function Products() {
           <p className={`${product?.discountPrice ? "hasDiscount" : ""}`}>
             ₩ {toKRW(product?.price)}
           </p>
-          <p>
-            ₩ {toKRW(product?.price * (1 - product?.discountPrice / 100))}{" "}
-            <span>{product?.discountPrice}%</span>
-          </p>
+          {product?.discountPrice && (
+            <p>
+              ₩ {toKRW(product?.price * (1 - product?.discountPrice / 100))}{" "}
+              <span>{product?.discountPrice}%</span>
+            </p>
+          )}
         </div>
         <div className="product-right-desc">
           <div
@@ -182,8 +203,22 @@ function Products() {
           )}
         </div>
         <div className="product-right-button">
+          {isCartOpen && (
+            <div className="cart-alert">
+              <div className="cart-alert-close">
+                <CloseIcon
+                  className="closeIcon"
+                  onClick={() => setIsCartOpen(false)}
+                />
+              </div>
+              <p>장바구니로 이동하시겠습니까?</p>
+              <button onClick={() => navigate("/cart")}>장바구니 이동</button>
+            </div>
+          )}
+          <button className="cart" onClick={addCart}>
+            카트 담기
+          </button>
           <button className="purchase">바로 구매</button>
-          <button className="cart" onClick={addCart}>카트 담기</button>
         </div>
       </div>
     </div>

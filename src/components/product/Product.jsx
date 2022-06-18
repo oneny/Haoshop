@@ -7,6 +7,10 @@ import publicURL from "../../utils/publicURL";
 function Product({ product }) {
   const navigate = useNavigate();
 
+  const toKRW = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
   const onClickNavigate = (page) => () => {
     navigate(page);
   };
@@ -25,11 +29,11 @@ function Product({ product }) {
       </p>
       <p>
         <span className={`${product.discountPrice}` > 0 ? "hasDiscount" : ""}>
-          ₩{product.price}
+          ₩{toKRW(product.price)}
         </span>
         {product.discountPrice && (
           <span className="discount">
-            ₩{product.price - product.discountPrice}
+            ₩{toKRW(product?.price * (1 - product?.discountPrice / 100))}
           </span>
         )}
       </p>

@@ -17,19 +17,21 @@ function Lookbooks() {
 
   return (
     <div className="lookbooks-container">
-      {lookbooks?.map((lookbook) => (
-        <div
-          className="lookbooks-items"
-          key={lookbook._id}
-          onClick={() => navigate(`/lookbooks/${lookbook._id}`)}
-        >
-          <img
-            src={publicURL(lookbook.banners[0].img)}
-            alt=""
-          />
-          <b>{lookbook.name}</b>
-        </div>
-      ))}
+     <div className="lookbooks-wrapper">
+        {lookbooks?.map((lookbook) => (
+          <div
+            className="lookbooks-items"
+            key={lookbook._id}
+            onClick={() => navigate(`/lookbooks/${lookbook._id}`)}
+          >
+            <img
+              src={publicURL(lookbook.banners[0].img)}
+              alt=""
+            />
+            <b>{lookbook.name}</b>
+          </div>
+        ))}
+     </div>
     </div>
   );
 }

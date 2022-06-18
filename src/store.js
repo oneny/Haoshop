@@ -19,6 +19,7 @@ import productReducer from "./slice/productSlice";
 import userReducer from "./slice/userSlice";
 import brandReducer from "./slice/brandSlice";
 import lookbookReducer from './slice/lookbookSlice';
+import collectionSlice from "./slice/collectionSlice";
 
 const persistConfig = {
   key: "root",
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   brand: brandReducer,
   lookbook: lookbookReducer,
+  collection: collectionSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

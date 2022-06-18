@@ -1,34 +1,26 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
-import Filter4Icon from "@mui/icons-material/Filter4";
-import Filter3Icon from "@mui/icons-material/Filter3";
-import Filter2Icon from "@mui/icons-material/Filter2";
-import Filter1Icon from "@mui/icons-material/Filter1";
-import AppsOutlinedIcon from "@mui/icons-material/AppsOutlined";
-import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 
 import "./category.scss";
 import { getProductsByCategories } from "../../slice/productSlice";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { createLinearCategory, categoryToggle } from "../../slice/categorySlice";
-import Product from "../../components/product/Product";
 import Pagination from '../../components/pagination/Pagination';
+import ProductList from "../../components/product/ProductList";
 
 function Category() {
   const dispatch = useDispatch();
   const params = useParams();
-  const { products, total, perPage, _currentPage, _sort, _brands, brandData } =
+  const { products, total, perPage, _currentPage, _brands, _sort, brandData } =
     useSelector((store) => store.product);
   const { categories, categoryOpen } = useSelector((store) => store.category);
   const [currentPage, setCurrentPage] = useState(_currentPage);
   const [sort, setSort] = useState(_sort);
   const [brands, setBrands] = useState(_brands);
+  const haveFilter = true;
   const currentCategory = [];
   let cids = [];
-  
-  const [selectedGrid, setSelectedGrid] = useState(false);
   
   // path="/:slug/:cid"
   if (params.cid === "all") {
@@ -59,18 +51,10 @@ function Category() {
       sort, // 상품 정렬
     };
     dispatch(getProductsByCategories(payload));
-  }, [params, brands, perPage, currentPage, sort]);
-
-  const onChangeSort = (e) => {
-    setSort(e.target.value);
-  }
+  }, [params, brands, perPage, currentPage]);
 
   const categoryToggleHandler = () => {
     dispatch(categoryToggle()); // 카테고리 토글
-  };
-
-  const handleGridColums = (boolean) => () => {
-    setSelectedGrid(boolean);
   };
 
   return (
@@ -84,43 +68,12 @@ function Category() {
           categoryOpen={categoryOpen}
           categoryToggleHandler={categoryToggleHandler}
         />
-        <section>
-          <div className="top">
-            <div className="top-left">
-              <div className="filter" onClick={categoryToggleHandler}>
-                <FormatAlignLeftIcon className="filter-icon" />
-                <span>FILTER</span>
-              </div>
-
-              <div className="sort">
-                <select onChange={onChangeSort}>
-                  <option defaultValue hidden>
-                    SORT
-                  </option>
-                  <option value={"timestamps"}>신상품</option>
-                  <option value={"ascending"}>낮은가격</option>
-                  <option value={"descending"}>높은가격</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="top-right">
-              <GridViewRoundedIcon
-                className={`grid-icon ${selectedGrid && "selected"}`}
-                onClick={handleGridColums(true)}
-              />
-              <AppsOutlinedIcon
-                className={`grid-icon ${!selectedGrid && "selected"}`}
-                onClick={handleGridColums(false)}
-              />
-            </div>
-          </div>
-          <div className={`products-wrapper ${selectedGrid ? "selected" : ""}`}>
-            {products?.map((product) => (
-              <Product key={product._id} product={product} />
-            ))}
-          </div>
-        </section>
+        <ProductList
+          haveFilter={haveFilter}
+          setSort={setSort}
+          products={products}
+          categoryToggleHandler={categoryToggleHandler}
+        />
       </main>
       <Pagination
         total={total}

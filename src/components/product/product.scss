@@ -22,3 +22,15 @@
     margin-left: 0.5rem;
   }
 }
+
+@media screen and (max-width: $md) {
+  .products-items {
+    font-size: 1.3rem;
+  }
+}
+
+@media screen and (max-width: $sm) {
+  .products-items {
+    font-size: 1.1rem;
+  }
+}

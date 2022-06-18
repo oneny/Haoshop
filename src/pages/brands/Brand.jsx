@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import AppsOutlinedIcon from "@mui/icons-material/AppsOutlined";
-import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 
 import "./brand.scss";
-import Paging from "../../components/pagination/Pagination";
-import Product from "../../components/product/Product";
-import BrandSidebar from "../../components/brandsidebar/BrandSidebar";
+import ProductList from "../../components/product/ProductList";
 import { getBrand } from "../../slice/brandSlice";
 import { getProductsByBrand } from "../../slice/productSlice";
 import publicURL from "../../utils/publicURL";
@@ -23,7 +19,6 @@ function Brand() {
   );
   const [sort, setSort] = useState(_sort);
   const [currentPage, setCurrentPage] = useState(_currentPage);
-  const [selectedGrid, setSelectedGrid] = useState(false);
 
   useEffect(() => {
     dispatch(getBrand(params.name));
@@ -41,72 +36,33 @@ function Brand() {
 
   console.log({ brand, products });
 
-  const handleGridColums = (boolean) => () => {
-    setSelectedGrid(boolean);
-  };
-
   return (
     <>
-    <div className="brands-container">
-      <div className="brands-wrapper">
-        {brand?.banners && (
-          <div className="brands-img">
-            <img
-              src={publicURL(brand?.banners[0].img)}
-              alt=""
-            />
-          </div>
-        )}
-        {/* {brand.cards && brand?.cards.map((card) => (
-          <div>
-            <img src={publicURL(card.img)} alt="" width="300" height="300" />
-          </div>
-        ))} */}
-        <div className="brands-info">
-          <h3>{brand?.name}</h3>
-          <span>{brand?.description}</span>
-        </div>
-
-        <div className="top">
-            <div className="top-left">
-              <div className="sort">
-                <select onChange={(e) => setSort(e.target.value)}>
-                  <option defaultValue hidden>
-                    SORT
-                  </option>
-                  <option value={"latest"}>신상품</option>
-                  <option value={"ascending"}>낮은가격</option>
-                  <option value={"descending"}>높은가격</option>
-                </select>
+      <div className="brands-container">
+        <div className="brands-wrapper">
+          {brand?.banners && (
+            <div className="img-wrapper">
+              <div className="brands-img">
+                <img src={publicURL(brand?.banners[0].img)} alt="" />
               </div>
             </div>
-
-            <div className="top-right">
-              <GridViewRoundedIcon
-                className={`grid-icon ${selectedGrid && "selected"}`}
-                onClick={handleGridColums(true)}
-              />
-              <AppsOutlinedIcon
-                className={`grid-icon ${!selectedGrid && "selected"}`}
-                onClick={handleGridColums(false)}
-              />
-            </div>
+          )}
+          <div className="brands-info">
+            <h3>{brand?.name}</h3>
+            <p>{brand?.description}</p>
+            <p className="navi">컬렉션 보러가기</p>
           </div>
 
-          <div className={`products-wrapper ${selectedGrid && "selected"}`}>
-            {products?.map((product) => (
-              <Product key={product._id} product={product} />
-            ))}
-          </div>
+          <ProductList setSort={setSort} products={products} />
+        </div>
       </div>
-    </div>
-    <Pagination
-    total={total}
-    perPage={perPage}
-    setCurrentPage={setCurrentPage}
-    currentPage={currentPage}
-  />
-  </>
+      <Pagination
+        total={total}
+        perPage={perPage}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+      />
+    </>
   );
 }
 

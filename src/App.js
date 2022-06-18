@@ -9,6 +9,9 @@ import Brand from './pages/brands/Brand';
 import Lookbooks from "./pages/lookbooks/Lookbooks";
 import Signup from "./pages/signup/Signup";
 import Product from "./pages/products/Products";
+import Lookbook from "./pages/lookbooks/Lookbook";
+import Collections from "./pages/collections/Collections";
+import Collection from './pages/collections/Collection';
 
 function App() {
   return (
@@ -21,6 +24,9 @@ function App() {
           <Route path="cart" element={<Cart />} />
           <Route path="checkout" element={<Checkout />} />
           <Route path="lookbooks" element={<Lookbooks />} />
+          <Route path="lookbooks/:id" element={<Lookbook />} />
+          <Route path="collections" element={<Collections />} />
+          <Route path="collections/:id" element={<Collection />} />
           <Route path="brands/:name" element={<Brand />} />
           <Route path="products/:id" element={<Product />} />
           <Route path=":slug/:cid" element={<Category />} />
