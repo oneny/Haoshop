@@ -15,12 +15,8 @@ function Collections() {
   const perPage = 20;
   const [currentPage, setCurrentPage] = useState(1);
 
-  let mainCollections = [];
-  let subCollections = [];
-
-  for (let c of collections) {
-    c.priority ? mainCollections.push(c) : subCollections.push(c);
-  }
+  const mainCollections = collections.filter((v, i) => i < 2);
+  const subCollections = collections.filter((v, i) => i >= 2);
 
   useEffect(() => {
     const payload = { perPage, currentPage, keyword };
@@ -51,6 +47,7 @@ function Collections() {
             </div>
           ))}
         </div>
+        
         <div className="collections-sub">
           {collections?.map((collection) => (
             <div

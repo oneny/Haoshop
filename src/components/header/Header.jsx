@@ -49,7 +49,7 @@ function Header() {
           <div className="navbar-items">
             <NavLink to="/caregories/all">
               <div className="navbar-item" onMouseOver={() => setIsHovering(0)}>
-                CATEGORY
+                SHOPPING
               </div>
             </NavLink>
             <div className="navbar-item" onMouseOver={() => setIsHovering(1)}>
@@ -82,9 +82,17 @@ function Header() {
               SEARCH
             </div>
             {user ? (
-              <div className="navbar-item" onClick={logout}>
-                SIGNOUT
-              </div>
+              <>
+                <div className="navbar-item" onClick={logout}>
+                  SIGNOUT
+                </div>
+                <div
+                  className="navbar-item"
+                  onClick={onClickNavigate("/mypage")}
+                >
+                  MYPAGE
+                </div>
+              </>
             ) : (
               <>
                 <div
@@ -112,11 +120,8 @@ function Header() {
             <div className="navbar-item" onClick={onClickNavigate("/contact")}>
               CONTACT
             </div>
-            <div className="menu-item" onClick={onClickNavigate("/orders")}>
+            <div className="navbar-item" onClick={onClickNavigate("/orders")}>
               order
-            </div>
-            <div className="menu-item" onClick={onClickNavigate("/mypage")}>
-              mypage
             </div>
           </div>
           <div className="navbar-items-lg">

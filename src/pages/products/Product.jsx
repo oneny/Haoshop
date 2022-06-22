@@ -59,7 +59,7 @@ function Products() {
         color: product.color,
         img: product.productImgs[0].fileName,
         price: product.price,
-        discountPrice:product.discountPrice,
+        discountPrice: product.discountPrice,
         size,
         qty,
       })
@@ -103,10 +103,16 @@ function Products() {
           <p className={`${product?.discountPrice ? "hasDiscount" : ""}`}>
             ₩ {toKRW(product?.price)}
           </p>
-          <p>
-            ₩ {toKRW(product?.discountPrice)}{" "}
-            <span>{product?.price * (1 - product?.discountPrice / 100)}%</span>
-          </p>
+          {product?.discountPrice && (
+            <p>
+              ₩ {toKRW(product?.discountPrice)}{" "}
+              <span>
+                {Math.round(((product?.price - product?.discountPrice) / product?.price) *
+                  100)}
+                %
+              </span>
+            </p>
+          )}
         </div>
         <div className="product-right-desc">
           <div className="descMenu" onClick={toggleIsDescOpen}>

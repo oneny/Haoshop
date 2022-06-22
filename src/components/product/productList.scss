@@ -15,7 +15,7 @@ section {
     &-right {
       display: flex;
       column-gap: 1rem;
-      
+
       .filter {
         display: none;
         align-items: center;
@@ -23,7 +23,7 @@ section {
 
       .sort {
         height: 100%;
-        
+
         > select {
           border: none;
           height: 100%;
@@ -54,7 +54,7 @@ section {
     column-gap: 5rem;
     position: relative;
     z-index: 100;
-    
+
     &.selected {
       grid-template-columns: repeat(3, 1fr);
     }
@@ -154,4 +154,4 @@ section {
       }
     }
   }
-}
+} 
