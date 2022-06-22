@@ -7,6 +7,7 @@ import { selectTotalPrice, selectTotalQty } from "../../slice/cartSlice";
 import CartItem from "../../components/cartItem/CartItem";
 import { Navigate, useNavigate } from "react-router-dom";
 import AddressForm from "../../components/address/AddressForm";
+import CheckoutItem from "../../components/checkout/CheckoutItem";
 
 function Checkout() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ function Checkout() {
   const totalPrice = useSelector(selectTotalPrice);
   const totalQty = useSelector(selectTotalQty);
   const { latestOrder, clearLatestOrder } = useSelector((store) => store.user);
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(sessionStorage.getItem("user"));
 
   const [confirmedAddress, setConfirmAddress] = useState("");
   const [formType, setFormType] = useState("add");
@@ -31,7 +32,7 @@ function Checkout() {
   const [name, setName] = useState(selectedAddress?.name || "");
 
   if (!user) {
-    navigate("/");
+    navigate("/signin");
   }
 
   useEffect(() => {
@@ -72,12 +73,13 @@ function Checkout() {
         <h2>CHECK OUT</h2>
       </div>
       <div className="checkout-wrapper">
-        <div className="checkout-wrapper-product">
-          <div className="product-title">
-            <h3>상품 정보</h3>
-          </div>
+        <CheckoutItem title={"상품 정보"}>
           {cartItems.map((cartItem) => (
-            <CartItem key={cartItem._id} cartItem={cartItem} onlyInfo={true} />
+            <CartItem
+              key={cartItem._id + cartItem.size}
+              cartItem={cartItem}
+              onlyInfo={true}
+            />
           ))}
           <div className="product-total">
             <div className="product-total-item">
@@ -89,12 +91,9 @@ function Checkout() {
               <h4>₩ {totalPrice}</h4>
             </div>
           </div>
-        </div>
+        </CheckoutItem>
 
-        <div className="checkout-wrapper-buyer">
-          <div className="buyer-title">
-            <h3>주문자 정보</h3>
-          </div>
+        <CheckoutItem title={"주문자 정보"}>
           {user && (
             <div className="buyer-info">
               <div className="buyer-info-left">이름</div>{" "}
@@ -105,12 +104,9 @@ function Checkout() {
               <div>{user.phoneNumber}</div>
             </div>
           )}
-        </div>
+        </CheckoutItem>
 
-        <div className="checkout-wrapper-shipping">
-          <div className="shipping-title">
-            <h3>배송 정보</h3>
-          </div>
+        <CheckoutItem title={"배송 정보"}>
           <div className="shipping-content">
             <div className="shipping-item">
               <div className="shipping-item-left">배송지 선택</div>
@@ -130,7 +126,7 @@ function Checkout() {
                   <label htmlFor="new">신규 배송지</label>
                 </div>
                 {addresses?.map((address) => (
-                  <div key={address._id}>
+                  <div key={address?._id}>
                     <input
                       type="radio"
                       id={address.name}
@@ -149,23 +145,22 @@ function Checkout() {
             </div>
             {formType === "add" ? (
               <AddressForm
+                addresses={addresses}
                 enableInput={enableInput}
                 setEnableInput={setEnableInput}
               />
             ) : (
               <AddressForm
+                addresses={addresses}
                 enableInput={enableInput}
                 setEnableInput={setEnableInput}
                 selectedAddress={selectedAddress}
               />
             )}
           </div>
-        </div>
-        <div className="checkout-wrapper-payment">
-          <div className="shipping-title">
-            <h3>결제 정보</h3>
-          </div>
-        </div>
+        </CheckoutItem>
+
+        <CheckoutItem title={"결제 정보"}></CheckoutItem>
       </div>
     </div>
   );

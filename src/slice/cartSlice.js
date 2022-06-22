@@ -20,19 +20,14 @@ export const getCartItems = createAsyncThunk(
 
 export const addCartItems = createAsyncThunk(
   "cart/addCartItems",
-  async (cartItems, thunkAPI) => {
+  async ({ user, cartItems }, thunkAPI) => {
     try {
-      let user = JSON.parse(localStorage.getItem("user"));
-      user = user._id;
-
       // product -> products의 _id, quantity -> default: 1
       cartItems = cartItems.map((cartItem) => ({
         product: cartItem._id,
-        quantity: cartItem.qty,
         size: cartItem.size,
+        quantity: cartItem.qty,
       }));
-
-      console.log("{user, cartItems}", { user, cartItems });
       const res = await axios.post("/carts", { user, cartItems });
       if (res.status === 201) thunkAPI.dispatch(getCartItems(user));
 
@@ -45,17 +40,17 @@ export const addCartItems = createAsyncThunk(
 
 export const updateCartItems = createAsyncThunk(
   "cart/updateCartItems",
-  async (cartItems, thunkAPI) => {
+  async ({ user, cartItems }, thunkAPI) => {
     try {
-      let user = JSON.parse(localStorage.getItem("user"));
-      user = user._id;
-
       cartItems = cartItems.map((cartItem) => {
-        return { product: cartItem._id, quantity: cartItem.qty };
+        return {
+          product: cartItem._id,
+          size: cartItem.size,
+          quantity: cartItem.qty,
+        };
       });
-      console.log("{user, cartItems}22", { user, cartItems });
+
       const res = await axios.put("/carts", { user, cartItems });
-      // if (res.status === 201) thunkAPI.dispatch(getCartItems());
 
       return res.data;
     } catch (err) {
@@ -69,14 +64,14 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem: (state, action) => {
+      const { _id, size, qty } = action.payload;
+
       const cartItem = state.cartItems.find(
         (item) =>
-          item._id === action.payload._id && item.size === action.payload.size
+          item._id === _id && item.size === size
       );
-      console.log("cartItem", cartItem);
-      console.log("state", action);
       cartItem
-        ? (cartItem.qty += action.payload.qty) // 같은 상품을 카트 담기 하는 경우
+        ? (cartItem.qty += qty) // 같은 상품을 카트 담기 하는 경우
         : (state.cartItems = [...state.cartItems, action.payload]); // 새로운 상품 카트 담기
     },
     clearCart: (state) => {
@@ -84,7 +79,7 @@ const cartSlice = createSlice({
     },
     removeItem: (state, action) => {
       const { _id, size } = action.payload;
-      console.log(_id, size);
+      
       state.cartItems = state.cartItems.filter((item) => {
         if (item._id === _id) return item.size !== size;
         else return item._id !== _id;
@@ -92,6 +87,7 @@ const cartSlice = createSlice({
     },
     increaseQty: (state, action) => {
       const { _id, size } = action.payload;
+
       const cartItem = state.cartItems.find(
         (item) => item._id === _id && item.size === size
       );
@@ -99,6 +95,7 @@ const cartSlice = createSlice({
     },
     decreaseQty: (state, action) => {
       const { _id, size } = action.payload;
+      
       const cartItem = state.cartItems.find(
         (item) => item._id === _id && item.size === size
       );

@@ -5,8 +5,8 @@ const initialState = {
   categories: [], // 계층화된 카테고리
   linearCategories: [], // 일자형 카테고리
   isLoading: false,
-  currentCategory: [], // 현재 카테고리
-  currentPath: "", // 부모에서 자식 카테고리까지 경로
+  // currentCategory: [], // 현재 카테고리
+  // currentPath: "", // 부모에서 자식 카테고리까지 경로
   categoryOpen: false,
 };
 
@@ -38,10 +38,10 @@ const categorySlice = createSlice({
   name: "category",
   initialState,
   reducers: {
-    setCurrentStatus: (state, action) => {
-      state.currentPath = action.payload.key;
-      state.currentCategory = action.payload.category;
-    },
+    // setCurrentStatus: (state, action) => {
+    //   state.currentPath = action.payload.key;
+    //   state.currentCategory = action.payload.category;
+    // },
     categoryToggle: (state) => {
       state.categoryOpen = !state.categoryOpen;
     },

@@ -1,24 +1,24 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from '../utils/axiosInstance.js';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "../utils/axiosInstance.js";
 
 const initialState = {
   brands: [],
   brand: {},
   isLoading: false,
   error: null,
-}
+};
 
 export const getBrands = createAsyncThunk(
   "brand/getBrands",
   async (dummy, thunkAPI) => {
     try {
-      const res = await axios.get('/brands');
+      const res = await axios.get("/brands");
       return res.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
     }
   }
-)
+);
 
 export const getBrand = createAsyncThunk(
   "brand/getBrand",
@@ -57,14 +57,10 @@ const brandSlice = createSlice({
       state.brand = action.payload.brand;
       state.isLoading = false;
     },
-    [getBrand.rejected]: (state, action) => {
-      state.brand = action.payload.brand;
-      state.isLoading = false;
-    },
     [getBrand.rejected]: (state) => {
       state.isLoading = false;
-    }
-  }
+    },
+  },
 });
 
 export default brandSlice.reducer;

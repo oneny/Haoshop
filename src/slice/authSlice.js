@@ -3,8 +3,9 @@ import axios from "../utils/axiosInstance";
 import { clearCart } from "./cartSlice";
 
 const initialState = {
-  isLoading: false,
+  idAuthenticated: false,
   matchResult: "",
+  isLoading: false,
   error: null,
 };
 
@@ -37,9 +38,11 @@ export const signin = createAsyncThunk(
   async (_user, thunkAPI) => {
     try {
       const res = await axios.post("/auth/signin", _user);
-      const { token, user } = res.data; // 서버에서 반환
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+      const { accessToken, user } = res.data; // 서버에서 반환
+      
+      sessionStorage.setItem("accessToken", accessToken);
+      sessionStorage.setItem("user", JSON.stringify(user));
+
       return res.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
@@ -51,7 +54,8 @@ export const signout = createAsyncThunk(
   "auth/signout",
   async (thunk, thunkAPI) => {
     try {
-      localStorage.clear();
+      await axios.get("/auth/signout");
+      sessionStorage.clear();
       thunkAPI.dispatch(clearCart());
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
@@ -62,7 +66,14 @@ export const signout = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    clearMatchResult: (state) => {
+      state.matchResult = "";
+    },
+    clearError: (state) => {
+      state.error = null;
+    },
+  },
   extraReducers: {
     // auth/matchEmail
     [matchEmail.pending]: (state) => {
@@ -92,6 +103,7 @@ const authSlice = createSlice({
       state.error = null;
     },
     [signin.fulfilled]: (state) => {
+      state.isAuthenticated = true;
       state.isLoading = false;
     },
     [signin.rejected]: (state, action) => {
@@ -104,6 +116,7 @@ const authSlice = createSlice({
       state.error = null;
     },
     [signout.fulfilled]: (state) => {
+      state.isAuthenticated = false;
       state.isLoading = false;
     },
     [signout.rejected]: (state, action) => {
@@ -112,5 +125,7 @@ const authSlice = createSlice({
     },
   },
 });
+
+export const { clearMatchResult, clearError } = authSlice.actions;
 
 export default authSlice.reducer;

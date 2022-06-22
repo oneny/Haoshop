@@ -22,15 +22,17 @@ function Products() {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const toKRW = (num) => {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    if (num) return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
   useEffect(() => {
+    console.log('kdk');
     dispatch(getProduct(params.id));
   }, [params]);
 
   useEffect(() => {
-    setSrc(publicURL(product?.productImgs[0]?.fileName));
+    if (product?.productImgs)
+      setSrc(publicURL(product?.productImgs[0]?.fileName));
   }, [product]);
 
   console.log("hi");

@@ -4,7 +4,7 @@ import AppsOutlinedIcon from "@mui/icons-material/AppsOutlined";
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 
 import "./productList.scss";
-import Product from "../../components/product/Product";
+import Product from "./Product";
 
 function ProductList({ haveFilter, products, setSort, categoryToggleHandler }) {
   const [selectedGrid, setSelectedGrid] = useState(false);

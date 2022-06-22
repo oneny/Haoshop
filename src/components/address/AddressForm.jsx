@@ -4,9 +4,9 @@ import { useDispatch } from "react-redux";
 import { upsertAddress } from "../../slice/userSlice";
 import PostCodeModal from "../postCodeModal/PostCodeModal";
 
-function AddressForm({ selectedAddress, enableInput, setEnableInput }) {
+function AddressForm({ addresses, enableInput, setEnableInput }) {
   const dispatch = useDispatch();
-
+  const [selectedAddress, setSelectedAddress] = useState("");
   const [name, setName] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [pinCode, setPinCode] = useState("");
@@ -14,6 +14,7 @@ function AddressForm({ selectedAddress, enableInput, setEnableInput }) {
   const [address2, setAddress2] = useState("");
   const [claim, setClaim] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  console.log('hi');
 
   const handleSubmit = () => {
     const address = {
@@ -59,6 +60,39 @@ function AddressForm({ selectedAddress, enableInput, setEnableInput }) {
         />
       )}
       <div className="shipping-item">
+        <div className="shipping-item-left">배송지 선택</div>
+        <div className="shipping-selection">
+          <div>
+            <input
+              defaultChecked
+              type="radio"
+              id="new"
+              name="destination"
+              value="new"
+              onClick={() => {
+                setEnableInput(false);
+              }}
+            />{" "}
+            <label htmlFor="new">신규 배송지</label>
+          </div>
+          {addresses?.map((address) => (
+            <div key={address?._id}>
+              <input
+                type="radio"
+                id={address.name}
+                name="destination"
+                value={address.name}
+                onClick={() => {
+                  setSelectedAddress(address);
+                  setName(address.name);
+                }}
+              />{" "}
+              <label htmlFor={address.name}>{address.name}</label>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="shipping-item">
         <div className="shipping-item-left">이름</div>
         <div className="shipping-item-right">
           <input
@@ -83,7 +117,7 @@ function AddressForm({ selectedAddress, enableInput, setEnableInput }) {
       <div className="shipping-item">
         <div className="shipping-item-left">우편번호</div>
         <div className="shipping-item-right">
-          <input type="text" value={pinCode} className="pincode" disabled />
+          <input type="text" value={pinCode} disabled />
           <button
             onClick={() => setIsModalOpen((prev) => !prev)}
             disabled={selectedAddress && !enableInput ? true : false}
@@ -122,7 +156,7 @@ function AddressForm({ selectedAddress, enableInput, setEnableInput }) {
           />
         </div>
       </div>
-      <div className="shipping-item">
+      <div className="shipping-button">
         {selectedAddress && !enableInput && (
           <>
             <button onClick={() => setEnableInput(true)}>수정하기</button>

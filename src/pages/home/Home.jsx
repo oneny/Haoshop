@@ -1,6 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import CollectionTile from '../../components/home/tile/CollectionTile';
 import Masthead from '../../components/home/mastHead/Masthead';
+import NewLookbook from '../../components/home/newLookbook/NewLookbook';
+import NewArraval from '../../components/home/newArrival/NewArraval';
 
 function Home() {
   const [scrollY, setScrollY] = useState(0);
@@ -17,9 +19,13 @@ function Home() {
     return () => document.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
+  
+
   return (
     <>
       <Masthead scrollY={scrollY} />
+      <NewArraval />
+      <NewLookbook />
       <CollectionTile scrollY={scrollY} numberOfPage={3} />
     </>
   )

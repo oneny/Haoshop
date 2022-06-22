@@ -1,37 +1,28 @@
-import { useEffect } from "react"; 
-import { Outlet } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
+import Header from "./header/Header";
 import { useDispatch, useSelector } from "react-redux";
-
-import Header from './header/Header';
-import { getCategories } from '../slice/categorySlice';
+import { useEffect } from "react";
+import { getCategories } from "../slice/categorySlice";
+import { batch } from "react-redux";
 import { addCartItems } from "../slice/cartSlice";
+import { getBrands } from "../slice/brandSlice";
 
 function Layout() {
   const dispatch = useDispatch();
-  const user = JSON.parse(localStorage.getItem("user"));
-  const { cartItems } = useSelector((store) => store.cart);
 
   useEffect(() => {
-    dispatch(getCategories()); // 카테고리 데이터 가져와서 state에 저장
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-      dispatch(addCartItems(cartItems)); // 로그인 상태인 경우 cart 상품 가져오기
-      // dispatch(getCartItems(user._id));
-    }
+    batch(() => {
+      dispatch(getCategories());
+      dispatch(getBrands());
+    });
   }, []);
 
   return (
-    <div className="layout">
-      <header>
-        <Header />
-      </header>
-      <main>
-        <Outlet />
-      </main>
-    </div>
-  )
+    <>
+      <Header />
+      <Outlet />
+    </>
+  );
 }
 
 export default Layout;

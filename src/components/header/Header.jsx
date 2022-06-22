@@ -1,23 +1,27 @@
-import React, { useCallback, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import SearchIcon from "@mui/icons-material/Search";
-
 import "./header.scss";
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
+import SearchIcon from "@mui/icons-material/Search";
+import BrandSidebar from "../brandsidebar/BrandSidebar";
 import { clearFeatures } from "../../slice/productSlice";
 import { signout } from "../../slice/authSlice";
-import BrandSidebar from "../brandsidebar/BrandSidebar";
-import Search from "./search/Search";
+import SearchInput from "./searchInput/SearchInput";
 import Menu from "./menu/Menu";
 
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = localStorage.getItem("user");
+  const { pathname } = useLocation();
+  const user = sessionStorage.getItem("user");
   const { cartItems } = useSelector((store) => store.cart);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [isHovering, setIsHovering] = useState(0);
+
+  useEffect(() => {
+    setSearchOpen(false);
+  }, [pathname]);
 
   const onClickNavigate = useCallback(
     (cate) => () => {
@@ -29,6 +33,7 @@ function Header() {
 
   const onClickLogout = useCallback(() => {
     dispatch(signout());
+    navigate("/");
   }, []);
 
   const onClickMenuOpen = useCallback(() => {
@@ -54,7 +59,13 @@ function Header() {
             >
               CATEGORY
             </div>
-            <div className="navbar-item" onMouseOver={() => setIsHovering(1)}>
+            <div
+              className="navbar-item"
+              onMouseOver={() => {
+                setIsHovering(1);
+                setSearchOpen(false);
+              }}
+            >
               BRANDS
             </div>
             <div
@@ -89,10 +100,16 @@ function Header() {
               </div>
             ) : (
               <>
-                <div className="navbar-item" onClick={onClickNavigate("/signin")}>
+                <div
+                  className="navbar-item"
+                  onClick={onClickNavigate("/signin")}
+                >
                   SIGNIN
                 </div>
-                <div className="navbar-item" onClick={onClickNavigate("/signup")}>
+                <div
+                  className="navbar-item"
+                  onClick={onClickNavigate("/signup")}
+                >
                   SIGNUP
                 </div>
               </>
@@ -124,7 +141,7 @@ function Header() {
           setIsHovering={setIsHovering}
         />
       ) : null}
-      {searchOpen && <Search />}
+      {searchOpen && <SearchInput setSearchOpen={setSearchOpen} />}
       <Menu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
     </div>
   );

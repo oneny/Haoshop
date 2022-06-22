@@ -18,13 +18,21 @@ import cartReducer from "./slice/cartSlice";
 import productReducer from "./slice/productSlice";
 import userReducer from "./slice/userSlice";
 import brandReducer from "./slice/brandSlice";
-import lookbookReducer from './slice/lookbookSlice';
+import lookbookReducer from "./slice/lookbookSlice";
 import collectionSlice from "./slice/collectionSlice";
 
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
+  blacklist: [
+    "auth",
+    "collection",
+    "lookbook",
+    "product",
+    "review",
+    "user",
+  ],
 };
 
 const rootReducer = combineReducers({

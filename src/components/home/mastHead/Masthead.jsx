@@ -24,10 +24,8 @@ function Masthead({ scrollY }) {
       document
         .getElementsByClassName("masthead-slide")
         [currentIndex].classList.remove("active");
-      console.log('currentIndex', currentIndex);
       currentIndex++;
       if (currentIndex > 4) currentIndex = 0;
-      console.log(currentIndex);
       document
         .getElementsByClassName("masthead-slide")
         [currentIndex].classList.add("active");

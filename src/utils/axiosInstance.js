@@ -1,36 +1,47 @@
 import axios from "axios";
 
-const token = localStorage.getItem("token");
-
 const axiosInstance = axios.create({
   baseURL: process.env.API,
-  headers: {
-    Authorization: token ? `Bearer ${token}` : "",
-  },
+  headers: { "Content-Type": "application/json" },
+  withCredentials: true,
 });
 
-axiosInstance.defaults.headers.Authorization = token ? `Bearer ${token}` : "";
+axiosInstance.interceptors.request.use((config) => {
+  // 처음 로딩시 등에 헤더에 안담길 수 있어
+  const accessToken = sessionStorage.getItem("accessToken");
 
-axiosInstance.interceptors.request.use((config) => { // 처음 로딩시 등에 헤더에 안담길 수 있어
-  const token = localStorage.getItem("token");
+  if (accessToken) config.headers["Authorization"] = `Bearer ${accessToken}`;
 
-  config.headers.Authorization = token ? `Bearer ${token}` : "";
   return config;
-});
+},
+(error) => Promise.reject(error)
+);
 
 axiosInstance.interceptors.response.use(
-  (res) => {
-    return res;
+  (response) => {
+    return response;
   },
-  (error) => {
-    console.log(error.response);
 
-    const status = error.response ? error.response.status : 401;
+  async (error) => {
+    const prevRequest = error?.config;
 
-    if (status && status === 401) {
-      localStorage.clear();
-      window.location.reload();
+    if (error?.response?.status === 403 && !prevRequest?.sent) {
+      prevRequest.sent = true;
+
+      const res = await axiosInstance.get("/refresh");
+
+      const newAccessToken = res.data.accessToken;
+      sessionStorage.setItem("accessToken", newAccessToken);
+
+      prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
+
+      return axiosInstance(prevRequest);
     }
+
+    if (error?.response?.status === 401) {
+      sessionStorage.clear();
+    }
+    
     return Promise.reject(error);
   }
 );
