@@ -6,11 +6,10 @@
   .cartItem-name {
     border-bottom: 1px solid $line-color;
     padding: 1rem;
-    > h4 {
+    > h3 {
       font-weight: 600;
     }
   }
-  
   .cartItem-info {
     display: flex;
     padding: 0.5rem 1rem;

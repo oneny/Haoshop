@@ -7,7 +7,6 @@ function TreeItem({ category, children, categoryToggleHandler, setBrands, setCur
   const navigate = useNavigate();
   const params = useParams();
   const [isOpen, setIsOpen] = useState(false);
-  console.log('categroy.children', category.children);
 
   return (
     <div key={category._id} className="categorylist-sub-items">
@@ -38,7 +37,6 @@ function TreeItem({ category, children, categoryToggleHandler, setBrands, setCur
 }
 
 function CategoryItem({ categories, categoryToggleHandler, setBrands, setCurrentPage }) {
-  console.log(categories);
 
   const createTree = (category) => (
     <TreeItem

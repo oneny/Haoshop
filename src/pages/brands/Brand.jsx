@@ -1,24 +1,21 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-
-import "./brand.scss";
+import { Link, useParams } from "react-router-dom";
+import Pagination from "../../components/pagination/Pagination";
 import ProductList from "../../components/product/ProductList";
 import { getBrand } from "../../slice/brandSlice";
-import { getProductsByBrand } from "../../slice/productSlice";
+import { getProducts } from "../../slice/productSlice";
 import publicURL from "../../utils/publicURL";
-import Pagination from "../../components/pagination/Pagination";
+import "./brand.scss";
 
 function Brand() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const params = useParams();
   const { brand } = useSelector((store) => store.brand);
-  const { products, total, perPage, _currentPage, _sort } = useSelector(
-    (store) => store.product
-  );
-  const [sort, setSort] = useState(_sort);
-  const [currentPage, setCurrentPage] = useState(_currentPage);
+  const { products, total } = useSelector((store) => store.product);
+  const perPage = 20;
+  const [sort, setSort] = useState("latest");
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     dispatch(getBrand(params.name));
@@ -31,10 +28,8 @@ function Brand() {
       currentPage,
       sort,
     };
-    dispatch(getProductsByBrand(payload));
+    dispatch(getProducts(payload));
   }, [params, perPage, currentPage, sort]);
-
-  console.log({ brand, products });
 
   return (
     <>
@@ -50,7 +45,9 @@ function Brand() {
           <div className="brands-info">
             <h3>{brand?.name}</h3>
             <p>{brand?.description}</p>
-            <p className="navi">컬렉션 보러가기</p>
+            <Link to="/collections" state={brand?.name}>
+              <p className="navi">컬렉션 보러가기</p>
+            </Link>
           </div>
 
           <ProductList setSort={setSort} products={products} />

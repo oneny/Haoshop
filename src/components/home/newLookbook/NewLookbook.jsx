@@ -80,8 +80,8 @@ function NewLookbook() {
           className="newLookbook-wrapper-content"
         >
           <div ref={refInner} className="content-inner">
-            {lookbooks?.map(({ _id, banners, name, products }) => (
-              <div className="content-inner-wrapper" key={_id}>
+            {lookbooks?.map(({ _id, banners, name, products }, i) => (
+              <div className="content-inner-wrapper" key={i}>
                 <div
                   className="mainImg-wrapper"
                   onClick={() => {
@@ -96,8 +96,9 @@ function NewLookbook() {
                   </p>
                 </div>
                 <div className="relatedProduct">
-                  {products?.map(({ _id, name, brand, color, productImgs }) => (
+                  {products?.map(({ _id, name, brand, color, productImgs },i ) => (
                     <div
+                    key={i}
                       className="relatedProduct-wrapper"
                       onClick={() => navigate(`products/${_id}`)}
                     >

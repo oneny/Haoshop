@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import { useNavigate } from "react-router-dom";
 
 import "./product.scss";
@@ -17,28 +17,28 @@ function Product({ product }) {
 
   return (
     <div
-      className="products-items"
-      onClick={onClickNavigate(`/products/${product._id}`)}
-    >
-      <img src={publicURL(product.productImgs[0].fileName)} alt="" />
-      <p>
-        <b>{product.brand}</b>
-      </p>
-      <p>
-        {product.name} {product.color && `(${product.color})`}
-      </p>
-      <p>
-        <span className={`${product.discountPrice}` > 0 ? "hasDiscount" : ""}>
-          ₩{toKRW(product.price)}
+    className="products-items"
+    onClick={onClickNavigate(`/products/${product._id}`)}
+  >
+    <img src={publicURL(product.productImgs[0].fileName)} alt="" />
+    <p>
+      <b>{product.brand}</b>
+    </p>
+    <p>
+      {product.name} {product.color && `(${product.color})`}
+    </p>
+    <p>
+      <span className={`${product.discountPrice}` > 0 ? "hasDiscount" : ""}>
+        ₩{toKRW(product.price)}
+      </span>
+      {product.discountPrice && (
+        <span className="discount">
+          ₩{toKRW(product?.price * (1 - product?.discountPrice / 100))}
         </span>
-        {product.discountPrice && (
-          <span className="discount">
-            ₩{toKRW(product?.price * (1 - product?.discountPrice / 100))}
-          </span>
-        )}
-      </p>
-    </div>
-  );
+      )}
+    </p>
+  </div>
+  )
 }
 
 export default Product;

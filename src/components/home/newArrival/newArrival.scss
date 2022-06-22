@@ -44,3 +44,9 @@
     }
   }
 }
+
+@media screen and (max-width: $sm) {
+  .newArrival {
+    font-size: $smFont;
+  }
+}

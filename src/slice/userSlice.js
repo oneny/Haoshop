@@ -1,36 +1,58 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../utils/axiosInstance";
 import { clearCart } from "./cartSlice";
 
 const initialState = {
-  addresses: [],
+  user:{},
+  total: 0,
   orders: [],
-  latestOrder: {},
-  orderDetails: {},
+  order: {},
+  addresses: [],
   isLoading: false,
 };
 
-export const getAddress = createAsyncThunk( // 사용자 주소록 가져오기
-  "user/getAddress",
-  async (uid, thunkAPI) => {
+export const getUser = createAsyncThunk(
+  "user/getUser",
+  async (dummy, thunkAPI) => {
     try {
-      const res = await axios.get(`/address/${uid}`);
-      return res.data; // userAddress 반환
+      const res = await axios.get(`/users/id`);
+      return res.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
     }
   }
 );
 
-export const upsertAddress = createAsyncThunk( // 사용자 주소록 업데이트
+export const getAddresses = createAsyncThunk(
+  "user/getAddresses",
+  async (dummy, thunkAPI) => {
+    try {
+      const res = await axios.get(`/addresses`);
+      return res.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const upsertAddress = createAsyncThunk(
   "user/upsertAddress",
   async (address, thunkAPI) => {
     try {
-      const user = JSON.parse(sessionStorage.getItem("user")); // 로컬 스토리지로부터 파싱
-      console.log('user', user);
-      console.log('address', address);
-      const res = await axios.patch(`/address`, { user, address });
-      return res.data; // 업데이트한 userAddress 값 반환
+      const res = await axios.patch(`/addresses`, { address });
+      return res.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const deleteAddress = createAsyncThunk(
+  "user/deleteAddress",
+  async (id, thunkAPI) => {
+    try {
+      const res = await axios.delete(`/addresses/${id}`);
+      return res.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
     }
@@ -42,8 +64,8 @@ export const addOrder = createAsyncThunk(
   async (order, thunkAPI) => {
     try {
       const res = await axios.post(`/orders`, order);
-      if (res.status === 201) thunkAPI.dispatch(clearCart()); // 주문 성공하면 카트 비우기
-      return res.data; 
+      if (res.status === 201) thunkAPI.dispatch(clearCart());
+      return res.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
     }
@@ -52,13 +74,24 @@ export const addOrder = createAsyncThunk(
 
 export const getOrders = createAsyncThunk(
   "user/getOrders",
-  async (uid, thunkAPI) => {
+  async (payload, thunkAPI) => {
     try {
-      const res = await axios.get(`/orders/user/${uid}`);
-      // orders의 _id, paymentStatus, paymentType, orderStatus, items의 _id, name, productImg
+      const res = await axios.post(`/orders/get`, payload);
       return res.data;
     } catch (err) {
-      thunkAPI.rejectWithValue(err.response.data);
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const getOrder = createAsyncThunk(
+  "user/getOrder",
+  async (id, thunkAPI) => {
+    try {
+      const res = await axios.get(`/orders/${id}`);
+      return res.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
     }
   }
 );
@@ -68,47 +101,87 @@ const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    // user/getAddress
-    [getAddress.pending]: (state) => {
+    [getUser.pending]: (state) => {
       state.isLoading = true;
     },
-    [getAddress.fulfilled]: (state, action) => {
-      state.addresses = action.payload.userAddress.address;
+    [getUser.fulfilled]: (state, action) => {
+      state.user = action.payload.user;
+      state.addresses = action.payload.userAddress.addresses;
       state.isLoading = false;
     },
-    [getAddress.rejected]: (state, action) => {
+    [getUser.rejected]: (state, action) => {
       state.isLoading = false;
     },
-    // user/upsertAddress
+
+    [getAddresses.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getAddresses.fulfilled]: (state, action) => {
+      state.addresses = action.payload.userAddress.addresses;
+      state.isLoading = false;
+    },
+    [getAddresses.rejected]: (state, action) => {
+      state.isLoading = false;
+    },
+
     [upsertAddress.pending]: (state) => {
       state.isLoading = true;
     },
     [upsertAddress.fulfilled]: (state, action) => {
-      state.address = action.payload.userAddress.address;
+      state.addresses = action.payload.userAddress.addresses;
       state.isLoading = false;
     },
-    [upsertAddress.rejected]: (state) => {
+    [upsertAddress.rejected]: (state, action) => {
       state.isLoading = false;
     },
-    // user/addOrder
-    [addOrder.pending]: (state) => {
+
+    [deleteAddress.pending]: (state) => {
       state.isLoading = true;
     },
-    [addOrder.fulfilled]: (state) => {
-
+    [deleteAddress.fulfilled]: (state, action) => {
+      state.addresses = action.payload.userAddress.addresses;
+      state.isLoading = false;
     },
-    // user/getOrders
+    [deleteAddress.rejected]: (state, action) => {
+      state.isLoading = false;
+    },
+
     [getOrders.pending]: (state) => {
       state.isLoading = true;
     },
     [getOrders.fulfilled]: (state, action) => {
+      state.total = action.payload.total;
       state.orders = action.payload.orders;
       state.isLoading = false;
     },
-    [getOrders.rejected]: (state) => {
+    [getOrders.rejected]: (state, action) => {
       state.isLoading = false;
     },
-  }
+
+    [getOrder.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getOrder.fulfilled]: (state, action) => {
+      state.order = action.payload.order;
+      state.isLoading = false;
+    },
+    [getOrder.rejected]: (state, action) => {
+      state.isLoading = false;
+    },
+
+    [addOrder.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [addOrder.fulfilled]: (state, action) => {
+      state.latestOrder = action.payload.order;
+      state.isLoading = false;
+    },
+    [addOrder.rejected]: (state, action) => {
+      state.isLoading = false;
+    },
+  },
 });
+
+export const {} = userSlice.actions;
 
 export default userSlice.reducer;

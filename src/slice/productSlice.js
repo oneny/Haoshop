@@ -1,17 +1,12 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from '../utils/axiosInstance';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "../utils/axiosInstance";
 
 const initialState = {
-  relatedProducts:[],
-  product: {},
-  products: [],
-  brandData: [],
   total: 0,
-  perPage: 20,
-  _currentPage: 1,
-  _sort: "latest",
-  _brands: [], // checked brands
-  _brand: "", // 브랜드 영역에서 사용
+  brandData: [],
+  products: [],
+  product: {},
+  relatedProducts: [],
   isLoading: false,
 };
 
@@ -20,7 +15,6 @@ export const getProductsByCategories = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const res = await axios.post(`/products/cate`, payload);
-      thunkAPI.dispatch(saveFeatures(payload));
       return res.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
@@ -28,25 +22,11 @@ export const getProductsByCategories = createAsyncThunk(
   }
 );
 
-export const getProductsByBrand = createAsyncThunk(
-  "product/getProductsByBrand",
+export const getProducts = createAsyncThunk(
+  "product/getProducts",
   async (payload, thunkAPI) => {
     try {
-      const res = await axios.post(`/products/brand`, payload);
-      thunkAPI.dispatch(saveFeatures(payload));
-      return res.data;
-    } catch (err) {
-      return thunkAPI.rejectWithValue(err.response.data);
-    }
-  }
-);
-
-export const getProductsByKeyword = createAsyncThunk(
-  "product/getProductsByKeyword",
-  async (payload, thunkAPI) => {
-    try {
-      const res = await axios.post("/products/keyword", payload);
-      thunkAPI.dispatch(saveFeatures(payload));
+      const res = await axios.post(`/products/get`, payload);
       return res.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
@@ -61,69 +41,42 @@ export const getProduct = createAsyncThunk(
       const res = await axios.get(`/products/${id}`);
       return res.data;
     } catch (err) {
-      thunkAPI.rejectWithValue(err.response.data);
+      return thunkAPI.rejectWithValue(err.response.data);
     }
-  },
+  }
 );
 
 const productSlice = createSlice({
   name: "product",
   initialState,
-  reducers: {
-    saveFeatures: (state, action) => {
-      state._currentPage = action.payload.currentPage;
-      state._sort = action.payload.sort;
-      state._brands = action.payload.brands;
-      state._brand = action.payload.brand;
-    },
-    clearFeatures: (state, action) => {
-      state._currentPage = 1;
-      state._sort = "timestamps";
-      state._brands = [];
-      state._brand = null;
-    },
-  },
+  reducers: {},
   extraReducers: {
-    // product/getProductsByCategories
     [getProductsByCategories.pending]: (state) => {
       state.isLoading = true;
     },
     [getProductsByCategories.fulfilled]: (state, action) => {
+      state.total = action.payload.total;
       state.products = action.payload.products;
       state.brandData = action.payload.brandData;
-      state.total = action.payload.total;
       state.isLoading = false;
     },
-    [getProductsByCategories.rejected]: (state) => {
+    [getProductsByCategories.rejected]: (state, action) => {
       state.isLoading = false;
     },
-    // product/getProductsByCategories
-    [getProductsByBrand.pending]: (state) => {
+
+    [getProducts.pending]: (state) => {
       state.isLoading = true;
     },
-    [getProductsByBrand.fulfilled]: (state, action) => {
+    [getProducts.fulfilled]: (state, action) => {
+      state.total = action.payload.total;
       state.products = action.payload.products;
       state.brandData = [];
-      state.total = action.payload.total;
       state.isLoading = false;
     },
-    [getProductsByBrand.rejected]: (state) => {
+    [getProducts.rejected]: (state, action) => {
       state.isLoading = false;
     },
-    // product/getProductsByKeyword
-    [getProductsByKeyword.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [getProductsByKeyword.fulfilled]: (state, action) => {
-      state.products = action.payload.products;
-      state.brandData = [];
-      state.total = action.payload.total;
-      state.isLoading = false;
-    },
-    [getProductsByKeyword.rejected]: (state) => {
-      state.isLoading = false;
-    },
-    // product/getProduct
+
     [getProduct.pending]: (state) => {
       state.isLoading = true;
     },
@@ -134,10 +87,10 @@ const productSlice = createSlice({
     },
     [getProduct.rejected]: (state, action) => {
       state.isLoading = false;
-    }
-  }
+    },
+  },
 });
 
-export const { saveFeatures, clearFeatures } = productSlice.actions;
+export const { } = productSlice.actions;
 
 export default productSlice.reducer;

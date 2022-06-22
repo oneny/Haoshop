@@ -1,24 +1,17 @@
-import React, { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
-
-import "./searchInput.scss";
+import { useNavigate } from "react-router-dom";
 import useInput from "../../../hooks/useInput";
+import "./searchInput.scss";
 
-function SearchInput({ setSearchOpen }) {
+function Search({ setSearchOpen }) {
   const navigate = useNavigate();
   const [keyword, onChangeKeyword] = useInput("");
 
   const onSubmit = (e) => {
     e.preventDefault();
-
-    if (keyword.trim()) {
-      navigate(`/search/${keyword}`);
-    } else {
-      navigate("/search");
-    }
+    if (keyword.trim()) navigate(`/search/${keyword}`);
   };
-
+  
   return (
     <div className="search">
       <div className="search-wrapper">
@@ -40,4 +33,4 @@ function SearchInput({ setSearchOpen }) {
   );
 }
 
-export default SearchInput;
+export default Search;

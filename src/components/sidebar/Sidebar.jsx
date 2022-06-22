@@ -1,7 +1,7 @@
-import CloseIcon from '@mui/icons-material/Close';
-
 import "./sidebar.scss";
 import CategoryList from "./CategoryList";
+import CloseIcon from '@mui/icons-material/Close';
+
 
 function Sidebar({
   brands,
@@ -19,7 +19,7 @@ function Sidebar({
   };
 
   return (
-    <aside className={`sidebar-container ${categoryOpen ? "filterOpen" : ""}`}>
+    <aside className={`sidebar-container ${categoryOpen ? "" : "filterOpen"}`}>
       <div className="black" onClick={categoryToggleHandler}></div>
       <div className="categorylist-wrapper">
         <div className="categoryToggleBtn-wrapper" onClick={categoryToggleHandler}>
@@ -39,7 +39,7 @@ function Sidebar({
           <h4>BRANDS</h4>
         </div>
         <div className="brands-items">
-          {brandData.map((brand) => (
+          {brandData?.map((brand) => (
             <div className="brands-item" key={brand._id}>
               <input
                 type="checkbox"
@@ -48,7 +48,7 @@ function Sidebar({
                 value={brand._id}
                 onChange={(e) => handleCheck(e)}
               />
-              <span >{brand._id}</span>
+              <span>{brand._id}</span>
             </div>
           ))}
         </div>

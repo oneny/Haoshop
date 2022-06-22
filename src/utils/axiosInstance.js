@@ -6,15 +6,16 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-axiosInstance.interceptors.request.use((config) => {
-  // 처음 로딩시 등에 헤더에 안담길 수 있어
-  const accessToken = sessionStorage.getItem("accessToken");
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const accessToken = sessionStorage.getItem("accessToken");
 
-  if (accessToken) config.headers["Authorization"] = `Bearer ${accessToken}`;
+    if (accessToken) config.headers["Authorization"] = `Bearer ${accessToken}`;
 
-  return config;
-},
-(error) => Promise.reject(error)
+    return config;
+  },
+
+  (error) => Promise.reject(error)
 );
 
 axiosInstance.interceptors.response.use(
@@ -41,7 +42,7 @@ axiosInstance.interceptors.response.use(
     if (error?.response?.status === 401) {
       sessionStorage.clear();
     }
-    
+
     return Promise.reject(error);
   }
 );

@@ -3,7 +3,7 @@ import axios from "../utils/axiosInstance";
 import { clearCart } from "./cartSlice";
 
 const initialState = {
-  idAuthenticated: false,
+  isAuthenticated: false,
   matchResult: "",
   isLoading: false,
   error: null,
@@ -38,8 +38,9 @@ export const signin = createAsyncThunk(
   async (_user, thunkAPI) => {
     try {
       const res = await axios.post("/auth/signin", _user);
-      const { accessToken, user } = res.data; // 서버에서 반환
-      
+
+      const { accessToken, user } = res.data;
+
       sessionStorage.setItem("accessToken", accessToken);
       sessionStorage.setItem("user", JSON.stringify(user));
 
@@ -51,10 +52,11 @@ export const signin = createAsyncThunk(
 );
 
 export const signout = createAsyncThunk(
-  "auth/signout",
-  async (thunk, thunkAPI) => {
+  "/auth/signout",
+  async (dummy, thunkAPI) => {
     try {
       await axios.get("/auth/signout");
+      
       sessionStorage.clear();
       thunkAPI.dispatch(clearCart());
     } catch (err) {
@@ -75,7 +77,6 @@ const authSlice = createSlice({
     },
   },
   extraReducers: {
-    // auth/matchEmail
     [matchEmail.pending]: (state) => {
       state.isLoading = true;
     },
@@ -86,7 +87,7 @@ const authSlice = createSlice({
     [matchEmail.rejected]: (state) => {
       state.isLoading = false;
     },
-    // auth/signup
+
     [signup.pending]: (state) => {
       state.isLoading = true;
     },
@@ -97,27 +98,27 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload.error;
     },
-    // auth/signin
+
     [signin.pending]: (state) => {
       state.isLoading = true;
-      state.error = null;
     },
-    [signin.fulfilled]: (state) => {
+    [signin.fulfilled]: (state, action) => {
       state.isAuthenticated = true;
       state.isLoading = false;
+      state.error = null;
     },
     [signin.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload.error;
     },
-    // auth/signout
+
     [signout.pending]: (state) => {
       state.isLoading = true;
-      state.error = null;
     },
     [signout.fulfilled]: (state) => {
       state.isAuthenticated = false;
       state.isLoading = false;
+      state.error = null;
     },
     [signout.rejected]: (state, action) => {
       state.isLoading = false;

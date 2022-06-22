@@ -1,21 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-import "./cart.scss";
+import CartItem from "../../components/cartItem/CartItem";
 import {
   clearCart,
   selectTotalPrice,
-  selectTotalQty,
-  updateCartItems,
+  selectTotalQty
 } from "../../slice/cartSlice";
-import CartItem from "../../components/cartItem/CartItem";
+import "./cart.scss";
 
 function Cart() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { cartItems } = useSelector((store) => store.cart);
-  const totalQty = useSelector(selectTotalQty); // 총 수량
-  const totalPrice = useSelector(selectTotalPrice); // 총 금액
+  const totalQty = useSelector(selectTotalQty);
+  const totalPrice = useSelector(selectTotalPrice);
   const user = JSON.parse(sessionStorage.getItem("user"));
 
   return (
@@ -27,8 +25,8 @@ function Cart() {
           </h2>
         </div>
         <div className="cart-list">
-          {cartItems?.map((cartItem) => (
-            <CartItem key={cartItem._id + cartItem.size} cartItem={cartItem} />
+          {cartItems?.map((cartItem, i) => (
+            <CartItem key={i} cartItem={cartItem} />
           ))}
         </div>
         <div className="cart-total">
@@ -43,15 +41,6 @@ function Cart() {
         </div>
         <div className="cart-button">
           <button onClick={() => dispatch(clearCart())}>카트 초기화</button>
-          {user && (
-            <button
-              onClick={() =>
-                dispatch(updateCartItems({ user: user._id, cartItems }))
-              }
-            >
-              카트 저장
-            </button>
-          )}
         </div>
         <div className="checkout-button">
           <button

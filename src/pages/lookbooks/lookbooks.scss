@@ -3,6 +3,8 @@
 .lookbooks-container {
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
   width: 100vw;
   margin: 7rem 0;
   font-size: 1.4rem;

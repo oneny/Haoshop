@@ -24,14 +24,19 @@ function Masthead({ scrollY }) {
       document
         .getElementsByClassName("masthead-slide")
         [currentIndex].classList.remove("active");
+
       currentIndex++;
+
       if (currentIndex > 4) currentIndex = 0;
+
       document
         .getElementsByClassName("masthead-slide")
         [currentIndex].classList.add("active");
     }, 4500);
 
-    return () => { clearInterval(slide) }
+    return () => {
+      clearInterval(slide);
+    };
   }, [currentIndex]);
 
   return (

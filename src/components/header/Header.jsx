@@ -1,22 +1,25 @@
-import "./header.scss";
+import SearchIcon from "@mui/icons-material/Search";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
-import SearchIcon from "@mui/icons-material/Search";
-import BrandSidebar from "../brandsidebar/BrandSidebar";
-import { clearFeatures } from "../../slice/productSlice";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import useToggle from "../../hooks/useToggle";
 import { signout } from "../../slice/authSlice";
-import SearchInput from "./searchInput/SearchInput";
+import { updateCartItems } from "../../slice/cartSlice";
+import BrandMenu from "./brandMenu/BrandMenu";
+import "./header.scss";
 import Menu from "./menu/Menu";
+import SearchInput from "./searchInput/SearchInput";
 
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const user = sessionStorage.getItem("user");
-  const { cartItems } = useSelector((store) => store.cart);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
+  const cartItems = useSelector((store) => store.cart.cartItems);
+  // const [menuOpen, setMenuOpen] = useState(false);
+  // const [searchOpen, setSearchOpen] = useState(false);
+  const [menuOpen, toggleMenuOpen, setMenuOpen] = useToggle(false);
+  const [searchOpen, toggleSearchOpen, setSearchOpen] = useToggle(false);
   const [isHovering, setIsHovering] = useState(0);
 
   useEffect(() => {
@@ -25,24 +28,16 @@ function Header() {
 
   const onClickNavigate = useCallback(
     (cate) => () => {
-      if (cate === "/categories/all" || "/brands") dispatch(clearFeatures());
       navigate(cate);
     },
     []
   );
 
-  const onClickLogout = useCallback(() => {
+  const logout = () => {
+    dispatch(updateCartItems(cartItems));
     dispatch(signout());
     navigate("/");
-  }, []);
-
-  const onClickMenuOpen = useCallback(() => {
-    setMenuOpen(!menuOpen);
-  }, [menuOpen]);
-
-  const onClickSearchOpen = useCallback(() => {
-    setSearchOpen(!searchOpen);
-  }, [searchOpen]);
+  };
 
   return (
     <div className="header-container">
@@ -52,21 +47,13 @@ function Header() {
       <div className="navbar-container">
         <div className="navbar-wrapper">
           <div className="navbar-items">
-            <div
-              className="navbar-item"
-              onClick={onClickNavigate("/categories/all")}
-              onMouseOver={() => setIsHovering(0)}
-            >
-              CATEGORY
-            </div>
-            <div
-              className="navbar-item"
-              onMouseOver={() => {
-                setIsHovering(1);
-                setSearchOpen(false);
-              }}
-            >
-              BRANDS
+            <NavLink to="/caregories/all">
+              <div className="navbar-item" onMouseOver={() => setIsHovering(0)}>
+                CATEGORY
+              </div>
+            </NavLink>
+            <div className="navbar-item" onMouseOver={() => setIsHovering(1)}>
+              BRAND
             </div>
             <div
               className="navbar-item"
@@ -83,7 +70,7 @@ function Header() {
             </div>
           </div>
           <div className={`navbar-items-lg ${menuOpen ? "opened" : ""}`}>
-            <div onClick={onClickMenuOpen} className="menuOpen-btn">
+            <div onClick={toggleMenuOpen} className="menuOpen-btn">
               <span className="menuLine"></span>
               <span className="menuLine"></span>
               <span className="menuLine"></span>
@@ -91,11 +78,11 @@ function Header() {
           </div>
 
           <div className="navbar-items">
-            <div className="navbar-item" onClick={onClickSearchOpen}>
+            <div className="navbar-item" onClick={toggleSearchOpen}>
               SEARCH
             </div>
             {user ? (
-              <div className="navbar-item" onClick={onClickLogout}>
+              <div className="navbar-item" onClick={logout}>
                 SIGNOUT
               </div>
             ) : (
@@ -125,9 +112,15 @@ function Header() {
             <div className="navbar-item" onClick={onClickNavigate("/contact")}>
               CONTACT
             </div>
+            <div className="menu-item" onClick={onClickNavigate("/orders")}>
+              order
+            </div>
+            <div className="menu-item" onClick={onClickNavigate("/mypage")}>
+              mypage
+            </div>
           </div>
           <div className="navbar-items-lg">
-            <div className="search-icon-wrapper" onClick={onClickSearchOpen}>
+            <div className="search-icon-wrapper" onClick={toggleSearchOpen}>
               <SearchIcon className="search-icon" />
             </div>
           </div>
@@ -135,7 +128,7 @@ function Header() {
       </div>
 
       {isHovering ? (
-        <BrandSidebar
+        <BrandMenu
           onMouseOver={() => setIsHovering(1)}
           onMouseOut={() => setIsHovering(0)}
           setIsHovering={setIsHovering}

@@ -1,70 +1,43 @@
-import "./checkout.scss";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import { addOrder, getAddress } from "../../slice/userSlice";
-import { selectTotalPrice, selectTotalQty } from "../../slice/cartSlice";
-import CartItem from "../../components/cartItem/CartItem";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AddressForm from "../../components/address/AddressForm";
-import CheckoutItem from "../../components/checkout/CheckoutItem";
+import CartItem from "../../components/cartItem/CartItem";
+import CheckoutItem from "../../components/checkoutItem/CheckoutItem";
+import { selectTotalPrice, selectTotalQty } from "../../slice/cartSlice";
+import { addOrder, getUser } from "../../slice/userSlice";
+import "./checkout.scss";
+
 
 function Checkout() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { cartItems } = useSelector((store) => store.cart);
-  const { addresses } = useSelector((store) => store.user);
-  const addressName = addresses.map((v) => v.name);
+  const { user, addresses } = useSelector((store) => store.user);
   const totalPrice = useSelector(selectTotalPrice);
   const totalQty = useSelector(selectTotalQty);
-  const { latestOrder, clearLatestOrder } = useSelector((store) => store.user);
-  const user = JSON.parse(sessionStorage.getItem("user"));
-
-  const [confirmedAddress, setConfirmAddress] = useState("");
   const [formType, setFormType] = useState("add");
-  const [isItemConfirmed, setIsItemConfirmed] = useState(false);
-  const [paymentType, setPaymentType] = useState("");
   const [selectedAddress, setSelectedAddress] = useState("");
   const [enableInput, setEnableInput] = useState(false);
-  const [ready, setReady] = useState(false);
-  const [isOrderConfirmed, setIsOrderConfirmed] = useState(false);
-
-  const [name, setName] = useState(selectedAddress?.name || "");
-
-  if (!user) {
-    navigate("/signin");
-  }
+  const [paymentType, setPaymentType] = useState("");
 
   useEffect(() => {
-    user && dispatch(getAddress(user._id));
-    // dispatch(clearLastestOrder());
+    dispatch(getUser());
   }, []);
 
-  useEffect(() => {
-    user && confirmedAddress && isItemConfirmed && paymentType
-      ? setReady(true)
-      : setReady(false);
-  }, [user, confirmedAddress, isItemConfirmed, paymentType]);
-
   const handleOrderSubmit = () => {
-    const items = cartItems.map((item) => ({
-      product: item._id,
-      purchasedPrice: item.price,
-      purchasedQty: item.qty,
-    }));
     const order = {
       user: user._id,
-      address: confirmedAddress._id,
+      address: selectedAddress,
       totalPrice,
       totalQty,
-      items,
+      items: cartItems,
       paymentStatus: "pending",
-      paymentType,
+      paymentType: "card",
     };
 
-    console.log(order);
     dispatch(addOrder(order));
-    setIsOrderConfirmed(true);
+    navigate("/success", { replace: true });
   };
 
   return (
@@ -73,7 +46,7 @@ function Checkout() {
         <h2>CHECK OUT</h2>
       </div>
       <div className="checkout-wrapper">
-        <CheckoutItem title={"상품 정보"}>
+      <CheckoutItem title={"상품 정보"}>
           {cartItems.map((cartItem) => (
             <CartItem
               key={cartItem._id + cartItem.size}
@@ -101,7 +74,7 @@ function Checkout() {
               <div className="buyer-info-left">이메일</div>{" "}
               <div>{user.email}</div>
               <div className="buyer-info-left">연락처</div>{" "}
-              <div>{user.phoneNumber}</div>
+              <div>{user.mobile}</div>
             </div>
           )}
         </CheckoutItem>
@@ -126,7 +99,7 @@ function Checkout() {
                   <label htmlFor="new">신규 배송지</label>
                 </div>
                 {addresses?.map((address) => (
-                  <div key={address?._id}>
+                  <div key={address._id}>
                     <input
                       type="radio"
                       id={address.name}
@@ -135,7 +108,6 @@ function Checkout() {
                       onClick={() => {
                         setSelectedAddress(address);
                         setFormType("update");
-                        setName(address.name);
                       }}
                     />{" "}
                     <label htmlFor={address.name}>{address.name}</label>
@@ -145,13 +117,11 @@ function Checkout() {
             </div>
             {formType === "add" ? (
               <AddressForm
-                addresses={addresses}
                 enableInput={enableInput}
                 setEnableInput={setEnableInput}
               />
             ) : (
               <AddressForm
-                addresses={addresses}
                 enableInput={enableInput}
                 setEnableInput={setEnableInput}
                 selectedAddress={selectedAddress}
@@ -160,7 +130,14 @@ function Checkout() {
           </div>
         </CheckoutItem>
 
-        <CheckoutItem title={"결제 정보"}></CheckoutItem>
+        <div className="checkout-wrapper-payment">
+          <div className="shipping-title">
+            <h3>결제 정보</h3>
+          </div>
+        </div>
+
+        <div>잔여 포인트: {user.point}</div>
+        <div onClick={handleOrderSubmit}>결제고고</div>
       </div>
     </div>
   );

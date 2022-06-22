@@ -1,37 +1,36 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { upsertAddress } from "../../slice/userSlice";
+import { deleteAddress, upsertAddress } from "../../slice/userSlice";
 import PostCodeModal from "../postCodeModal/PostCodeModal";
 
-function AddressForm({ addresses, enableInput, setEnableInput }) {
+function AddressForm({ selectedAddress, enableInput, setEnableInput }) {
   const dispatch = useDispatch();
-  const [selectedAddress, setSelectedAddress] = useState("");
+
   const [name, setName] = useState("");
   const [contactNumber, setContactNumber] = useState("");
-  const [pinCode, setPinCode] = useState("");
+  const [zonecode, setZonecode] = useState("");
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
   const [claim, setClaim] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  console.log('hi');
 
   const handleSubmit = () => {
     const address = {
       name,
       contactNumber,
-      pinCode,
+      zonecode,
       address1,
       address2,
       claim,
     };
     if (selectedAddress) address._id = selectedAddress._id;
-    console.log(address);
+
     if (
       !(
         address.name.length ||
         address.contactNumber.length ||
-        address.pinCode.length ||
+        address.zonecode.length ||
         address.address2.length
       )
     )
@@ -43,7 +42,7 @@ function AddressForm({ addresses, enableInput, setEnableInput }) {
   useEffect(() => {
     setName(selectedAddress?.name || "");
     setContactNumber(selectedAddress?.contactNumber || "");
-    setPinCode(selectedAddress?.pinCode || "");
+    setZonecode(selectedAddress?.zonecode || "");
     setAddress1(selectedAddress?.address1 || "");
     setAddress2(selectedAddress?.address2 || "");
     setClaim(selectedAddress?.claim || "");
@@ -55,43 +54,10 @@ function AddressForm({ addresses, enableInput, setEnableInput }) {
       {isModalOpen && (
         <PostCodeModal
           onClick={() => setIsModalOpen((prev) => !prev)}
-          setPinCode={setPinCode}
+          setZonecode={setZonecode}
           setAddress1={setAddress1}
         />
       )}
-      <div className="shipping-item">
-        <div className="shipping-item-left">배송지 선택</div>
-        <div className="shipping-selection">
-          <div>
-            <input
-              defaultChecked
-              type="radio"
-              id="new"
-              name="destination"
-              value="new"
-              onClick={() => {
-                setEnableInput(false);
-              }}
-            />{" "}
-            <label htmlFor="new">신규 배송지</label>
-          </div>
-          {addresses?.map((address) => (
-            <div key={address?._id}>
-              <input
-                type="radio"
-                id={address.name}
-                name="destination"
-                value={address.name}
-                onClick={() => {
-                  setSelectedAddress(address);
-                  setName(address.name);
-                }}
-              />{" "}
-              <label htmlFor={address.name}>{address.name}</label>
-            </div>
-          ))}
-        </div>
-      </div>
       <div className="shipping-item">
         <div className="shipping-item-left">이름</div>
         <div className="shipping-item-right">
@@ -117,7 +83,7 @@ function AddressForm({ addresses, enableInput, setEnableInput }) {
       <div className="shipping-item">
         <div className="shipping-item-left">우편번호</div>
         <div className="shipping-item-right">
-          <input type="text" value={pinCode} disabled />
+          <input type="text" value={zonecode} className="zonecode" disabled />
           <button
             onClick={() => setIsModalOpen((prev) => !prev)}
             disabled={selectedAddress && !enableInput ? true : false}
@@ -156,10 +122,11 @@ function AddressForm({ addresses, enableInput, setEnableInput }) {
           />
         </div>
       </div>
-      <div className="shipping-button">
+      <div className="shipping-item">
         {selectedAddress && !enableInput && (
           <>
             <button onClick={() => setEnableInput(true)}>수정하기</button>
+            <button onClick={() => dispatch(deleteAddress(selectedAddress._id))}>삭제하기</button>
           </>
         )}
         {enableInput && (
