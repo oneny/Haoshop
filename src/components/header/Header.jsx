@@ -26,13 +26,6 @@ function Header() {
     setSearchOpen(false);
   }, [pathname]);
 
-  const onClickNavigate = useCallback(
-    (cate) => () => {
-      navigate(cate);
-    },
-    []
-  );
-
   const logout = () => {
     dispatch(updateCartItems(cartItems));
     dispatch(signout());
@@ -41,9 +34,11 @@ function Header() {
 
   return (
     <div className="header-container">
-      <div className="logo-wrapper" onClick={onClickNavigate("/")}>
-        <h1>HOW ABOUT OOTD</h1>
-      </div>
+      <NavLink to="/">
+        <div className="logo-wrapper">
+          <h1>HOW ABOUT OOTD</h1>
+        </div>
+      </NavLink>
       <div className="navbar-container">
         <div className="navbar-wrapper">
           <div className="navbar-items">
@@ -55,20 +50,16 @@ function Header() {
             <div className="navbar-item" onMouseOver={() => setIsHovering(1)}>
               BRAND
             </div>
-            <div
-              className="navbar-item"
-              onClick={onClickNavigate("/lookbooks")}
-              onMouseOver={() => setIsHovering(0)}
-            >
-              LOOKBOOK
-            </div>
-            <div
-              className="navbar-item"
-              onClick={onClickNavigate("/collections")}
-            >
-              COLLECTION
-            </div>
+            <NavLink to="/lookbooks">
+              <div className="navbar-item" onMouseOver={() => setIsHovering(0)}>
+                LOOKBOOK
+              </div>
+            </NavLink>
+            <NavLink to="/collections">
+              <div className="navbar-item">COLLECTION</div>
+            </NavLink>
           </div>
+
           <div className={`navbar-items-lg ${menuOpen ? "opened" : ""}`}>
             <div onClick={toggleMenuOpen} className="menuOpen-btn">
               <span className="menuLine"></span>
@@ -86,43 +77,36 @@ function Header() {
                 <div className="navbar-item" onClick={logout}>
                   SIGNOUT
                 </div>
-                <div
-                  className="navbar-item"
-                  onClick={onClickNavigate("/mypage")}
-                >
-                  MYPAGE
-                </div>
+                <NavLink to="/mypage">
+                  <div className="navbar-item">MYPAGE</div>
+                </NavLink>
               </>
             ) : (
               <>
-                <div
-                  className="navbar-item"
-                  onClick={onClickNavigate("/signin")}
-                >
-                  SIGNIN
-                </div>
-                <div
-                  className="navbar-item"
-                  onClick={onClickNavigate("/signup")}
-                >
-                  SIGNUP
-                </div>
+                <NavLink to="signin">
+                  <div className="navbar-item">SIGNIN</div>
+                </NavLink>
+                <NavLink to="/signup">
+                  <div className="navbar-item">SIGNUP</div>
+                </NavLink>
               </>
             )}
-            <div className="navbar-item" onClick={onClickNavigate("/cart")}>
-              CART
-              {cartItems.length > 0 ? (
-                <div className="navbar-item-cart-counter">
-                  &nbsp;{cartItems.length}
-                </div>
-              ) : null}
-            </div>
-            <div className="navbar-item" onClick={onClickNavigate("/contact")}>
-              CONTACT
-            </div>
-            <div className="navbar-item" onClick={onClickNavigate("/orders")}>
-              order
-            </div>
+            <NavLink to="/cart">
+              <div className="navbar-item">
+                CART
+                {cartItems.length > 0 ? (
+                  <div className="navbar-item-cart-counter">
+                    &nbsp;{cartItems.length}
+                  </div>
+                ) : null}
+              </div>
+            </NavLink>
+            <NavLink to="/contack">
+              <div className="navbar-item">CONTACT</div>
+            </NavLink>
+            <NavLink to="/orders">
+              <div className="navbar-item">order</div>
+            </NavLink>
           </div>
           <div className="navbar-items-lg">
             <div className="search-icon-wrapper" onClick={toggleSearchOpen}>

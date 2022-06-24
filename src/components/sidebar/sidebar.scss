@@ -99,7 +99,6 @@
 @media screen and (max-width: $lg) {
   .sidebar-container {
     display: none;
-    font-size: 1.5rem;
 
     .categorylist-wrapper {
       .categoryToggleBtn-wrapper {
@@ -137,11 +136,18 @@
   }
 }
 
+@media screen and (max-width: $md) {
+  .sidebar-container {
+    font-size: $mdFont;
+  }
+}
+
 @media screen and (max-width: $sm) {
   .sidebar-container {
+    font-size: $smFont;
     &.filterOpen {
-      min-width: 100vw;
-      padding: 5rem;
+      width: 100vw;
+      padding: 3rem;
     }
 
     .black {
