@@ -77,7 +77,7 @@ function Header() {
                 <div className="navbar-item" onClick={logout}>
                   SIGNOUT
                 </div>
-                <NavLink to="/mypage">
+                <NavLink to="/orders">
                   <div className="navbar-item">MYPAGE</div>
                 </NavLink>
               </>
@@ -101,7 +101,7 @@ function Header() {
                 ) : null}
               </div>
             </NavLink>
-            <NavLink to="/contack">
+            <NavLink to="/contact">
               <div className="navbar-item">CONTACT</div>
             </NavLink>
             <NavLink to="/orders">

@@ -14,9 +14,7 @@ import Home from "./pages/home/Home";
 import Lookbook from "./pages/lookbooks/Lookbook";
 import Lookbooks from "./pages/lookbooks/Lookbooks";
 import Missing from "./pages/etc/missing/Missing";
-import Mypage from "./pages/mypage/Mypage";
-import Order from "./pages/orders/Order";
-import Orders from "./pages/orders/Orders";
+import Order from "./pages/mypage/Order";
 import Product from "./pages/products/Product";
 import ResetPassword from "./pages/auth/resetPassword/ResetPassword";
 import Search from "./pages/search/Search";
@@ -25,6 +23,8 @@ import Signup from "./pages/auth/signup/Signup";
 import Success from "./pages/etc/success/Success";
 import UnAuthorized from "./pages/etc/unauthorized/Unauthorized";
 import { ROLES } from "./utils/roleList";
+import Orders from "./pages/mypage/Orders";
+import Addresses from "./pages/mypage/Addresses";
 
 function App() {
   return (
@@ -47,10 +47,11 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route element={<ProtectedRoute allowedRoles={[ROLES.USER]} />}>
-            <Route path="/mypage" element={<Mypage />} />
+            <Route path="/orders" element={<Orders />} />
             <Route path="checkout" element={<Checkout />} />
             <Route path="orders" element={<Orders />} />
             <Route path="orders/:id" element={<Order />} />
+            <Route path="/addresses" element={<Addresses />} />
           </Route>
         </Route>
         <Route path="/forgot_password" element={<ForgotPassword />} />

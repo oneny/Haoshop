@@ -7,6 +7,7 @@ import {
   selectTotalQty
 } from "../../slice/cartSlice";
 import "./cart.scss";
+import toKRW from "../../utils/toKRW";
 
 function Cart() {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ function Cart() {
           </div>
           <div className="cart-total-item">
             <h4>총금액</h4>
-            <h4>₩ {totalPrice}</h4>
+            <h4>₩ {toKRW(totalPrice)}</h4>
           </div>
         </div>
         <div className="cart-button">
