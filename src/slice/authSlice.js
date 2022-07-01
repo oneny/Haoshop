@@ -21,6 +21,19 @@ export const matchEmail = createAsyncThunk(
   }
 );
 
+export const matchPassword = createAsyncThunk(
+  "/auth/matchPassword",
+  async (user, thunkAPI) => {
+    try {
+      const res = await axios.post("/auth/check", user);
+      console.log('res', res);
+      return res.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+)
+
 export const signup = createAsyncThunk(
   "/user/signup",
   async (user, thunkAPI) => {
@@ -86,6 +99,18 @@ const authSlice = createSlice({
     },
     [matchEmail.rejected]: (state) => {
       state.isLoading = false;
+    },
+
+    [matchPassword.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [matchPassword.fulfilled]: (state, action) => {
+      state.matchResult = action.payload.msg;
+      state.isLoading = false;
+    },
+    [matchPassword.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload.error;
     },
 
     [signup.pending]: (state) => {

@@ -1,12 +1,12 @@
 import React from "react";
 import MypageLayout from "../../components/mypage/MypageLayout";
 
-function Profile() {
+function Modify() {
   return (
     <MypageLayout>
-      <div>Profile</div>
+      <div>Modify</div>
     </MypageLayout>
   );
 }
 
-export default Profile;
+export default Modify;

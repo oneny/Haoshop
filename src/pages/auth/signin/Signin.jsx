@@ -1,11 +1,10 @@
-import "./signin.scss";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import useInput from "../../../hooks/useInput";
 import { clearError, signin } from "../../../slice/authSlice";
 import { addCartItems } from "../../../slice/cartSlice";
+import "./signin.scss";
 
 function Signin() {
   const navigate = useNavigate();
@@ -53,17 +52,19 @@ function Signin() {
       <div className="signinForm-title">
         <h3>SIGN IN</h3>
       </div>
+
       <div className="signinForm-wrapper">
         <form onSubmit={login} className="signinForm">
           <div className="form-box">
             <input
-              ref={emailRef}
               type="email"
               placeholder="Email"
+              ref={emailRef}
               onChange={setEmail}
             />
             <label htmlFor="email">Email</label>
           </div>
+
           <div className="form-box">
             <input
               type="password"
@@ -72,14 +73,16 @@ function Signin() {
             />
             <label htmlFor="email">Password</label>
           </div>
+
           <button type="submit">로그인</button>
         </form>
       </div>
+      
       <div className="navigate-wrapper">
         <div className="navigate-item" onClick={() => navigate("/signup")}>
           회원가입
         </div>
-        <div className="navigate-item" onClick={() => navigate("/signup")}>
+        <div className="navigate-item" onClick={() => navigate("/forgot_password")}>
           비밀번호 찾기
         </div>
       </div>

@@ -3,7 +3,7 @@ import axios from "../utils/axiosInstance";
 import { clearCart } from "./cartSlice";
 
 const initialState = {
-  user: {},
+  user:{},
   total: 0,
   orders: [],
   order: {},
@@ -106,7 +106,7 @@ const userSlice = createSlice({
     },
     [getUser.fulfilled]: (state, action) => {
       state.user = action.payload.user;
-      state.addresses = action.payload.userAddress.addresses;
+      state.addresses = action.payload.userAddress?.addresses;
       state.isLoading = false;
     },
     [getUser.rejected]: (state, action) => {
@@ -117,7 +117,7 @@ const userSlice = createSlice({
       state.isLoading = true;
     },
     [getAddresses.fulfilled]: (state, action) => {
-      state.addresses = action.payload.userAddress.addresses;
+      state.addresses = action.payload.userAddress?.addresses;
       state.isLoading = false;
     },
     [getAddresses.rejected]: (state, action) => {
@@ -182,12 +182,13 @@ const userSlice = createSlice({
   },
 });
 
-export const {} = userSlice.actions;
+// export const {} = userSlice.actions;
 
 export const selectTotalPaymentPrice = (state) =>
   state.user.orders.reduce(
     (totalPrice, item) => totalPrice + item.paymentPrice,
     0
   );
+
 
 export default userSlice.reducer;

@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import "./order.scss";
 import { getOrder } from "../../slice/userSlice";
 import MypageLayout from "../../components/mypage/MypageLayout";
-import CheckoutItem from "../../components/checkoutItem/CheckoutItem";
 import MypageItem from "../../components/mypage/MypageItem";
 import toKRW from "../../utils/toKRW";
 import publicURL from "../../utils/publicURL";

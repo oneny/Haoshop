@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
-
 import "./tile.scss";
+
 
 function Tile({ page, currentPage, numberOfPage }) {
   const refContainer = useRef(null);
@@ -41,7 +41,7 @@ function Tile({ page, currentPage, numberOfPage }) {
           className="tile-item-right"
         >
           <div className="tile-item-imgWrapper">
-            <img src={`/assets/looks/Look${page}.jpg`} alt="" />
+            <img src={`/assets/looks/Look${page}.jpg`} alt="" loading="lazy"/>
           </div>
         </div>
       </div>

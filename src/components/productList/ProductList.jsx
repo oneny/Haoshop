@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
 import AppsOutlinedIcon from "@mui/icons-material/AppsOutlined";
+import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
-
+import React from "react";
+import useAlt from "../../hooks/useAlt";
+import ProductItem from "./ProductItem";
 import "./productList.scss";
-import Product from "./Product";
 
-function ProductList({ haveFilter, products, setSort, categoryToggleHandler }) {
-  const [selectedGrid, setSelectedGrid] = useState(false);
+function ProductList({ haveFilter, products, onChangeSort, categoryToggleHandler }) {
+  const [selectedGrid, altSelectedGrid] = useAlt(false)
 
-  console.log(haveFilter);
   return (
     <section>
       <div className="top">
@@ -22,13 +21,15 @@ function ProductList({ haveFilter, products, setSort, categoryToggleHandler }) {
           )}
 
           <div className="sort">
-            <select onChange={(e) => setSort(e.target.value)}>
+            <select onChange={onChangeSort}>
               <option defaultValue hidden>
                 SORT
               </option>
-              <option value={"timestamps"}>신상품</option>
+              <option value={"latest"}>신상품</option>
               <option value={"ascending"}>낮은가격</option>
               <option value={"descending"}>높은가격</option>
+              <option value={"salesRate"}>판매량</option>
+              <option value={"ratings"}>평점</option>
             </select>
           </div>
         </div>
@@ -36,17 +37,17 @@ function ProductList({ haveFilter, products, setSort, categoryToggleHandler }) {
         <div className="top-right">
           <GridViewRoundedIcon
             className={`grid-icon ${selectedGrid ? "selected" : ""}`}
-            onClick={() => setSelectedGrid(true)}
+            onClick={altSelectedGrid(true)}
           />
           <AppsOutlinedIcon
             className={`grid-icon ${!selectedGrid ? "selected" : ""}`}
-            onClick={() => setSelectedGrid(false)}
+            onClick={altSelectedGrid(false)}
           />
         </div>
       </div>
       <div className={`products-wrapper ${selectedGrid ? "selected" : ""}`}>
         {products?.map((product) => (
-          <Product key={product._id} product={product} />
+          <ProductItem key={product._id} product={product} />
         ))}
       </div>
     </section>

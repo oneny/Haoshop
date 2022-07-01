@@ -6,8 +6,8 @@ import {
   selectTotalPrice,
   selectTotalQty
 } from "../../slice/cartSlice";
-import "./cart.scss";
 import toKRW from "../../utils/toKRW";
+import "./cart.scss";
 
 function Cart() {
   const navigate = useNavigate();
@@ -25,11 +25,13 @@ function Cart() {
             {cartItems?.length > 0 ? "Your Shopping Cart" : "Cart is empty"}
           </h2>
         </div>
+
         <div className="cart-list">
           {cartItems?.map((cartItem, i) => (
             <CartItem key={i} cartItem={cartItem} />
           ))}
         </div>
+
         <div className="cart-total">
           <div className="cart-total-item">
             <h4>총계</h4>
@@ -40,6 +42,7 @@ function Cart() {
             <h4>₩ {toKRW(totalPrice)}</h4>
           </div>
         </div>
+
         <div className="cart-button">
           <button onClick={() => dispatch(clearCart())}>카트 초기화</button>
         </div>

@@ -1,15 +1,13 @@
-import AppsOutlinedIcon from "@mui/icons-material/AppsOutlined";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Pagination from "../../components/pagination/Pagination";
-import ProductList from "../../components/product/ProductList";
+import ProductList from "../../components/productList/ProductList";
 import Sidebar from "../../components/sidebar/Sidebar";
+import useInput from "../../hooks/useInput";
 import {
   categoryToggle,
-  createLinearCategory
+  createLinearCategory,
 } from "../../slice/categorySlice";
 import { getProductsByCategories } from "../../slice/productSlice";
 import "./shopping.scss";
@@ -17,17 +15,18 @@ import "./shopping.scss";
 function Category() {
   const dispatch = useDispatch();
   const params = useParams();
-  const { categories, categoryOpen } = useSelector((store) => store.category);
+  const categories = useSelector((store) => store.category.categories);
+  const categoryOpen = useSelector((store) => store.category.categoryOpen);
   const { total, products, brandData } = useSelector((store) => store.product);
-  
+
   const perPage = 20;
-  const haveFilter = true;
   const [currentPage, setCurrentPage] = useState(1);
-  const [sort, setSort] = useState("latest");
+  const [sort, onChangeSort] = useInput("latest");
   const [brands, setBrands] = useState([]);
 
   const currentCategory = [];
   let cids = [];
+
 
   if (params.cid === "all") {
     cids = [];
@@ -58,11 +57,11 @@ function Category() {
   }, [params, brands, perPage, currentPage, sort]);
 
   const categoryToggleHandler = () => {
-    dispatch(categoryToggle()); // 카테고리 토글
+    dispatch(categoryToggle());
   };
 
   return (
-    <main>
+    <>
       <div className="category-container">
         <Sidebar
           brandData={brandData}
@@ -72,11 +71,10 @@ function Category() {
           categoryOpen={categoryOpen}
           categoryToggleHandler={categoryToggleHandler}
         />
-
         <ProductList
-          haveFilter={haveFilter}
-          setSort={setSort}
+          haveFilter={true}
           products={products}
+          onChangeSort={onChangeSort}
           categoryToggleHandler={categoryToggleHandler}
         />
       </div>
@@ -87,7 +85,7 @@ function Category() {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
-    </main>
+    </>
   );
 }
 

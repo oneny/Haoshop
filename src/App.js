@@ -2,30 +2,33 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ScrollToTop from "./components/ScrollToTop";
-import Brand from "./pages/brands/Brand";
+import ForgotPassword from "./pages/auth/forgotPassword/ForgotPassword";
+import ResetPassword from "./pages/auth/resetPassword/ResetPassword";
+import Signin from "./pages/auth/signin/Signin";
+import Signup from "./pages/auth/signup/Signup";
+import Brand from "./pages/brand/Brand";
 import Cart from "./pages/cart/Cart";
-import Shopping from "./pages/shopping/Shopping";
 import Checkout from "./pages/checkout/Checkout";
 import Collection from "./pages/collections/Collection";
 import Collections from "./pages/collections/Collections";
 import Contact from "./pages/etc/contact/Contact";
-import ForgotPassword from "./pages/auth/forgotPassword/ForgotPassword";
+import Missing from "./pages/etc/missing/Missing";
+import Success from "./pages/etc/success/Success";
+import UnAuthorized from "./pages/etc/unauthorized/Unauthorized";
 import Home from "./pages/home/Home";
 import Lookbook from "./pages/lookbooks/Lookbook";
 import Lookbooks from "./pages/lookbooks/Lookbooks";
-import Missing from "./pages/etc/missing/Missing";
-import Order from "./pages/mypage/Order";
-import Product from "./pages/products/Product";
-import ResetPassword from "./pages/auth/resetPassword/ResetPassword";
-import Search from "./pages/search/Search";
-import Signin from "./pages/auth/signin/Signin";
-import Signup from "./pages/auth/signup/Signup";
-import Success from "./pages/etc/success/Success";
-import UnAuthorized from "./pages/etc/unauthorized/Unauthorized";
-import { ROLES } from "./utils/roleList";
-import Orders from "./pages/mypage/Orders";
 import Addresses from "./pages/mypage/Addresses";
-import Profile from "./pages/mypage/Profile";
+import CheckUser from "./pages/mypage/CheckUser";
+import Modify from "./pages/mypage/Modify";
+// import Mypage from "./pages/mypage/Mypage";
+import Order from "./pages/mypage/Order";
+import Orders from "./pages/mypage/Orders";
+import Product from "./pages/product/Product";
+import Search from "./pages/search/Search";
+import Shopping from "./pages/shopping/Shopping";
+import Stripe from "./pages/stripe/Stripe";
+import { ROLES } from "./utils/roleList";
 
 function App() {
   return (
@@ -37,25 +40,29 @@ function App() {
           <Route path="search/:keyword" element={<Search />} />
           <Route path=":slug/:cid" element={<Shopping />} />
           <Route path="brands/:name" element={<Brand />} />
-          <Route path="lookbooks" element={<Lookbooks />} />
-          <Route path="lookbooks/:id" element={<Lookbook />} />
           <Route path="collections" element={<Collections />} />
           <Route path="collections/:id" element={<Collection />} />
+          <Route path="lookbooks" element={<Lookbooks />} />
+          <Route path="lookbooks/:id" element={<Lookbook />} />
           <Route path="products/:id" element={<Product />} />
           <Route path="cart" element={<Cart />} />
-          <Route path="success" element={<Success />} />
-          <Route path="contact" element={<Contact />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="contact" element={<Contact />} />\
           <Route element={<ProtectedRoute allowedRoles={[ROLES.USER]} />}>
-            <Route path="/orders" element={<Orders />} />
+            {/* <Route path="mypage" element={<Mypage />} /> */}
             <Route path="checkout" element={<Checkout />} />
+            <Route path="success" element={<Success />} />
             <Route path="orders" element={<Orders />} />
             <Route path="orders/:id" element={<Order />} />
             <Route path="addresses" element={<Addresses />} />
-            <Route path="profile" element={<Profile />} />
+            <Route path="check_user" element={<CheckUser />} />
+            <Route path="modify" element={<Modify />} />
           </Route>
         </Route>
+        <Route element={<ProtectedRoute allowedRoles={[ROLES.USER]} />}>
+          <Route path="/stripe" element={<Stripe />} />
+        </Route>
+        <Route path="signin" element={<Signin />} />
+        <Route path="signup" element={<Signup />} />
         <Route path="/forgot_password" element={<ForgotPassword />} />
         <Route path="/reset_password/:resetToken" element={<ResetPassword />} />
         <Route path="/unauthorized" element={<UnAuthorized />} />

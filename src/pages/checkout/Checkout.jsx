@@ -43,7 +43,7 @@ function Checkout() {
       address: selectedAddress,
       items: cartItems,
       totalQty,
-      totalPrice: totalPrice,
+      totalPrice,
       usedPoint,
       paymentPrice: totalPrice - usedPoint,
       paymentType: "card",
@@ -51,8 +51,8 @@ function Checkout() {
     };
 
     dispatch(addOrder(order));
-    navigate("/success", { replace: true });
-    // navigate("/stripe", {state: order});
+    // navigate("/success", { replace: true });
+    navigate("/stripe", {state: order});
   };
 
   return (
@@ -77,7 +77,7 @@ function Checkout() {
             </div>
             <div className="product-total-item">
               <h4>총금액</h4>
-              <h4>₩ {toKRW(totalPrice)}</h4>
+              <h4>₩ {totalPrice}</h4>
             </div>
           </div>
         </CheckoutItem>
@@ -85,18 +85,12 @@ function Checkout() {
         <CheckoutItem title={"주문자 정보"}>
           {user && (
             <div className="buyer-info">
-              <div className="buyer-info-item">
-                <p className="item-left">이름</p>
-                <p className="item-right">{user.username}</p>
-              </div>
-              <div className="buyer-info-item">
-                <p className="item-left">이메일</p>
-                <p className="item-right">{user.email}</p>
-              </div>
-              <div className="buyer-info-item">
-                <p className="item-left">연락처</p>
-                <p className="item-right">{user.mobile}</p>
-              </div>
+              <div className="buyer-info-left">이름</div>{" "}
+              <div>{user.username}</div>
+              <div className="buyer-info-left">이메일</div>{" "}
+              <div>{user.email}</div>
+              <div className="buyer-info-left">연락처</div>{" "}
+              <div>{user.mobile}</div>
             </div>
           )}
         </CheckoutItem>
@@ -172,7 +166,10 @@ function Checkout() {
             </div>
           </div>
         </CheckoutItem>
-        <button className="checkout-btn" onClick={handleOrderSubmit}>결제하기</button>
+        
+        <button className="checkout-btn" onClick={handleOrderSubmit}>
+          결제하기
+        </button>
       </div>
     </div>
   );

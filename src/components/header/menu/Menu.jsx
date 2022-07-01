@@ -1,69 +1,55 @@
-import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
-
-import "./menu.scss";
-import { updateCartItems } from "../../../slice/cartSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { signout } from "../../../slice/authSlice";
+import "./menu.scss";
 
 function Menu({ menuOpen, setMenuOpen }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = sessionStorage.getItem("user");
-  const cartItems = useSelector((store) => store.cart.cartItems);
-
-  const closeMenu = (cate) => () => {
-    setMenuOpen(false);
-  };
 
   const logout = () => {
-    dispatch(updateCartItems(cartItems));
     dispatch(signout());
-    navigate("/");
+    setMenuOpen(!menuOpen);
+  };
+
+  const onNavigate = (path) => () => {
+    setMenuOpen(!menuOpen);
+    navigate(path);
   };
 
   return (
     <div className={`menu-container ${menuOpen ? "menuOpen" : ""}`}>
       <div className="menu-items">
-        <NavLink to="/categories/all">
-          <div className="menu-item" onClick={closeMenu}>
-            CATEGORY
-          </div>
-        </NavLink>
-        <div className="menu-item" onClick={closeMenu}>
+        <div className="menu-item" onClick={onNavigate("/categories/all")}>
+          CATEGORY
+        </div>
+        <div className="menu-item" onClick={onNavigate("/brands/DIGAWEL")}>
           BRAND
         </div>
-        <NavLink to="/lookbooks">
-          <div className="menu-item">LOOKBOOK</div>
-        </NavLink>
+        <div className="menu-item" onClick={onNavigate("/lookbooks")}>
+          LOOKBOOK
+        </div>
+        <div className="menu-item" onClick={onNavigate("/collections")}>
+          COLLECTION
+        </div>
       </div>
+      
       <div className="menu-items">
         {user ? (
-          <>
-            <div className="menu-item" onClick={logout}>
-              SIGNOUT
-            </div>
-            <NavLink to="/mypage">
-              <div className="menu-item">MYPAGE</div>
-            </NavLink>
-          </>
+          <div className="menu-item" onClick={logout}>
+            SIGNOUT
+          </div>
         ) : (
-          <>
-            <NavLink to="/signin" onClick={closeMenu}> 
-              <div className="menu-item" onClick={closeMenu}>SIGNIN</div>
-            </NavLink>
-            <NavLink to="/signup">
-              <div className="menu-item">SIGNUP</div>
-            </NavLink>
-          </>
+          <div className="menu-item" onClick={onNavigate("/signin")}>
+            SIGNIN
+          </div>
         )}
-        <div className="menu-item" onClick={closeMenu}>
+        <div className="menu-item" onClick={onNavigate("/cart")}>
           CART
         </div>
-        <div className="menu-item" onClick={closeMenu}>
+        <div className="menu-item" onClick={onNavigate("/contact")}>
           CONTACT
-        </div>
-        <div className="menu-item" onClick={closeMenu}>
-          order
         </div>
       </div>
     </div>

@@ -39,7 +39,7 @@ function MypageSidebar() {
         <div className="title">회원정보</div>
         <ul className="content">
           <li>
-            <NavLink to="/profile" className={`${pathname === "/profile" ? "selected" : ""}`}>
+            <NavLink to="/check_user" className={`${pathname === "/modify" || pathname === "/check_user"? "selected" : ""}`}>
               회원정보 수정
             </NavLink>
           </li>
