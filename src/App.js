@@ -25,6 +25,7 @@ import UnAuthorized from "./pages/etc/unauthorized/Unauthorized";
 import { ROLES } from "./utils/roleList";
 import Orders from "./pages/mypage/Orders";
 import Addresses from "./pages/mypage/Addresses";
+import Profile from "./pages/mypage/Profile";
 
 function App() {
   return (
@@ -51,7 +52,8 @@ function App() {
             <Route path="checkout" element={<Checkout />} />
             <Route path="orders" element={<Orders />} />
             <Route path="orders/:id" element={<Order />} />
-            <Route path="/addresses" element={<Addresses />} />
+            <Route path="addresses" element={<Addresses />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
         </Route>
         <Route path="/forgot_password" element={<ForgotPassword />} />

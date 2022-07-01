@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import "./addresses.scss";
-import AddressForm from '../../components/address/AddressForm';
+import AddressForm from '../../components/addressForm/AddressForm';
 import MypageItem from '../../components/mypage/MypageItem';
 import MypageLayout from '../../components/mypage/MypageLayout';
 

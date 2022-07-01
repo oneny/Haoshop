@@ -59,7 +59,7 @@ function AddressForm({ selectedAddress, enableInput, setEnableInput }) {
         />
       )}
       <div className="shipping-item">
-        <div className="shipping-item-left">이름</div>
+        <p className="shipping-item-left">이름</p>
         <div className="shipping-item-right">
           <input
             type="text"
@@ -73,6 +73,7 @@ function AddressForm({ selectedAddress, enableInput, setEnableInput }) {
         <div className="shipping-item-left">연락처</div>
         <div className="shipping-item-right">
           <input
+            className="mobile"
             type="text"
             value={contactNumber}
             onChange={(e) => setContactNumber(e.target.value)}
@@ -80,6 +81,7 @@ function AddressForm({ selectedAddress, enableInput, setEnableInput }) {
           />
         </div>
       </div>
+
       <div className="shipping-item">
         <div className="shipping-item-left">우편번호</div>
         <div className="shipping-item-right">
@@ -92,6 +94,7 @@ function AddressForm({ selectedAddress, enableInput, setEnableInput }) {
           </button>
         </div>
       </div>
+      
       <div className="shipping-item">
         <div className="shipping-item-left">기본주소</div>
         <div className="shipping-item-right">
@@ -124,19 +127,25 @@ function AddressForm({ selectedAddress, enableInput, setEnableInput }) {
       </div>
       <div className="shipping-item">
         {selectedAddress && !enableInput && (
-          <>
+          <div className="shipping-button">
             <button onClick={() => setEnableInput(true)}>수정하기</button>
-            <button onClick={() => dispatch(deleteAddress(selectedAddress._id))}>삭제하기</button>
-          </>
+            <button
+              onClick={() => dispatch(deleteAddress(selectedAddress._id))}
+            >
+              삭제하기
+            </button>
+          </div>
         )}
         {enableInput && (
-          <>
+          <div className="shipping-button">
             <button onClick={handleSubmit}>수정 완료</button>
             <button onClick={() => setEnableInput(false)}>취소 하기</button>
-          </>
+          </div>
         )}
         {!selectedAddress && !enableInput && (
-          <button onClick={handleSubmit}>등록하기</button>
+          <div className="shipping-button">
+            <button onClick={handleSubmit}>등록하기</button>
+          </div>
         )}
       </div>
     </>

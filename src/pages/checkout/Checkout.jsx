@@ -1,13 +1,24 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import AddressForm from "../../components/address/AddressForm";
+import AddressForm from "../../components/addressForm/AddressForm";
 import CartItem from "../../components/cartItem/CartItem";
-import CheckoutItem from "../../components/checkoutItem/CheckoutItem";
+import useInput from "../../hooks/useInput";
 import { selectTotalPrice, selectTotalQty } from "../../slice/cartSlice";
 import { addOrder, getUser } from "../../slice/userSlice";
+import toKRW from "../../utils/toKRW";
 import "./checkout.scss";
 
+function CheckoutItem({ title, children }) {
+  return (
+    <div className="checkoutItem">
+      <div className="checkoutItem-title">
+        <h3>{title}</h3>
+      </div>
+      {children}
+    </div>
+  );
+}
 
 function Checkout() {
   const navigate = useNavigate();
@@ -20,6 +31,7 @@ function Checkout() {
   const [selectedAddress, setSelectedAddress] = useState("");
   const [enableInput, setEnableInput] = useState(false);
   const [paymentType, setPaymentType] = useState("");
+  const [usedPoint, onChangeUsedPoint] = useInput(0);
 
   useEffect(() => {
     dispatch(getUser());
@@ -27,17 +39,20 @@ function Checkout() {
 
   const handleOrderSubmit = () => {
     const order = {
-      user: user._id,
+      user,
       address: selectedAddress,
-      totalPrice,
-      totalQty,
       items: cartItems,
-      paymentStatus: "pending",
+      totalQty,
+      totalPrice: totalPrice,
+      usedPoint,
+      paymentPrice: totalPrice - usedPoint,
       paymentType: "card",
+      paymentStatus: "pending",
     };
 
     dispatch(addOrder(order));
     navigate("/success", { replace: true });
+    // navigate("/stripe", {state: order});
   };
 
   return (
@@ -45,8 +60,9 @@ function Checkout() {
       <div className="checkout-title">
         <h2>CHECK OUT</h2>
       </div>
+
       <div className="checkout-wrapper">
-      <CheckoutItem title={"상품 정보"}>
+        <CheckoutItem title={"상품 정보"}>
           {cartItems.map((cartItem) => (
             <CartItem
               key={cartItem._id + cartItem.size}
@@ -61,7 +77,7 @@ function Checkout() {
             </div>
             <div className="product-total-item">
               <h4>총금액</h4>
-              <h4>₩ {totalPrice}</h4>
+              <h4>₩ {toKRW(totalPrice)}</h4>
             </div>
           </div>
         </CheckoutItem>
@@ -69,12 +85,18 @@ function Checkout() {
         <CheckoutItem title={"주문자 정보"}>
           {user && (
             <div className="buyer-info">
-              <div className="buyer-info-left">이름</div>{" "}
-              <div>{user.username}</div>
-              <div className="buyer-info-left">이메일</div>{" "}
-              <div>{user.email}</div>
-              <div className="buyer-info-left">연락처</div>{" "}
-              <div>{user.mobile}</div>
+              <div className="buyer-info-item">
+                <p className="item-left">이름</p>
+                <p className="item-right">{user.username}</p>
+              </div>
+              <div className="buyer-info-item">
+                <p className="item-left">이메일</p>
+                <p className="item-right">{user.email}</p>
+              </div>
+              <div className="buyer-info-item">
+                <p className="item-left">연락처</p>
+                <p className="item-right">{user.mobile}</p>
+              </div>
             </div>
           )}
         </CheckoutItem>
@@ -122,22 +144,35 @@ function Checkout() {
               />
             ) : (
               <AddressForm
+                selectedAddress={selectedAddress}
                 enableInput={enableInput}
                 setEnableInput={setEnableInput}
-                selectedAddress={selectedAddress}
               />
             )}
           </div>
         </CheckoutItem>
 
-        <div className="checkout-wrapper-payment">
-          <div className="shipping-title">
-            <h3>결제 정보</h3>
+        <CheckoutItem title={"결제 정보"}>
+          <div className="buyer-info">
+            <div className="buyer-info-item">
+              <p className="item-left">마일리지</p>
+              <p className="item-right">{user.point}</p>
+            </div>
+            <div className="buyer-info-item">
+              <p className="item-left">사용 마일리지</p>
+              <div className="item-right">
+                <input type="number" onChange={onChangeUsedPoint} />
+              </div>
+            </div>
+            <div className="buyer-info-item">
+              <p className="item-left total">총 결제금액</p>
+              <div className="item-right">
+                <p className="total">₩ {toKRW(totalPrice - usedPoint)}</p>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <div>잔여 포인트: {user.point}</div>
-        <div onClick={handleOrderSubmit}>결제고고</div>
+        </CheckoutItem>
+        <button className="checkout-btn" onClick={handleOrderSubmit}>결제하기</button>
       </div>
     </div>
   );

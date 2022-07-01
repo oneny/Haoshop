@@ -7,6 +7,7 @@
     border-bottom: 1px solid $line-color;
     padding: 1rem;
     > h3 {
+      font-size: 1.6rem;
       font-weight: 600;
     }
   }
@@ -86,11 +87,13 @@
 
 @media screen and (max-width: $sm) {
   .cartItem-wrapper {
+    font-size: $smFont;
+
     .cartItem-name {
       padding: 0.7rem;
 
       > h3 {
-        font-size: $smFont;
+        font-size: calc($smFont + 1px);
       }
     }
 

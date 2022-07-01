@@ -39,7 +39,9 @@ function MypageSidebar() {
         <div className="title">회원정보</div>
         <ul className="content">
           <li>
-            <span>회원정보 수정</span>
+            <NavLink to="/profile" className={`${pathname === "/profile" ? "selected" : ""}`}>
+              회원정보 수정
+            </NavLink>
           </li>
           <li>
             <NavLink to="/addresses" className={`${pathname === "/addresses" ? "selected" : ""}`}>
