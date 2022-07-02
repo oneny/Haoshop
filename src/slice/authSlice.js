@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../utils/axiosInstance";
 import { clearCart } from "./cartSlice";
+import { getUser } from "./userSlice"
 
 const initialState = {
   isAuthenticated: false,
   matchResult: "",
+  matchPwd: false,
   isLoading: false,
   error: null,
 };
@@ -78,12 +80,29 @@ export const signout = createAsyncThunk(
   }
 );
 
+export const updateProfile = createAsyncThunk(
+  "auth/updateProfile",
+  async (user, thunkAPI) => {
+    try {
+      console.log('user', user);
+      await axios.post("/auth/update", user);
+
+      thunkAPI.dispatch(getUser());
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+)
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     clearMatchResult: (state) => {
       state.matchResult = "";
+    },
+    clearMatchPassword: (state) => {
+      state.matchPwd = false;
     },
     clearError: (state) => {
       state.error = null;
@@ -105,7 +124,7 @@ const authSlice = createSlice({
       state.isLoading = true;
     },
     [matchPassword.fulfilled]: (state, action) => {
-      state.matchResult = action.payload.msg;
+      state.matchPwd = action.payload.result;
       state.isLoading = false;
     },
     [matchPassword.rejected]: (state, action) => {
@@ -149,9 +168,20 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload.error;
     },
+
+    [updateProfile.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [updateProfile.fulfilled]: (state) => {
+      state.isLoading = false;
+    },
+    [updateProfile.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload.error;
+    }
   },
 });
 
-export const { clearMatchResult, clearError } = authSlice.actions;
+export const { clearMatchResult, clearError, clearMatchPassword } = authSlice.actions;
 
 export default authSlice.reducer;

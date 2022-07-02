@@ -3,9 +3,11 @@ import CollectionTile from "../../components/home/tile/CollectionTile";
 import Masthead from "../../components/home/mastHead/Masthead";
 import NewLookbook from "../../components/home/newLookbook/NewLookbook";
 import NewArraval from "../../components/home/newArrival/NewArraval";
+import Chat from "../../components/chat/Chat";
 
 function Home() {
   const [scrollY, setScrollY] = useState(0);
+  const user = sessionStorage.getItem("user");
 
   const handleScroll = useCallback(() => {
     console.log("window.scrollY", window.scrollY);
@@ -22,6 +24,7 @@ function Home() {
 
   return (
     <>
+      {user && <Chat />}
       <Masthead scrollY={scrollY} />
       <NewArraval />
       <NewLookbook />

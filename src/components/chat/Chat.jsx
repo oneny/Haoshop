@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
+import useToggle from "../../hooks/useToggle";
 import axios from "../../utils/axiosInstance";
-import "./chat.css";
+import "./chat.scss";
 import Chatroom from "./Chatroom";
 import Message from "./Message";
+import CloseIcon from "@mui/icons-material/Close";
 
 function Chat() {
   const [chatrooms, setChatrooms] = useState([]);
@@ -14,7 +16,9 @@ function Chat() {
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
 
-  const [alarm, setAlarm] = useState(0);
+  const [alarm, setAlarm] = useState(1);
+
+  const [chatOpen, toggleChatOpen] = useToggle(false);
 
   const socket = useRef();
   const scrollRef = useRef();
@@ -111,6 +115,10 @@ function Chat() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!newMessage || newMessage.length === 0)
+      return alert("메시지를 입력하세요.");
+
     const message = {
       chatroom: currentChatroom._id,
       sender: user._id,
@@ -143,23 +151,40 @@ function Chat() {
 
   return (
     <div className="chat">
-      <button onClick={() => addChatroom(user._id)}>+ {alarm}</button>
+      <div
+        className={`chat-btn ${chatOpen ? "open" : ""}`}
+        onClick={() => {
+          addChatroom(user._id);
+          toggleChatOpen();
+        }}
+      >
+        <div className="chat-btn-name">CS</div>
+        {alarm > 0 && <div className="chat-btn-alarm">{alarm}</div>}
+      </div>
 
-      <div className="chatrooms">
+      {/* <div className="chatrooms">
         {chatrooms?.map((c, i) => (
           <div key={i} onClick={() => setCurrentChatroom(c)}>
             <Chatroom chatroom={c} />
           </div>
         ))}
-      </div>
+      </div> */}
 
-      <div className="chatBox">
-        <div className="chatBoxWrapper">
-          {currentChatroom ? (
+      <div className={`chatBox ${chatOpen ? "open" : ""}`}>
+        <div className="chatBox-title">
+          <div className="title">
+            <p>1:1 문의하기</p>
+          </div>
+          <div className="close" onClick={toggleChatOpen}>
+            <CloseIcon className="close-icon" />
+          </div>
+        </div>
+        <div className="chatBox-content">
+          {currentChatroom && (
             <>
               <div className="chatBoxTop">
                 {messages.map((m, i) => (
-                  <div key={i} ref={scrollRef}>
+                  <div key={i} ref={scrollRef} className="chatBoxTop-chat">
                     <Message
                       message={m}
                       own={m.sender === user._id}
@@ -174,6 +199,7 @@ function Chat() {
                   </div>
                 ))}
               </div>
+
               <div className="chatBoxBottom">
                 <textarea
                   className="chatMessageInput"
@@ -186,8 +212,6 @@ function Chat() {
                 </button>
               </div>
             </>
-          ) : (
-            <span className="noChatroom">채팅방 여세요</span>
           )}
         </div>
       </div>

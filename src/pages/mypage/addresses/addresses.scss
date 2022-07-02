@@ -1,0 +1,29 @@
+@import "../../../variable.scss";
+
+.addresses {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+}
+
+@media screen and (max-width: $md) {
+  .addresses {
+    row-gap: 1rem;
+
+    &-title {
+      > h2 {
+        font-size: 1.7rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $sm) {
+  .addresses {
+    &-title {
+      > h2 {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}

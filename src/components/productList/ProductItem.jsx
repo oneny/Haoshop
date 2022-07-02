@@ -13,7 +13,7 @@ function Product({ product }) {
       <div className="products-items">
         <img src={publicURL(productImgs[0].fileName)} alt="" />
         
-        <p className=""><b>{brand}</b></p>
+        <p><b>{brand}</b></p>
         <p>{name} {color && `(${color})`}</p>
         <p>
           <span className={`${discountPrice}` > 0 ? "hasDiscount" : ""}>

@@ -3,9 +3,13 @@
 .shipping-content {
   display: flex;
   flex-direction: column;
-  padding-top: 2rem;
+  padding: 2rem 1rem;
   row-gap: 2rem;
   width: 100%;
+
+  &.addresses-content {
+    padding: 0;
+  }
 
   .shipping-item {
     display: flex;

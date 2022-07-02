@@ -3,12 +3,10 @@ import { batch, useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 import { getBrands } from "../slice/brandSlice";
 import { getCategories } from "../slice/categorySlice";
-import Chat from "./chat/Chat";
 import Header from "./header/Header";
 
 function Layout() {
   const dispatch = useDispatch();
-  const user = sessionStorage.getItem("user");
 
   useEffect(() => {
     batch(() => {
@@ -21,7 +19,6 @@ function Layout() {
     <>
       <Header />
       <Outlet />
-      {user && <Chat />}
     </>
   );
 }
