@@ -1,0 +1,20 @@
+@import "../variable.scss";
+
+main {
+  margin-left: 34.5rem;
+  transition: margin-left 0.3s ease;
+}
+
+#nav-toggle:checked ~ main {
+  margin-left: 6rem;
+}
+
+@media screen and (max-width: $lg) {
+  main {
+    margin-left: 0rem;
+  }
+
+  #nav-toggle:checked ~ main {
+    margin-left: 0rem;
+  }
+}
