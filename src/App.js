@@ -29,6 +29,8 @@ import Search from "./pages/search/Search";
 import Shopping from "./pages/shopping/Shopping";
 import Stripe from "./pages/stripe/Stripe";
 import { ROLES } from "./utils/roleList";
+import Reviewables from "./pages/mypage/reviewables/Reviewables";
+import ReviewForm from "./pages/mypage/reviews/submit/ReviewForm";
 
 function App() {
   return (
@@ -56,6 +58,8 @@ function App() {
               <Route path="reviews" element={<Reviews />} />
               <Route path="addresses" element={<Addresses />} />
               <Route path="profile" element={<Profile />} />
+              <Route path="reviewables" element={<Reviewables />} />
+              <Route path="reviews/submit" element={<ReviewForm />} />
             </Route>
           </Route>
         </Route>
