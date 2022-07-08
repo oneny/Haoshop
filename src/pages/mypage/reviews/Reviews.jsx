@@ -1,82 +1,76 @@
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import moment from "moment";
+
 import Pagination from "../../../components/pagination/Pagination";
-import { getOrders, getUser } from "../../../slice/userSlice";
+import { getReviewsByUserId } from "../../../slice/reviewSlice";
 import publicURL from "../../../utils/publicURL";
 import "./reviews.scss";
 
-function Mypage() {
+function Reviews() {
   const dispatch = useDispatch();
-  const { user, addresses, total, orders } = useSelector((store) => store.user);
-  const perPage = 20;
+  const { total, reviews } = useSelector((store) => store.review);
+  const perPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const payload = { perPage, currentPage };
-    dispatch(getOrders(payload));
+    dispatch(getReviewsByUserId(payload));
   }, [perPage, currentPage]);
 
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
+  console.log(reviews);
 
   return (
-    <>
-      <div className="mypageItem">
-        <div className="mypageItem-title">
-          <h2>주문내역조회</h2>
-        </div>
-
-        <div className="orders-content">
-          {orders?.map((order) => (
-            <div key={order._id} className="orders-item">
-              <div className="orders-item-number">
-                <Link to={`/mypage/orders/${order._id}`}>
-                  <p>
-                    {order?._id}
-                    <span>
-                      <ChevronRightIcon className="icon" />
-                    </span>
-                  </p>
-                </Link>
-              </div>
-              <div className="orders-item-detail">
-                <div className="img">
-                  <img
-                    src={order?.items && publicURL(order?.items[0]?.img)}
-                    alt=""
-                  />
-                </div>
-                <div className="paymentInfo">
-                  <p>
-                    {order?.items && order?.items[0]?.name}{" "}
-                    {order?.items?.length > 1 &&
-                      "외 " + (order?.items?.length - 1) + "건"}
-                  </p>
-                  <p>₩ {order?.paymentPrice}</p>
-                  {order?.items && (
-                    <p>
-                      [옵션: {order?.items[0]?.size}] / [컬러:{" "}
-                      {order?.items[0].color}]
-                    </p>
-                  )}
-                  <p>배송 중</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+    <div className="reviews">
+      <div className="reviews-title">
+        <h2>리뷰 내역 조회</h2>
       </div>
+
+      <div className="reviews-content">
+        {reviews?.map((review) => (
+          <div key={review._id} className="reviews-content-wrapper">
+            <Link
+              className="left"
+              to={`/mypage/reviews/${review._id}`}
+              state={review}
+            >
+              <div className="left-imgWrapper">
+                <img src={publicURL(review.reviewImgs[0])} alt="" />
+              </div>
+              <div className="left-info">
+                <p>{review.product?.brand}</p>
+                <p>{review.product?.name}</p>
+                <p>[SIZE: {review.purchasedSize}] / [COLOR: {review.product?.color}]</p>
+              </div>
+            </Link>
+
+            <div className="right">
+              <p>
+                {review.bodyInfo?.height}cm / {review.bodyInfo?.weight}kg
+              </p>
+              <p>
+                {review.comment?.length > 20
+                  ? review.comment?.substring(0, 17) + "..."
+                  : review.comment}
+              </p>
+              <p>
+                {moment(review.createdAt).format("YYYY-MM-DD")}에
+                작성하셨습니다.
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
       <Pagination
         total={total}
         perPage={perPage}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
-    </>
+    </div>
   );
 }
 
-export default Mypage;
+export default Reviews;

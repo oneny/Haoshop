@@ -1,4 +1,4 @@
-@import "../../variable.scss";
+@import "../../../variable.scss";
 
 .products-items {
   width: 100%;
@@ -7,7 +7,6 @@
   text-transform: uppercase;
   cursor: pointer;
   line-height: 1.8rem;
-
 
   img {
     width: 100%;
@@ -22,7 +21,6 @@
   .discount {
     margin-left: 0.5rem;
   }
-  
 }
 
 @media screen and (max-width: $md) {
@@ -34,7 +32,7 @@
 @media screen and (max-width: $sm) {
   .products-items {
     font-size: 1.2rem;
-
+    
     p {
       padding-left: 1rem;
     }

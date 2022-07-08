@@ -19,6 +19,7 @@ function Profile() {
   const { email, username, mobile } = useSelector((store) => store.user.user);
   const [password, onChangePassword, setPassword] = useInput("");
   const [passwordCheck, setPasswordCheck] = useState("");
+console.log({email, mobile});
 
   const [name, onChangeName, setName] = useInput(username);
   const [phone, onChangePhone, setPhone] = useInput(mobile);
@@ -34,12 +35,10 @@ function Profile() {
   };
 
   const onChangePasswordCheck = (e) => {
-    // matchPwd: true
     setPasswordCheck(e.target.value);
   };
 
   const onSubmit = (e) => {
-    // matchPwd: true
     e.preventDefault();
 
     const regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;

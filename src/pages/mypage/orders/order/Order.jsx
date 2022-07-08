@@ -1,16 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getOrder } from "../../../slice/userSlice";
-import publicURL from "../../../utils/publicURL";
-import toKRW from "../../../utils/toKRW";
+import { getOrder } from "../../../../slice/userSlice";
+import publicURL from "../../../../utils/publicURL";
+import toKRW from "../../../../utils/toKRW";
 import "./order.scss";
-
 
 function OrderItem({ title, children }) {
   return (
-    <div className="orderItem">
-      <div className="orderItem-title">
+    <div className="mypageItem">
+      <div className="mypageItem-title">
         <h2>{title}</h2>
       </div>
       {children}
@@ -21,13 +20,11 @@ function OrderItem({ title, children }) {
 function Order() {
   const params = useParams();
   const dispatch = useDispatch();
-  const { order, shippingAddress } = useSelector((store) => store.user);
+  const { order } = useSelector((store) => store.user);
 
   useEffect(() => {
     dispatch(getOrder(params.id));
   }, [params]);
-
-  console.log(order, shippingAddress);
 
   return (
     <div className="order">
@@ -55,7 +52,7 @@ function Order() {
       <OrderItem title={"주문 상품 정보"}>
         <ul className="order-product">
           {order.items?.map((item) => (
-            <li className="order-product-item">
+            <li key={item._id} className="order-product-item">
               <div className="product-img">
                 <img src={publicURL(item?.img)} alt="" />
               </div>

@@ -1,17 +1,33 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
-import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import StarIcon from '@mui/icons-material/Star';
+import StarIcon from "@mui/icons-material/Star";
+
 import { upsertReview } from "../../../../slice/reviewSlice";
 import publicURL from "../../../../utils/publicURL";
 import "./reviewForm.scss";
+import { useRef } from "react";
+
+const ratingComments = [
+  "아주 좋아요",
+  "맘에 들어요",
+  "보통이에요",
+  "그냥 그래요",
+  "별로에요",
+];
+const topSizeSelection = ["XS", "S", "M", "L", "XL"];
+const bottomSelection = Array(16)
+  .fill()
+  .map((arr, i) => i + 23);
+const shoesSelection = Array(18)
+  .fill()
+  .map((arr, i) => i * 5 + 220);
 
 function ReviewForm() {
   const dispatch = useDispatch();
   const location = useLocation();
   const review = location.state;
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
@@ -22,6 +38,7 @@ function ReviewForm() {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState("");
   const [reviewImgs, setReviewImgs] = useState([]);
+  const fileRef = useRef(null);
 
   useEffect(() => {
     setHeight(review.bodyInfo?.height || "");
@@ -36,7 +53,7 @@ function ReviewForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (reviewImgs.length === 0) return alert("이미지를 업로드해주세요.");
+    if (reviewImgs.length === 0) return alert("파일없음");
 
     const form = new FormData();
     form.append("_id", review._id);
@@ -80,7 +97,9 @@ function ReviewForm() {
 
       <form onSubmit={handleSubmit} className="reviewForm-form">
         <div className="form-item">
-          <label htmlFor="height" className="form-item-left">키</label>
+          <label htmlFor="height" className="form-item-left">
+            키
+          </label>
           <input
             placeholder="키 입력"
             required
@@ -89,7 +108,9 @@ function ReviewForm() {
           />
         </div>
         <div className="form-item">
-          <label htmlFor="weight" className="form-item-left">몸무게</label>
+          <label htmlFor="weight" className="form-item-left">
+            몸무게
+          </label>
           <input
             id="weight"
             placeholder="몸무게"
@@ -99,47 +120,80 @@ function ReviewForm() {
           />
         </div>
         <div className="form-item">
-          <label htmlFor="topSize" className="form-item-left">평소 상의 사이즈</label>
-          <input
-            id="topSize"
-            placeholder="상의 사이즈"
-            required
-            value={topSize}
-            onChange={(e) => setTopSize(e.target.value)}
-          />
+          <label htmlFor="topSize" className="form-item-left">
+            평소 상의 사이즈
+          </label>
+          <div className="button-wrapper">
+            {topSizeSelection.map((v, i) => (
+              <button
+                key={v}
+                type="button"
+                onClick={(e) => setTopSize(v)}
+                className={`${topSize === v ? "selected" : ""}`}
+              >
+                {v}
+              </button>
+            ))}
+          </div>
         </div>
         <div className="form-item">
-          <label htmlFor="bottomSize" className="form-item-left">평소 하의 사이즈</label>
-          <input
-            id="bottomSize"
-            placeholder="하의 사이즈"
-            required
-            value={bottomSize}
+          <label htmlFor="bottomSize" className="form-item-left">
+            평소 하의 사이즈
+          </label>
+          <select
+            className="form-item-select"
             onChange={(e) => setBottomSize(e.target.value)}
-          />
+          >
+            <option defaultValue hidden className="selection">
+              {bottomSize || "하의 사이즈"}
+            </option>
+            {bottomSelection.map((v, i) => (
+              <option value={v} key={i}>
+                {v}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="form-item">
-          <label htmlFor="shoesSize" className="form-item-left">평소 신발 사이즈</label>
-          <input
-            id="shoesSize"
-            placeholder="신발 사이즈"
-            required
-            value={shoesSize}
+          <label htmlFor="shoesSize" className="form-item-left">
+            평소 신발 사이즈
+          </label>
+          <select
+            className="form-item-select"
             onChange={(e) => setShoesSize(e.target.value)}
-          />
+          >
+            <option defaultValue hidden className="selection">
+              {shoesSize || "신발 사이즈"}
+            </option>
+            {shoesSelection.map((v, i) => (
+              <option value={v} key={i}>
+                {v}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="form-item">
-          <label htmlFor="rating" className="form-item-left">평점</label>
-          <input
-            id="rating"
-            placeholder="평점"
-            required
-            value={rating}
+          <label htmlFor="rating" className="form-item-left">
+            평점
+          </label>
+          <select
+            className="form-item-select"
             onChange={(e) => setRating(e.target.value)}
-          />
+          >
+            <option defaultValue hidden className="selection">
+              {ratingComments.filter((v, i) => i === rating) || "평점"}
+            </option>
+            {ratingComments.map((comment, i) => (
+              <option value={5 - i} key={i}>
+                {comment}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="form-item">
-          <label htmlFor="comment" className="form-item-left">상품명</label>
+          <label htmlFor="comment" className="form-item-left">
+            상품명
+          </label>
           <textarea
             id="comment"
             placeholder="상품평"
@@ -149,34 +203,46 @@ function ReviewForm() {
           />
         </div>
 
-        {reviewImgs &&
-          reviewImgs.map((img, i) => (
-            <div key={i}>
-              <img
-                src={
-                  img instanceof File
-                    ? URL.createObjectURL(img)
-                    : publicURL(img)
-                }
-                alt=""
-                height="50"
-              />
+        <div className="form-item">
+          <label htmlFor="addImg" className="form-item-left">
+            사진 후기
+          </label>
+          <div className="addImg">
+            <button
+              type="button"
+              className="addImg-btn"
+              onClick={() => fileRef.current.click()}
+            >
+              사진 추가
+            </button>
+            <div className="addImg-grid">
+              {reviewImgs &&
+                reviewImgs.map((img, i) => (
+                  <div key={i} className="addImg-grid-imgWrapper">
+                    <img
+                      src={
+                        img instanceof File
+                          ? URL.createObjectURL(img)
+                          : publicURL(img)
+                      }
+                      alt=""
+                    />
+                  </div>
+                ))}
             </div>
-          ))}
+          </div>
+        </div>
+        <input
+          ref={fileRef}
+          type="file"
+          id="file"
+          multiple
+          accept=".png, .jpeg, .jpg"
+          style={{ display: "none" }}
+          onChange={(e) => handleReviewImgs(e.target.files)}
+        />
 
-        <label htmlFor="file">
-          <span>사진 추가</span>
-          <input
-            type="file"
-            id="file"
-            multiple
-            accept=".png, .jpeg, .jpg"
-            style={{ display: "none" }}
-            onChange={(e) => handleReviewImgs(e.target.files)}
-          />
-        </label>
-
-        <button type="submit">submit</button>
+        <button type="submit">리뷰 등록</button>
       </form>
     </div>
   );

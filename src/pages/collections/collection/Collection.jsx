@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import CollectionSection from "../../components/collectionSection/CollectionSection";
-import { getCollection } from "../../slice/collectionSlice";
+import CollectionSection from "../../../components/collectionSection/CollectionSection";
+import { getCollection } from "../../../slice/collectionSlice";
 import "./collection.scss";
 
 function Collection() {

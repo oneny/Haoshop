@@ -2,9 +2,10 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../utils/axiosInstance";
 
 const initialState = {
+  total: 0,
   reviews: [],
   review: {},
-  isLoading:false,
+  isLoading: false,
 };
 
 export const getReviewsByProductId = createAsyncThunk(

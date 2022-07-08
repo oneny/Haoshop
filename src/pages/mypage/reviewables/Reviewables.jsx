@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Pagination from "../../../components/pagination/Pagination";
@@ -17,8 +17,6 @@ function Reviewables() {
     const payload = { status, perPage, currentPage };
     dispatch(getOrders(payload));
   }, [perPage, currentPage, status]);
-
-  console.log(orders);
 
   return (
     <div className="reviewables">
@@ -43,7 +41,7 @@ function Reviewables() {
                       <p>{item.brand}</p>
                       <p>{item.name}</p>
                       <p>
-                         [SIZE: {item.size}] / [COLOR: {item.color}]
+                        [SIZE: {item.size}] / [COLOR: {item.color}]
                       </p>
                     </div>
                   </div>

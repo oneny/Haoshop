@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { getLookbook } from "../../slice/lookbookSlice";
-import publicURL from "../../utils/publicURL";
+import { getLookbook } from "../../../slice/lookbookSlice";
+import publicURL from "../../../utils/publicURL";
 import "./lookbook.scss";
 
 function Lookbook() {
