@@ -1,0 +1,122 @@
+section {
+  display: flex;
+  flex-direction: column;
+}
+
+section .top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #ededed;
+}
+
+section .top-left, section .top-right {
+  display: flex;
+  column-gap: 1rem;
+}
+
+section .top-left .filter, section .top-right .filter {
+  display: none;
+  align-items: center;
+}
+
+section .top-left .sort, section .top-right .sort {
+  height: 100%;
+}
+
+section .top-left .sort > select, section .top-right .sort > select {
+  border: none;
+  height: 100%;
+  width: 8rem;
+  font-size: 1.4rem;
+  background: transparent;
+}
+
+section .top-left .grid-icon, section .top-right .grid-icon {
+  cursor: pointer;
+  font-size: 1.7rem;
+  color: darkgray;
+}
+
+section .top-left .grid-icon:last-child, section .top-right .grid-icon:last-child {
+  transform: scale(1.1);
+}
+
+section .top-left .grid-icon.selected, section .top-right .grid-icon.selected {
+  color: black;
+}
+
+section .products-wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 2rem;
+  column-gap: 5rem;
+  position: relative;
+  padding-top: 1rem;
+  z-index: 100;
+}
+
+section .products-wrapper.selected {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media screen and (max-width: 64em) {
+  section .top {
+    display: flex;
+    font-size: 1.4rem;
+  }
+  section .top-left .filter {
+    display: flex;
+    height: inherit;
+    align-items: center;
+    column-gap: 0.5rem;
+    cursor: pointer;
+  }
+  section .top-left .filter .filter-icon {
+    font-size: 1.5rem;
+    transform: translateY(-0.1rem);
+  }
+  section .products-wrapper {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  section .products-wrapper.selected {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 48em) {
+  section .top {
+    font-size: 1.3rem;
+  }
+  section .top-left .filter .filter-icon, section .top-right .filter .filter-icon {
+    font-size: 1.4rem;
+  }
+  section .top-left .sort > select, section .top-right .sort > select {
+    font-size: 1.3rem;
+  }
+  section .top-left .grid-icon, section .top-right .grid-icon {
+    font-size: 1.6rem;
+  }
+}
+
+@media screen and (max-width: 37.5em) {
+  section .top {
+    font-size: 1.1rem;
+  }
+  section .top-left .filter .filter-icon, section .top-right .filter .filter-icon {
+    font-size: 1.2rem;
+  }
+  section .top-left .sort > select, section .top-right .sort > select {
+    font-size: 1.1rem;
+  }
+  section .top-left .grid-icon, section .top-right .grid-icon {
+    font-size: 1.4rem;
+  }
+  section .products-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  section .products-wrapper.selected {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

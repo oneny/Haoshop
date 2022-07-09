@@ -3,6 +3,7 @@ import { batch, useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 import { getBrands } from "../slice/brandSlice";
 import { getCategories } from "../slice/categorySlice";
+import Footer from "./footer/Footer";
 import Header from "./header/Header";
 
 function Layout() {
@@ -20,6 +21,7 @@ function Layout() {
     <>
       <Header />
       <Outlet />
+      <Footer />
     </>
   );
 }

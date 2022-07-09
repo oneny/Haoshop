@@ -1,0 +1,55 @@
+.lookbooks-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  padding: 7rem 0;
+  font-size: 1.4rem;
+}
+
+.lookbooks-container .lookbooks-wrapper {
+  width: 80%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5rem;
+}
+
+.lookbooks-container .lookbooks-wrapper .lookbooks-items {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+}
+
+.lookbooks-container .lookbooks-wrapper .lookbooks-items > img {
+  width: 100%;
+}
+
+@media screen and (max-width: 64em) {
+  .lookbooks-container .lookbooks-wrapper {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 48em) {
+  .lookbooks-container {
+    padding: 5rem 0;
+    font-size: 1.3rem;
+  }
+  .lookbooks-container .lookbooks-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 37.5em) {
+  .lookbooks-container {
+    padding: 2rem 0;
+    font-size: 1.1rem;
+  }
+  .lookbooks-container .lookbooks-wrapper {
+    grid-template-columns: 1fr;
+    gap: 2rem 0;
+  }
+}

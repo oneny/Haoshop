@@ -1,0 +1,60 @@
+.header {
+  font-size: 1.4;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.4rem;
+  align-items: center;
+  height: 6rem;
+  padding: 0 2rem;
+  border-bottom: 1px solid #ccc;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
+  font-size: 2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.header-left .icon {
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  column-gap: 1.5rem;
+}
+
+.header-right-item {
+  display: flex;
+  position: relative;
+}
+
+.header-right-item .avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+
+.header-right-item .icon {
+  font-size: 2rem;
+}
+
+.header-right-item .counter {
+  position: absolute;
+  top: -0.4rem;
+  right: -0.5rem;
+  background-color: #8aa1a1;
+  color: #282828;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  border-radius: 50%;
+}

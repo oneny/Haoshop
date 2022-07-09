@@ -1,0 +1,48 @@
+.users {
+  padding: 0 2rem;
+  font-size: 1.4rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.users-table {
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+  border-top: 3px solid #8aa1a1;
+}
+
+.users-table .thead-tr > th {
+  border: 1px solid #ccc;
+  padding: 1.5rem;
+  font-size: 1.7rem;
+}
+
+.users-table .tbody-tr > td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.users-table .tbody-tr-name {
+  text-align: center;
+}
+
+.users-table .tbody-tr-name .navi:hover {
+  font-weight: 600;
+}
+
+.users-table .tbody-tr > td button {
+  border-radius: 0.7rem;
+  width: 100%;
+  padding: 1rem 0;
+  border: none;
+  outline: none;
+  background-color: #8aa1a1;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.users-table .tbody-tr > td button:hover {
+  background-color: #282828;
+}

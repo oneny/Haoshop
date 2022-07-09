@@ -1,0 +1,130 @@
+.profile-item {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+  width: 100%;
+}
+
+.profile-item-content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 4rem;
+  width: 100%;
+}
+
+.profile-item-content .alert {
+  line-height: 2rem;
+}
+
+.profile-item-content .form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 4rem;
+}
+
+.profile-item-content .form-input {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.profile-item-content .form-input > label {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.profile-item-content .form-input > input {
+  width: 42rem;
+  padding: 1rem 0.5rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.profile-item-content .form-btn, .profile-item-content .modifyForm-btn {
+  width: 42rem;
+  padding: 1rem;
+  background-color: #aaa;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.profile-item-content .form-btn:hover, .profile-item-content .modifyForm-btn:hover {
+  background-color: #8aa1a1;
+}
+
+.profile-item-content .modifyForm {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+}
+
+.profile-item-content .modifyForm-input {
+  display: flex;
+}
+
+.profile-item-content .modifyForm-input-left {
+  padding: 0.7rem 0;
+  width: 15rem;
+  font-weight: 600;
+}
+
+.profile-item-content .modifyForm-input-right {
+  width: 27rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 0.7rem;
+  outline: none;
+  color: #000;
+}
+
+@media screen and (max-width: 48em) {
+  .profile-item-title > h2 {
+    font-size: 1.7rem;
+  }
+  .profile-item-content {
+    row-gap: 2rem;
+  }
+  .profile-item-content .form {
+    row-gap: 2rem;
+  }
+  .profile-item-content .form-input > label {
+    font-size: 1.4rem;
+  }
+  .profile-item-content .form-btn, .profile-item-content .modifyForm-btn {
+    font-size: 1.3rem;
+  }
+}
+
+@media screen and (max-width: 37.5em) {
+  .profile-item-title > h2 {
+    font-size: 1.5rem;
+  }
+  .profile-item-content .form-input > label {
+    font-size: 1.2rem;
+  }
+  .profile-item-content .form-input > input {
+    padding: 0.5rem;
+    width: 100%;
+  }
+  .profile-item-content .form-btn, .profile-item-content .modifyForm-btn {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1.1rem;
+  }
+  .profile-item-content .modifyForm {
+    row-gap: 1.5rem;
+  }
+  .profile-item-content .modifyForm-input-left {
+    width: 9rem;
+  }
+  .profile-item-content .modifyForm-input-right {
+    width: calc(100% - 9rem);
+    padding: 0.5rem;
+    font-size: 1.1rem;
+  }
+}

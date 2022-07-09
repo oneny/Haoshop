@@ -1,0 +1,64 @@
+.mypage {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 7rem 0;
+  width: 75%;
+  font-size: 1.4rem;
+}
+
+.mypage-bottom {
+  margin-top: 5rem;
+  width: 100%;
+  display: flex;
+}
+
+.mypage-bottom-left {
+  width: 30%;
+}
+
+.mypage-bottom-right {
+  width: 70%;
+}
+
+@media screen and (max-width: 64em) {
+  .mypage {
+    padding: 5rem 0;
+    width: 80%;
+  }
+  .mypage-bottom {
+    margin-top: 4rem;
+    flex-direction: column;
+  }
+  .mypage-bottom-left {
+    width: 100%;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid #ccc;
+  }
+  .mypage-bottom-right {
+    padding-top: 4rem;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 48em) {
+  .mypage {
+    font-size: 1.3rem;
+  }
+}
+
+@media screen and (max-width: 37.5em) {
+  .mypage {
+    padding: 2rem 0;
+    font-size: 1.1rem;
+  }
+  .mypage-bottom {
+    margin-top: 2rem;
+  }
+  .mypage-bottom-left {
+    padding-bottom: 2rem;
+  }
+  .mypage-bottom-right {
+    padding-top: 2rem;
+  }
+}

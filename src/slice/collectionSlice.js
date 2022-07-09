@@ -33,6 +33,18 @@ export const getCollection = createAsyncThunk(
   }
 );
 
+export const getNewCollections = createAsyncThunk(
+  "collection/getNewCollections",
+  async (thunkAPI) => {
+    try {
+      const res = await axios.get("/collections/get");
+      return res.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const collectionSlice = createSlice({
   name: "collection",
   initialState,
@@ -60,6 +72,18 @@ const collectionSlice = createSlice({
     },
     [getCollection.rejected]: (state, action) => {
       state.isLoading = false;
+    },
+
+    [getNewCollections.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getNewCollections.fulfilled]: (state, action) => {
+      state.collections = action.payload.collections;
+      state.isLoading = false;
+    },
+    [getNewCollections.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload.error;
     },
   },
 });

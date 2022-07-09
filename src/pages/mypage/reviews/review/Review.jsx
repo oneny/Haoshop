@@ -8,14 +8,10 @@ import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import "./review.scss";
 
 function ratingStar(rating) {
-  const star = Array(5).fill();
-    for (let i = 0; i < rating; i++) {
-      star.push(<StarIcon />);
-    }
-
-    for (let i = 0; i < 5 - rating; i++) {
-      star.push(<StarOutlineIcon />);
-    }
+  const star = Array(5).fill().map((v, i) => {
+    if (i < rating) return <StarIcon />;
+    else return <StarOutlineIcon />;
+  });
 
   return star;
 }

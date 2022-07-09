@@ -1,0 +1,71 @@
+.lookbooks {
+  padding: 0 2rem;
+  font-size: 1.4rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.lookbooks-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+}
+
+.lookbooks-btn > button {
+  padding: 0.7rem 2rem;
+  outline: none;
+  border: none;
+  font-size: 1.4rem;
+  border-radius: 0.7rem;
+  background-color: #aaa;
+  transition: all 0.3s ease;
+  color: #fff;
+  cursor: pointer;
+}
+
+.lookbooks-btn > button:hover {
+  background-color: #8aa1a1;
+  transform: translateY(-0.2rem);
+}
+
+.lookbooks-table {
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+  border-top: 3px solid #8aa1a1;
+}
+
+.lookbooks-table .thead-tr > th {
+  border: 1px solid #ccc;
+  padding: 1.5rem;
+  font-size: 1.7rem;
+}
+
+.lookbooks-table .tbody-tr > td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+}
+
+.lookbooks-table .tbody-tr-name {
+  text-align: center;
+}
+
+.lookbooks-table .tbody-tr-name .navi:hover {
+  font-weight: 600;
+}
+
+.lookbooks-table .tbody-tr > td button {
+  border-radius: 0.7rem;
+  width: 100%;
+  padding: 1rem 0;
+  border: none;
+  outline: none;
+  background-color: #8aa1a1;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.lookbooks-table .tbody-tr > td button:hover {
+  background-color: #282828;
+}
