@@ -51,6 +51,7 @@
           &-top {
             display: flex;
             justify-content: space-between;
+            align-items: flex-end;
             color: #666;
 
             .icon {
@@ -58,25 +59,37 @@
             }
           }
 
+          &-comment {
+            padding: 1rem 0;
+          }
+
           &-img {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(4, 1fr) 0.4fr;
             gap: 1rem;
 
             &-wrapper {
               width: 100%;
-              height: 100%;
+              height: 25rem;
               cursor: pointer;
 
               > img {
                 width: 100%;
                 height: 100%;
+                object-fit: cover;
               }
 
               &:hover {
                 opacity: 0.4;
                 background-color: rgba(0, 0, 0, 0.4);
               }
+            }
+
+            &-more {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              font-size: 1.7rem;
             }
           }
         }
@@ -92,6 +105,102 @@
           > p:first-child {
             font-weight: 600;
             color: #000;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $lg) {
+  .reviewList {
+    padding-top: 5rem;
+
+    &-content {
+      &-detail {
+        .detailWrapper {
+          &-left {
+            &-img {
+              &-wrapper {
+                height: 13rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $md) {
+  .reviewList {
+    font-size: $mdFont;
+    padding-top: 2rem;
+
+    &-title {
+      > h2 {
+        font-size: 1.7rem;
+      }
+    }
+
+    &-content {
+      &-detail {
+        .detailWrapper {
+          &-left {
+            padding-right: 2rem;
+
+            &-img {
+              &-wrapper {
+                height: 10rem;
+              }
+              &-more {
+                font-size: 1.5rem;
+              }
+            }
+          }
+
+          &-userInfo {
+            padding-left: 2rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $sm) {
+  .reviewList {
+    font-size: $smFont;
+    padding-top: 2rem;
+    row-gap: 1rem;
+
+    &-title {
+      > h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+    &-content {
+      &-detail {
+        .detailWrapper {
+          padding: 1rem 0;
+
+          &-left {
+            width: 100%;
+            padding-right: 0;
+
+            &-img {
+              &-wrapper {
+                height: 7rem;
+              }
+              &-more {
+                font-size: 1.2rem;
+              }
+            }
+          }
+
+          &-userInfo {
+            display: none;
           }
         }
       }

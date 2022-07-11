@@ -3,6 +3,7 @@ import axios from "../utils/axiosInstance";
 
 const initialState = {
   cartItems: [],
+  cartItem: [],
   isLoading: false,
 };
 
@@ -105,6 +106,13 @@ const cartSlice = createSlice({
       );
       cartItem.qty -= 1;
     },
+
+    buyNow: (state, action) => {
+      state.cartItem = [action.payload];
+    },
+    clearCartItem: (state) => {
+      state.cartItem = {}
+    },
   },
 
   extraReducers: {
@@ -141,14 +149,21 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addItem, clearCart, removeItem, increaseQty, decreaseQty } =
-  cartSlice.actions;
+export const {
+  addItem,
+  clearCart,
+  removeItem,
+  increaseQty,
+  decreaseQty,
+  buyNow,
+  clearCartItem,
+} = cartSlice.actions;
 
 //Selector
 export const selectTotalQty = (store) =>
   store.cart.cartItems.reduce((totalQty, item) => totalQty + item.qty, 0);
 
-export const selectTotalPrice = (state) => 
+export const selectTotalPrice = (state) =>
   state.cart.cartItems.reduce(
     (totalPrice, item) => totalPrice + item.price * item.qty,
     0

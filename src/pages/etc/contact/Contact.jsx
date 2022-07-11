@@ -51,11 +51,7 @@ function Contact() {
         <div className="team-wrapper">
           <a href="https://github.com/wooomr2">
             <div className="team-wrapper-person">
-              <img
-                src="/assets/team/margelo_faces_christoph.svg"
-                alt="dkj"
-                width="200"
-              />
+              <img src="/assets/team/margelo_faces_christoph.svg" alt="dkj" />
               <p>MyeongJin</p>
               <p>@wooomr2</p>
             </div>

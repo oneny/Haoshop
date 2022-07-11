@@ -6,6 +6,7 @@ import { clearError, signin } from "../../../slice/authSlice";
 import { addCartItems } from "../../../slice/cartSlice";
 import "./signin.scss";
 import Header from "../../../components/header/Header"
+import Footer from "../../../components/footer/Footer";
 
 function Signin() {
   const navigate = useNavigate();
@@ -93,6 +94,7 @@ function Signin() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

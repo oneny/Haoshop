@@ -9,8 +9,8 @@ import "./review.scss";
 
 function ratingStar(rating) {
   const star = Array(5).fill().map((v, i) => {
-    if (i < rating) return <StarIcon />;
-    else return <StarOutlineIcon />;
+    if (i < rating) return <StarIcon className="icon" />;
+    else return <StarOutlineIcon className="icon" />;
   });
 
   return star;

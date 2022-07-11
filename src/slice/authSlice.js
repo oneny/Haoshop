@@ -113,6 +113,7 @@ const authSlice = createSlice({
       state.isLoading = true;
     },
     [matchEmail.fulfilled]: (state, action) => {
+      console.log(action.payload.msg);
       state.matchResult = action.payload.msg;
       state.isLoading = false;
     },

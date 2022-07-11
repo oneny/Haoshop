@@ -55,8 +55,7 @@ function Reviews() {
                   : review.comment}
               </p>
               <p>
-                {moment(review.createdAt).format("YYYY-MM-DD")}에
-                작성하셨습니다.
+                {moment(review.createdAt).format("YYYY-MM-DD")}
               </p>
             </div>
           </div>

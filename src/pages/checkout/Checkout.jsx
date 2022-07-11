@@ -23,7 +23,7 @@ function CheckoutItem({ title, children }) {
 function Checkout() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { cartItems } = useSelector((store) => store.cart);
+  const { cartItems, cartItem } = useSelector((store) => store.cart);
   const { user, addresses } = useSelector((store) => store.user);
   const totalPrice = useSelector(selectTotalPrice);
   const totalQty = useSelector(selectTotalQty);
@@ -33,26 +33,33 @@ function Checkout() {
   const [paymentType, setPaymentType] = useState("");
   const [usedPoint, onChangeUsedPoint] = useInput(0);
 
+  console.log("ashgdubfa", cartItem);
+
   useEffect(() => {
     dispatch(getUser());
   }, []);
 
   const handleOrderSubmit = () => {
+    const paymentPrice = cartItem?.price
+      ? cartItem?.price - usedPoint
+      : totalPrice - usedPoint;
+
     const order = {
       user,
       address: selectedAddress,
-      items: cartItems,
-      totalQty,
-      totalPrice,
+      items: cartItem?._id ? cartItem : cartItems,
+      totalQty: cartItem?.qty ? cartItem?.qty : totalQty,
+      totalPrice:cartItem?.price ? cartItem?.price : totalPrice,
       usedPoint,
-      paymentPrice: totalPrice - usedPoint,
+      paymentPrice,
       paymentType: "card",
       paymentStatus: "pending",
     };
 
+    console.log("order", order);
     dispatch(addOrder(order));
     // navigate("/success", { replace: true });
-    // navigate("/stripe", {state: order});
+    // navigate("/stripe", { state: order });
   };
 
   return (
@@ -63,21 +70,25 @@ function Checkout() {
 
       <div className="checkout-wrapper">
         <CheckoutItem title={"상품 정보"}>
-          {cartItems.map((cartItem) => (
-            <CartItem
-              key={cartItem._id + cartItem.size}
-              cartItem={cartItem}
-              onlyInfo={true}
-            />
-          ))}
+          {cartItem?._id ? (
+            <CartItem cartItem={cartItem} onlyInfo={true} />
+          ) : (
+            cartItems?.map((cartItem) => (
+              <CartItem
+                key={cartItem._id + cartItem.size}
+                cartItem={cartItem}
+                onlyInfo={true}
+              />
+            ))
+          )}
           <div className="product-total">
             <div className="product-total-item">
               <h4>총계</h4>
-              <h4>{totalQty}</h4>
+              <h4>{cartItem.qty ? cartItem.qty : totalQty}</h4>
             </div>
             <div className="product-total-item">
               <h4>총금액</h4>
-              <h4>₩ {totalPrice}</h4>
+              <h4>₩ {toKRW(cartItem.price ? cartItem.price : totalPrice)}</h4>
             </div>
           </div>
         </CheckoutItem>
@@ -167,12 +178,17 @@ function Checkout() {
             <div className="buyer-info-item">
               <p className="item-left total">총 결제금액</p>
               <div className="item-right">
-                <p className="total">₩ {toKRW(totalPrice - usedPoint)}</p>
+                <p className="total">
+                  ₩{" "}
+                  {cartItem.price
+                    ? toKRW(cartItem.price - usedPoint)
+                    : toKRW(totalPrice - usedPoint)}
+                </p>
               </div>
             </div>
           </div>
         </CheckoutItem>
-        
+
         <button className="checkout-btn" onClick={handleOrderSubmit}>
           결제하기
         </button>
