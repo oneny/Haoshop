@@ -1,14 +1,8 @@
-import React, { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getNewBrands } from "../../../slice/brandSlice";
 import publicURL from "../../../utils/publicURL";
 import "./scrollable.scss";
-
-function lerp(start, end, t) {
-  // start 이전 값, end는 scrollY
-  return start * (1 - t) + end * t; // start * 0.9 + end * 0.1
-}
 
 function Scrollable({ scrollY }) {
   const dispatch = useDispatch();

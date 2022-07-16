@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-
+import CloseIcon from "@mui/icons-material/Close";
+import React, { useEffect } from "react";
+import publicURL from "../../../utils/publicURL";
 import "./reviewModal.scss";
-import publicURL from "../../utils/publicURL";
+
 
 function ReviewModal({
   reviews,
@@ -15,6 +15,7 @@ function ReviewModal({
   setReviewImgIndex,
 }) {
   const decreaseIndex = (index) => () => {
+    console.log(index)
     if (index < 0) index = reviews[reviewIndex].reviewImgs.length - 1;
     return setReviewImgIndex(index);
   };
@@ -22,7 +23,6 @@ function ReviewModal({
   const increaseIndex = (index) => () => {
     // 왜 ++ 돼서 안넘어오지
     ++index;
-    console.log(index);
     if (index > reviews[reviewIndex].reviewImgs.length - 1) index = 0;
     return setReviewImgIndex(index);
   };

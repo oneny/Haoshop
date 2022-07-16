@@ -2,7 +2,7 @@ footer {
   width: 100vw;
   display: flex;
   justify-content: center;
-  padding: 10rem 0;
+  padding: 5rem;
   font-size: 1.4rem;
   background-color: #fff;
 }
@@ -28,6 +28,7 @@ footer .footer-content-middle, footer .footer-content-bottom {
 @media screen and (max-width: 48em) {
   footer {
     font-size: 1.3rem;
+    padding: 2rem;
   }
   footer .footer-content > p:first-child {
     font-size: 1.4rem;

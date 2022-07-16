@@ -8,7 +8,6 @@ import Header from "./header/Header";
 
 function Layout() {
   const dispatch = useDispatch();
-  const user = localStorage.getItem("user");
 
   useEffect(() => {
     batch(() => {

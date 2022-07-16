@@ -6,7 +6,6 @@ import { clearError, signin } from "../../../slice/authSlice";
 import { addCartItems } from "../../../slice/cartSlice";
 import "./signin.scss";
 import Header from "../../../components/header/Header"
-import Footer from "../../../components/footer/Footer";
 
 function Signin() {
   const navigate = useNavigate();
@@ -93,8 +92,11 @@ function Signin() {
             비밀번호 찾기
           </div>
         </div>
+
+        <div className="kakaoLogin">
+          <img src="/assets/kakao.png" alt="" />
+        </div>
       </div>
-      <Footer />
     </>
   );
 }

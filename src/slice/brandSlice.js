@@ -33,6 +33,7 @@ export const getNewBrands = createAsyncThunk(
   }
 );
 
+
 export const getBrand = createAsyncThunk(
   "brand/getBrand",
   async (name, thunkAPI) => {

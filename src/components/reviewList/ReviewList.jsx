@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import moment from "moment";
-
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import useToggle from "../../hooks/useToggle";
 import { getReviewsByProductId } from "../../slice/reviewSlice";
+import publicURL from "../../utils/publicURL";
 import Pagination from "../pagination/Pagination";
 import "./reviewList.scss";
-import publicURL from "../../utils/publicURL";
-import useToggle from "../../hooks/useToggle";
-import ReviewModal from "../reviewModal/ReviewModal";
+import ReviewModal from "./reviewModal/ReviewModal";
+
 
 function ratingStar(rating) {
   const star = Array(5)

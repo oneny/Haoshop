@@ -11,6 +11,7 @@ function Masthead({ scrollY }) {
   if (elContainer) {
     // + 60px -> 헤더 영역까지 더해서 scrollY을 나눠야 함
     progress = Math.min(1, scrollY / elContainer.clientHeight);
+    console.log("progress", progress);
   }
 
   let currentIndex = 0;
@@ -45,23 +46,16 @@ function Masthead({ scrollY }) {
         {Array(5)
           .fill()
           .map((_, idx) => (
-            <div
-              className={`masthead-slide ${idx === 0 ? "active" : ""}`}
-              key={idx}
-            >
-              <img
-                src={`/assets/mainbg${idx}.jpeg`}
-                alt=""
-                loading={`${idx < 2 ? "eager" : "lazy"}`}
-              />
+            <div className={`masthead-slide ${idx === 0 ? "active" : ""}`} key={idx}>
+              <img src={`/assets/mainbg${idx}.jpeg`} alt="" loading={`${idx < 2 ? "eager" : "lazy"}`} />
               <div className="masthead-mainText">
                 <strong>HOW ABOUT OOTD</strong>
                 <div className="masthead-mainText-num">
-                  0 <span>{idx + 1}</span>
+                  0 <span>{idx+1}</span>
                 </div>
               </div>
             </div>
-          ))}
+        ))}
 
         <div className="masthead-bar">
           <div>View More</div>

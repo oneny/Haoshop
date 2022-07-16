@@ -2,8 +2,8 @@
 
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .product {
@@ -80,7 +80,7 @@ input[type="number"]::-webkit-inner-spin-button {
       }
 
       p > span {
-        color: #ff0000;
+        color: #FF0000;
       }
     }
 
@@ -119,10 +119,10 @@ input[type="number"]::-webkit-inner-spin-button {
         .img-wrapper {
           display: flex;
           align-items: center;
-
+          
           > img {
-            width: 100%;
-            height: auto;
+           width: 100%;
+           height: auto; 
           }
         }
       }
@@ -132,7 +132,7 @@ input[type="number"]::-webkit-inner-spin-button {
       display: flex;
       flex-direction: column;
       row-gap: 1rem;
-
+      
       .selection {
         background-color: #fff;
         color: #353535;
@@ -217,7 +217,7 @@ input[type="number"]::-webkit-inner-spin-button {
         }
 
         &::after {
-          content: "";
+          content: '';
           position: absolute;
           left: 50%;
           bottom: -3rem;
@@ -303,6 +303,7 @@ input[type="number"]::-webkit-inner-spin-button {
     font-size: 1.3rem;
 
     &-right {
+
       .brand-button {
         font-size: 1.3rem;
       }
@@ -311,11 +312,11 @@ input[type="number"]::-webkit-inner-spin-button {
         font-size: 1.3rem;
         font-weight: bold;
       }
-
+  
       &-name {
         font-size: 1.5rem;
       }
-
+  
       &-price {
         font-size: 1.5rem;
       }
@@ -328,6 +329,7 @@ input[type="number"]::-webkit-inner-spin-button {
       }
 
       &-button {
+
         .cart-alert {
           top: -9rem;
 
@@ -382,11 +384,11 @@ input[type="number"]::-webkit-inner-spin-button {
         font-size: $smFont;
         font-weight: bold;
       }
-
+  
       &-name {
         font-size: 1.3rem;
       }
-
+  
       &-price {
         font-size: 1.3rem;
       }
@@ -399,6 +401,7 @@ input[type="number"]::-webkit-inner-spin-button {
       }
 
       &-button {
+
         .cart-alert {
           top: -9rem;
 

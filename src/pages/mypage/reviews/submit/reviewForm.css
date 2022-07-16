@@ -72,6 +72,7 @@
   border: 1px solid #ccc;
   padding: 0.7rem;
   outline: none;
+  background-color: #fff;
 }
 
 .reviewForm-form .form-item .addImg {

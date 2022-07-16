@@ -4,6 +4,16 @@
   display: flex;
   background-color: #fff;
   flex-direction: column;
+  position: relative;
+}
+
+.sidebar-container .black {
+  display: none;
+}
+
+.sidebar-container .sidebar-sticky {
+  position: sticky;
+  top: 0;
 }
 
 .sidebar-container .categorylist-wrapper {
@@ -122,6 +132,7 @@
     padding: 2rem;
   }
   .sidebar-container.filterOpen .black {
+    display: block;
     position: fixed;
     width: calc(100vw - 35rem);
     height: 100vh;
@@ -137,7 +148,7 @@
     min-width: 100vw;
     padding: 5rem;
   }
-  .sidebar-container .black {
+  .sidebar-container.filterOpen .black {
     display: none;
   }
 }

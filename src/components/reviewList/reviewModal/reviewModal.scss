@@ -1,4 +1,4 @@
-@import "../../variable.scss";
+@import "../../../variable.scss";
 
 .reviewModal {
   position: fixed;
@@ -21,7 +21,7 @@
     &-top {
       position: absolute;
       right: 0;
-      padding: .5rem;
+      padding: 0.5rem;
 
       > .icon {
         cursor: pointer;
@@ -37,7 +37,7 @@
       transform: translateY(-50%);
       display: flex;
       justify-content: space-between;
-      padding: .5rem;
+      padding: 0.5rem;
 
       > .icon {
         cursor: pointer;

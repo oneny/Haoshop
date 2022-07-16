@@ -2,10 +2,10 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./brandMenu.scss";
 
-function BrandMenu({altIsHovering }) {
+function BrandMenu({ altIsHovering }) {
   const brands = useSelector((store) => store.brand.brands);
 
-  const initial = brands.map((v) => v.name.slice(0, 1));
+  const initial = brands.map((v) => v.name.slice(0, 1).toUpperCase());
   const brandList = initial.filter((v, i) => initial.indexOf(v) === i);
 
   return (

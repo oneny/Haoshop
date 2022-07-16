@@ -54,6 +54,7 @@
 .reviewList-content-detail .detailWrapper-left-top {
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
   color: #666;
 }
 
@@ -61,26 +62,38 @@
   transform: translateY(0.2rem);
 }
 
+.reviewList-content-detail .detailWrapper-left-comment {
+  padding: 1rem 0;
+}
+
 .reviewList-content-detail .detailWrapper-left-img {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr) 0.4fr;
   gap: 1rem;
 }
 
 .reviewList-content-detail .detailWrapper-left-img-wrapper {
   width: 100%;
-  height: 100%;
+  height: 25rem;
   cursor: pointer;
 }
 
 .reviewList-content-detail .detailWrapper-left-img-wrapper > img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
 .reviewList-content-detail .detailWrapper-left-img-wrapper:hover {
   opacity: 0.4;
   background-color: rgba(0, 0, 0, 0.4);
+}
+
+.reviewList-content-detail .detailWrapper-left-img-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.7rem;
 }
 
 .reviewList-content-detail .detailWrapper-userInfo {
@@ -95,4 +108,62 @@
 .reviewList-content-detail .detailWrapper-userInfo > p:first-child {
   font-weight: 600;
   color: #000;
+}
+
+@media screen and (max-width: 64em) {
+  .reviewList {
+    padding-top: 5rem;
+  }
+  .reviewList-content-detail .detailWrapper-left-img-wrapper {
+    height: 13rem;
+  }
+}
+
+@media screen and (max-width: 48em) {
+  .reviewList {
+    font-size: 1.3rem;
+    padding-top: 2rem;
+  }
+  .reviewList-title > h2 {
+    font-size: 1.7rem;
+  }
+  .reviewList-content-detail .detailWrapper-left {
+    padding-right: 2rem;
+  }
+  .reviewList-content-detail .detailWrapper-left-img-wrapper {
+    height: 10rem;
+  }
+  .reviewList-content-detail .detailWrapper-left-img-more {
+    font-size: 1.5rem;
+  }
+  .reviewList-content-detail .detailWrapper-userInfo {
+    padding-left: 2rem;
+  }
+}
+
+@media screen and (max-width: 37.5em) {
+  .reviewList {
+    font-size: 1.1rem;
+    padding-top: 2rem;
+    row-gap: 1rem;
+  }
+  .reviewList-title > h2 {
+    font-size: 1.5rem;
+  }
+  .reviewList-content-detail .detailWrapper {
+    padding: 1rem 0;
+  }
+  .reviewList-content-detail .detailWrapper-left {
+    width: 100%;
+    padding-right: 0;
+  }
+  .reviewList-content-detail .detailWrapper-left-img-wrapper {
+    height: 7rem;
+  }
+  .reviewList-content-detail .detailWrapper-left-img-more {
+    font-size: 1.2rem;
+  }
+  .reviewList-content-detail .detailWrapper-userInfo {
+    display: none;
+  }
 }

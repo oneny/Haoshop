@@ -1,12 +1,12 @@
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import moment from "moment";
-
 import Pagination from "../../../components/pagination/Pagination";
 import { getReviewsByUserId } from "../../../slice/reviewSlice";
 import publicURL from "../../../utils/publicURL";
 import "./reviews.scss";
+
 
 function Reviews() {
   const dispatch = useDispatch();
@@ -41,7 +41,10 @@ function Reviews() {
               <div className="left-info">
                 <p>{review.product?.brand}</p>
                 <p>{review.product?.name}</p>
-                <p>[SIZE: {review.purchasedSize}] / [COLOR: {review.product?.color}]</p>
+                <p>
+                  [SIZE: {review.purchasedSize}] / [COLOR:{" "}
+                  {review.product?.color}]
+                </p>
               </div>
             </Link>
 
@@ -54,9 +57,7 @@ function Reviews() {
                   ? review.comment?.substring(0, 17) + "..."
                   : review.comment}
               </p>
-              <p>
-                {moment(review.createdAt).format("YYYY-MM-DD")}
-              </p>
+              <p>{moment(review.createdAt).format("YYYY-MM-DD")}</p>
             </div>
           </div>
         ))}

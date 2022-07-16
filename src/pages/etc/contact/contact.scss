@@ -125,10 +125,6 @@
 }
 
 @media screen and (max-width: $lg) {
-  .img {
-    display: none;
-  }
-
   .contact {
     &-list {
       display: flex;
@@ -143,6 +139,10 @@
       li {
         .text {
           width: 100%;
+        }
+
+        .img {
+          display: none;
         }
       }
     }

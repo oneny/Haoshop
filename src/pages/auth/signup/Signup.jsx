@@ -34,7 +34,7 @@ function Signup() {
   // 정규표현식
   const regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
   const regPassword =
-    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{10,16}$/;
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,16}$/;
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -126,7 +126,7 @@ function Signup() {
                 id="user-password"
                 type="password"
                 value={password}
-                placeholder="10 ~ 16자 및 최소 하나의 문자, 숫자, 특수 문자"
+                placeholder="6 ~ 16자 및 최소 하나의 문자, 숫자, 특수 문자"
                 required
                 onChange={onChangePassword}
               />

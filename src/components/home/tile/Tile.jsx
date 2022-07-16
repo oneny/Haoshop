@@ -34,8 +34,8 @@ function Tile({ page, currentPage, numberOfPage, collection }) {
         >
           <div>
             <div className="brandInfo">
-              <span>{collection.name.split(":")[0]}</span>
-              {collection.name
+              <span>{collection?.name.split(":")[0]}</span>
+              {collection?.name
                 .split(":")[1]
                 .split("\n")
                 .map((line, i) => (
@@ -48,7 +48,7 @@ function Tile({ page, currentPage, numberOfPage, collection }) {
         <div className="tile-item-right">
           <div className="tile-item-imgWrapper">
             <img
-              src={publicURL(collection.cards[0].img)}
+              src={publicURL(collection?.cards[0].img)}
               alt=""
               loading="lazy"
             />

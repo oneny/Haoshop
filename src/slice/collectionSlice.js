@@ -21,11 +21,11 @@ export const getCollections = createAsyncThunk(
   }
 );
 
-export const getCollection = createAsyncThunk(
-  "collection/getCollection",
-  async (id, thunkAPI) => {
+export const getNewCollections = createAsyncThunk(
+  "collection/getNewCollections",
+  async (thunkAPI) => {
     try {
-      const res = await axios.get(`/collections/${id}`);
+      const res = await axios.get("/collections/new");
       return res.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
@@ -33,11 +33,11 @@ export const getCollection = createAsyncThunk(
   }
 );
 
-export const getNewCollections = createAsyncThunk(
-  "collection/getNewCollections",
-  async (thunkAPI) => {
+export const getCollection = createAsyncThunk(
+  "collection/getCollection",
+  async (id, thunkAPI) => {
     try {
-      const res = await axios.get("/collections/get");
+      const res = await axios.get(`/collections/${id}`);
       return res.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
@@ -63,17 +63,6 @@ const collectionSlice = createSlice({
       state.error = action.payload.error;
     },
 
-    [getCollection.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [getCollection.fulfilled]: (state, action) => {
-      state.collection = action.payload.collection;
-      state.isLoading = false;
-    },
-    [getCollection.rejected]: (state, action) => {
-      state.isLoading = false;
-    },
-
     [getNewCollections.pending]: (state) => {
       state.isLoading = true;
     },
@@ -84,6 +73,17 @@ const collectionSlice = createSlice({
     [getNewCollections.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload.error;
+    },
+
+    [getCollection.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getCollection.fulfilled]: (state, action) => {
+      state.collection = action.payload.collection;
+      state.isLoading = false;
+    },
+    [getCollection.rejected]: (state, action) => {
+      state.isLoading = false;
     },
   },
 });

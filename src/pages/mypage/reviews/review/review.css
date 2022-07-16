@@ -61,3 +61,44 @@
 .review-content-btnWrapper button:hover {
   background-color: #8aa1a1;
 }
+
+@media screen and (max-width: 48em) {
+  .review {
+    row-gap: 1rem;
+  }
+  .review-title > h2 {
+    font-size: 1.7rem;
+  }
+  .review-content-item .right.gridImg .right-imgWrapper {
+    height: 8rem;
+  }
+  .review-content-btnWrapper button {
+    font-size: 1.3rem;
+  }
+}
+
+@media screen and (max-width: 37.5em) {
+  .review {
+    row-gap: 1rem;
+  }
+  .review-title > h2 {
+    font-size: 1.5rem;
+  }
+  .review-content-item .left {
+    width: 10rem;
+    padding: 0.5rem 0;
+  }
+  .review-content-item .right {
+    width: calc(100% - 10rem);
+    padding: 0.5rem 0;
+  }
+  .review-content-item .right .icon {
+    font-size: 1.1rem;
+  }
+  .review-content-item .right.gridImg .right-imgWrapper {
+    height: 6rem;
+  }
+  .review-content-btnWrapper button {
+    font-size: 1.1rem;
+  }
+}

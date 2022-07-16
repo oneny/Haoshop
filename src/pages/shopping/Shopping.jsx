@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import LoadingModal from "../../components/loadingModal/LoadingModal";
 import Pagination from "../../components/pagination/Pagination";
 import ProductList from "../../components/productList/ProductList";
 import Sidebar from "../../components/sidebar/Sidebar";
@@ -17,7 +18,7 @@ function Category() {
   const params = useParams();
   const categories = useSelector((store) => store.category.categories);
   const categoryOpen = useSelector((store) => store.category.categoryOpen);
-  const { total, products, brandData } = useSelector((store) => store.product);
+  const { total, products, brandData,isLoading } = useSelector((store) => store.product);
 
   const perPage = 20;
   const [currentPage, setCurrentPage] = useState(1);
@@ -76,6 +77,7 @@ function Category() {
           products={products}
           onChangeSort={onChangeSort}
           categoryToggleHandler={categoryToggleHandler}
+          isLoading={isLoading}
         />
       </div>
       

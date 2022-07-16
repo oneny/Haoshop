@@ -11,6 +11,7 @@ function Home() {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const handleScroll = useCallback(() => {
+    console.log("window.scrollY", window.scrollY);
     setScrollY(window.scrollY);
   }, []);
 
@@ -25,9 +26,9 @@ function Home() {
   return (
     <>
       <Masthead scrollY={scrollY} />
+      <CollectionTile scrollY={scrollY} numberOfPage={3} />
       <NewArraval />
       <NewLookbook />
-      <CollectionTile scrollY={scrollY} numberOfPage={3} />
       <Scrollable scrollY={scrollY} />
       {user && <Chat />}
     </>

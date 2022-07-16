@@ -20,9 +20,6 @@ function Products() {
   const params = useParams();
   const { product, relatedProducts } = useSelector((store) => store.product);
   const { cartItems } = useSelector((store) => store.cart);
-
-  console.log(cartItems);
-
   const [size, onChangeSize, setSize] = useInput("");
   const [qty, onChangeQty, setQty] = useInput(1);
   const [src, altSrc, setSrc] = useAlt("");
@@ -55,15 +52,18 @@ function Products() {
     if (!size) return alert("사이즈를 선택하셔야 합니다.");
 
     const item = product.stock.find((v) => v.size === size);
+    console.log("item", item);
     const cartItem = cartItems
       .filter((v) => v._id === product._id)
       .find((v) => v.size === size);
 
-    if (item?.qty < qty || item?.qty <= cartItem?.qty) {
-      return alert(`${item.qty}개 이상으로는 재고가 부족합니다.`);
-    }
+    console.log("cartItem", cartItem);
 
     if (buy === "now") {
+      if (item?.qty < qty) {
+        return alert(`${item.qty}개 이상으로는 재고가 부족합니다.`);
+      }
+
       dispatch(
         buyNow({
           _id: product._id,
@@ -73,11 +73,15 @@ function Products() {
           img: product.productImgs[0].fileName,
           price: product.discountPrice ? product.discountPrice : product.price,
           size,
-          qty,
+          qty: parseInt(qty),
         })
       );
       navigate("/checkout");
     } else {
+      if (item?.qty < qty || item?.qty <= cartItem?.qty + qty) {
+        return alert(`${item.qty}개 이상으로는 재고가 부족합니다.`);
+      }
+
       dispatch(
         addItem({
           _id: product._id,
@@ -87,7 +91,7 @@ function Products() {
           img: product.productImgs[0].fileName,
           price: product.discountPrice ? product.discountPrice : product.price,
           size,
-          qty,
+          qty: parseInt(qty),
         })
       );
       setIsCartOpen(true);

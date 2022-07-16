@@ -5,7 +5,7 @@ import {
   clearCart,
   selectTotalPrice,
   selectTotalQty,
-  clearCartItem,  
+  clearCartItem,
 } from "../../slice/cartSlice";
 import toKRW from "../../utils/toKRW";
 import "./cart.scss";
@@ -52,7 +52,7 @@ function Cart() {
             className="checkout-button-general"
             onClick={() => {
               dispatch(clearCartItem());
-              navigate("/checkout")
+              navigate("/checkout");
             }}
             disabled={!user}
           >

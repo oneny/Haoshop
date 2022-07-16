@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
-import StarIcon from "@mui/icons-material/Star";
-
 import { upsertReview } from "../../../../slice/reviewSlice";
 import publicURL from "../../../../utils/publicURL";
 import "./reviewForm.scss";
-import { useRef } from "react";
+
 
 const ratingComments = [
   "아주 좋아요",
@@ -51,6 +49,8 @@ function ReviewForm() {
     setReviewImgs(review.reviewImgs || []);
   }, []);
 
+  console.log(review.product);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (reviewImgs.length === 0) return alert("파일없음");
@@ -58,7 +58,7 @@ function ReviewForm() {
     const form = new FormData();
     form.append("_id", review._id);
     form.append("order", review.order);
-    form.append("product", review.product);
+    form.append("product", review.product._id);
     form.append("purchasedSize", review.purchasedSize);
     form.append("user", user._id);
     form.append("username", user.username);

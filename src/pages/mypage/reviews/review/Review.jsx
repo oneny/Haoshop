@@ -9,8 +9,8 @@ import "./review.scss";
 
 function ratingStar(rating) {
   const star = Array(5).fill().map((v, i) => {
-    if (i < rating) return <StarIcon className="icon" />;
-    else return <StarOutlineIcon className="icon" />;
+    if (i < rating) return <StarIcon className="icon" key={i} />;
+    else return <StarOutlineIcon className="icon" key={i} />;
   });
 
   return star;
@@ -32,8 +32,6 @@ function Review() {
     alert("리뷰가 삭제되었습니다.");
     navigate(`/mypage/reviews`);
   };
-
-  console.log(review);
 
   return (
     <div className="review">
@@ -70,7 +68,7 @@ function Review() {
           <div className="left">사진 후기</div>
           <div className="right gridImg">
             {review.reviewImgs?.map((img, i) => (
-              <div className="right-imgWrapper">
+              <div className="right-imgWrapper" key={i}>
                 <img src={publicURL(img)} alt="" />
               </div>
             ))}
