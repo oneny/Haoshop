@@ -5,7 +5,6 @@ import "./tile.scss";
 function Tile({ page, currentPage, numberOfPage, collection }) {
   const refContainer = useRef(null);
   const progress = Math.max(0, currentPage - page);
-  console.log(currentPage);
 
   // progress는 해당 컴포넌트가 브라우저의 반을 차지하기 시작하면서 양수
   // 0.25 -> 즉, 컴포넌트를 브라우저 반에서 8% 정도 올리면 opacity는 1이 됨
@@ -35,9 +34,7 @@ function Tile({ page, currentPage, numberOfPage, collection }) {
         >
           <div>
             <div className="brandInfo">
-              <span>
-                {collection.name.split(":") && collection?.name?.split(":")[0]}
-              </span>
+              <span>{collection?.name.split(":")[0]}</span>
               {collection?.name
                 .split(":")[1]
                 .split("\n")

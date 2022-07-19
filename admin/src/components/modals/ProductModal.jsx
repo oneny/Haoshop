@@ -82,7 +82,7 @@ function ProductModal() {
             dispatch(closeModal()) && resetState();
           }}
         >
-          <Box className="modal-wrapper">
+              <Box className="modal-wrapper">
             <form onSubmit={handleSubmit} className="modal-wrapper-form">
               <p className="form-title">Add New product</p>
 

@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useInput from "../../../hooks/useInput";
-import { clearError, matchPassword, updateProfile } from "../../../slice/authSlice";
+import {
+  clearError,
+  matchPassword,
+  updateProfile,
+} from "../../../slice/authSlice";
 import "./profile.scss";
 
 function Profile() {
@@ -70,7 +74,7 @@ function Profile() {
 
   return (
     <div className="profile">
-      {(!matchPwd && !provider) && (
+      {!matchPwd && !provider && (
         <div className="profile-item">
           <div className="profile-item-title">
             <h2>비밀번호 확인</h2>

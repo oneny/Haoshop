@@ -25,7 +25,7 @@ function Products() {
   const [src, altSrc, setSrc] = useAlt("");
   const [isDescOpen, toggleIsDescOpen] = useToggle(false);
   const [isCartOpen, altIsCartOpen, setIsCartOpen] = useAlt(false);
-  const selectRef = useRef(null);
+  const selectRef = useRef(null)
 
   const otherColors = relatedProducts?.filter((v) => v._id !== product._id);
 
@@ -76,7 +76,7 @@ function Products() {
       );
       navigate("/checkout");
     } else {
-      if (item?.qty < qty || item?.qty < cartItem?.qty + qty) {
+      if (item?.qty < qty || item?.qty <= cartItem?.qty + qty) {
         return alert(`${item.qty}개 이상으로는 재고가 부족합니다.`);
       }
 
@@ -90,6 +90,7 @@ function Products() {
           price: product.discountPrice ? product.discountPrice : product.price,
           size,
           qty: parseInt(qty),
+          stock: product.stock,
         })
       );
       setIsCartOpen(true);
@@ -120,7 +121,7 @@ function Products() {
         </div>
 
         <div className="product-right">
-          <Link to={`/brands/${product.brand}`}>
+          <Link to={`/brands/${product?.brand}`}>
             <div className="brand-button">브랜드 홈 바로가기</div>
           </Link>
 

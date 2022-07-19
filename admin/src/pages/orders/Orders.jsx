@@ -32,8 +32,6 @@ function Orders() {
     dispatch(getOrders(payload));
   }, [perPage, currentPage]);
 
-  console.log(orders);
-
   return (
     <div className="list">
       <div className="list-btn">

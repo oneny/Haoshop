@@ -1,50 +1,38 @@
 @import "../../../../variable.scss";
 
 .brandMenu {
-  display: none;
-}
+  width: 100vw;
+  height: calc(100vh - $headerHeight);
+  overflow: auto;
+  position: absolute;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
 
-@media screen and (max-width: $lg) {
-  .brandMenu {
-    width: 100vw;
-    height: calc(100vh - $headerHeight);
-    overflow: auto;
-    position: absolute;
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    row-gap: 1rem;
-  
-    &-back {
-      padding: 2rem 8.5rem;
-      cursor: pointer;
-  
-      .icon {
-        font-size: 1.3rem;
-        transform: translateY(0.1rem);
-      }
+  &-back {
+    padding: 2rem 8.5rem;
+    cursor: pointer;
+
+    .icon {
+      font-size: 1.3rem;
+      transform: translateY(0.1rem);
     }
-  
-    &-wrapper {
-      max-height: 100%;
-      overflow: auto;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      row-gap: 5rem;
-      padding: 1rem 7rem;
-  
-      .items {
-        display: flex;
-        flex-direction: column;
-        row-gap: 1rem;
-        padding: 0 2rem;
-  
-        &-wrapper {
-          display: flex;
-          flex-direction: column;
-          row-gap: 0.5rem;
-        }
-      }
+  }
+
+  &-wrapper {
+    max-height: 100%;
+    overflow: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 4rem;
+    padding: 1rem 7rem;
+
+    .items {
+      display: flex;
+      flex-direction: column;
+      row-gap: 1rem;
+      padding: 0 2rem;
     }
   }
 }

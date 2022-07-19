@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ProductModal from "../../components/modals/ProductModal";
 import Pagination from "../../components/pagination/Pagination";
 import { openModal } from "../../slice/modalSlice";
@@ -38,13 +38,13 @@ function Products() {
               <tr key={product._id} className="tbody-tr">
                 <td>{product._id}</td>
                 <td className="tbody-tr-name">
-                  <NavLink
+                  <Link
                     to={`/products/${product.slug}`}
                     state={product}
                     className="navi"
                   >
                     {product.name}
-                  </NavLink>
+                  </Link>
                 </td>
                 <td>
                   <img

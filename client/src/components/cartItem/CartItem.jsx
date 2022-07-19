@@ -9,8 +9,6 @@ import toKRW from "../../utils/toKRW";
 function CartItem({ cartItem, onlyInfo = false }) {
   const dispatch = useDispatch();
   const { _id, name, img, price, qty, size, stock } = cartItem;
-  console.log(cartItem);
-
   const stockQty = stock?.filter((v) => v.size === size);
 
   const increaseItem = () => {

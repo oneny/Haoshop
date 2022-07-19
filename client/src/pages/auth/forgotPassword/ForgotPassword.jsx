@@ -1,11 +1,9 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import Header from "../../../components/header/Header";
-import Footer from "../../../components/footer/Footer";
 import { clearState, forgotPassword } from "../../../slice/authSlice";
 import "./forgotPassword.scss";
 import useInput from "../../../hooks/useInput";
+import Header from "../../../components/header/Header";
+import Footer from "../../../components/footer/Footer";
 
 function ForgotPassword() {
   const dispatch = useDispatch();
@@ -16,6 +14,10 @@ function ForgotPassword() {
     e.preventDefault();
 
     dispatch(forgotPassword(email));
+
+    setTimeout(() => {
+      dispatch(clearState());
+    }, 5000);
   };
 
   return (

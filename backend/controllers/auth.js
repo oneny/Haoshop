@@ -237,8 +237,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
   const { email } = req.body;
 
   const user = await User.findOne({ email }).exec();
-  if (!user)
-    return next(new ErrorRes("해당 이메일은 가입되어 있지 않습니다."), 404);
+  if (!user) return next(new ErrorRes("Email 전송 실패"), 404);
 
   const resetToken = user.generateResetPasswordToken();
 
@@ -256,7 +255,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
       text: message,
     });
 
-    res.status(200).json({ success: true, msg: "이메일 전송했습니다." });
+    res.status(200).json({ success: true, msg: "Email Sent" });
   } catch (err) {
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
@@ -287,7 +286,7 @@ exports.resetPassword = (req, res, next) => {
 
     res.status(201).json({
       success: true,
-      msg: "비밀번호 변경 선공",
+      msg: "비밀번호 변경 선공"
     });
   });
 };

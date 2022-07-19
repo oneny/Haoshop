@@ -64,8 +64,8 @@ function BrandModal() {
                 required
                 onChange={(e) => setName(e.target.value)}
               />
-              <textarea
-                className="form-textarea"
+              <input
+                className="form-input"
                 placeholder="Brand Description"
                 required
                 onChange={(e) => setDescription(e.target.value)}

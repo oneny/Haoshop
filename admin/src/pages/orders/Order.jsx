@@ -4,9 +4,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { updateOrder } from "../../slice/orderSlice";
 import formatDate from "../../utils/formatDate";
 import moment from "moment";
-import "./order.scss";
 import publicURL from "../../utils/publicURL";
 import toKRW from "../../utils/toKRW";
+import "./order.scss"
 
 function Order() {
   const navigate = useNavigate();
@@ -16,11 +16,9 @@ function Order() {
   const orderSelects = order.orderStatus.filter((st) => !st.isCompleted);
   const [type, setType] = useState();
   const [paymentStatus, setPaymentStatus] = useState(order?.paymentStatus);
-  console.log(order);
 
   const handleUpdate = (_id) => () => {
     const findTypeIndex = order.orderStatus.findIndex((v) => v.type === type);
-    console.log(type);
 
     if (type) {
       order.orderStatus.forEach((st, i) => {
@@ -51,8 +49,9 @@ function Order() {
     }
   };
 
+
   return (
-    <div className="content orderDetail">
+   <div className="content orderDetail">
       <div className="content-top">
         <div className="content-top-id">
           <p>OrdersId: {order._id}</p>

@@ -45,14 +45,7 @@ function Brand() {
           )}
           <div className="brands-info">
             <h3>{brand?.name}</h3>
-            <p className="brands-info-desc">
-              {brand?.description?.split("\n").map((line, i) => (
-                <>
-                  {line}
-                  <br />
-                </>
-              ))}
-            </p>
+            <p className="brands-info-desc">{brand?.description}</p>
             <Link to="/collections" state={brand?.name}>
               <p className="navi">컬렉션 보러가기</p>
             </Link>
@@ -61,7 +54,7 @@ function Brand() {
           <ProductList onChangeSort={onChangeSort} products={products} />
         </div>
       </div>
-
+      
       <Pagination
         total={total}
         perPage={perPage}

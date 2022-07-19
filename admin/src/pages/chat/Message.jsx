@@ -4,6 +4,7 @@ import "moment/locale/ko";
 import "./message.scss";
 
 function Message({ message, own, owner }) {
+  
   return (
     <div className={own ? "message own" : "message"}>
       <div className="messageTop">

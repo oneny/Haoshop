@@ -1,4 +1,3 @@
-import PermMediaIcon from "@mui/icons-material/PermMedia";
 import { useRef } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -22,6 +21,7 @@ function Collection() {
   const [shop, setShop] = useState(collection.shop);
   const [banners, setBanners] = useState(collection.banners);
   const [cards, setCards] = useState(collection.cards);
+
   const bannerRef = useRef(null);
   const cardRef = useRef(null);
   const onClickBannerRef = () => {
@@ -30,6 +30,7 @@ function Collection() {
   const onClickcardRef = () => {
     cardRef.current.click();
   };
+
 
   const resetState = () => {
     setName(collection.name);

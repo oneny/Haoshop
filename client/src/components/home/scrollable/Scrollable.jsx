@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import publicURL from "../../../utils/publicURL";
 import "./scrollable.scss";

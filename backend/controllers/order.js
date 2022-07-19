@@ -78,15 +78,6 @@ exports.addOrder = asyncHandler(async (req, res, next) => {
   res.status(201).json({ order });
 });
 
-exports.getAllOrders = asyncHandler(async (req, res, next) => {
-  const orders =
-    req.query.at === "dashboard"
-      ? await Order.find({}).sort({ createdAt: -1 }).limit(5).exec()
-      : await Order.find({}).sort({ createdAt: -1 }).exec();
-
-  res.status(200).json({ orders });
-});
-
 exports.getOrdersForAdmin = asyncHandler(async (req, res, next) => {
   const orders = await new Feature(Order.find({}), req.body)
     .pagination()
@@ -160,7 +151,6 @@ exports.getOrder = asyncHandler(async (req, res, next) => {
 
 exports.updateOrderStatus = asyncHandler(async (req, res, next) => {
   let { _id, type, paymentStatus } = req.body;
-  console.log(req.body);
   if (!type) type = "delivered";
 
   //orderStatus ["ordered", "packed", "shipped", "delivered"] 변경

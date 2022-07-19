@@ -1,11 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import publicURL from "../../utils/publicURL";
-import PermMediaIcon from "@mui/icons-material/PermMedia";
 import { updateBrand } from "../../slice/brandSlice";
-import "../common.scss";
-import { useRef } from "react";
+import publicURL from "../../utils/publicURL";
 
 function Brand() {
   const navigate = useNavigate();
@@ -17,6 +14,7 @@ function Brand() {
   const [name, setName] = useState(brand.name);
   const [description, setDescription] = useState(brand.description);
   const [banners, setBanners] = useState(brand.banners);
+
   const fileRef = useRef(null);
   const onClickFileRef = () => {
     fileRef.current.click();
