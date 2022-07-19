@@ -3,16 +3,23 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const cors = require("cors");
-const corsOptions = require('./config/corsOptions');
+const corsOptions = require("./config/corsOptions");
 const connectDB = require("./config/db");
 const cookieParser = require("cookie-parser");
 const errorHandler = require("./middlewares/errorHandler");
 const { logger } = require("./middlewares/logger");
-const credentials = require('./middlewares/credentials');
+const credentials = require("./middlewares/credentials");
+const hpp = require("hpp");
+const helmet = require("helmet");
+
+if (process.env.NODE_ENV === "production") {
+  app.use(hpp());
+  app.use(helmet());
+}
 
 connectDB();
 app.use(logger);
-app.use(credentials); 
+app.use(credentials);
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -39,7 +46,6 @@ app.use("/api/products", require("./routes/products"));
 app.use("/api/reviews", require("./routes/reviews"));
 app.use("/api/stripe", require("./routes/stripe"));
 app.use("/api/users", require("./routes/users"));
-
 
 app.use(errorHandler);
 
