@@ -8,7 +8,7 @@ function Users() {
   const dispatch = useDispatch();
   const { users, total } = useSelector((store) => store.user);
   const [currentPage, setCurrentPage] = useState(1);
-  const perPage = 6;
+  const perPage = 10;
 
   useEffect(() => {
     const payload = { perPage, currentPage };

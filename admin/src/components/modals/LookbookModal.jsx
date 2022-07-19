@@ -64,7 +64,7 @@ function LookbookModal() {
             dispatch(closeModal()) && resetState();
           }}
         >
-                 <Box className="modal-wrapper">
+          <Box className="modal-wrapper">
             <form onSubmit={handleSubmit} className="modal-wrapper-form">
               <p className="form-title">Add New Lookbook</p>
               <input
@@ -126,7 +126,9 @@ function LookbookModal() {
                 onChange={(e) => handleBannerImgs(e.target.files)}
               />
 
-              <button className="form-btn" type="submit">submit</button>
+              <button className="form-btn" type="submit">
+                submit
+              </button>
               <button className="form-btn" type="reset" onClick={resetState}>
                 reset
               </button>

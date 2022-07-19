@@ -146,7 +146,7 @@ function Chat() {
   return (
     <div className="chat">
       <div
-        className={`chat-btn ${chatOpen ? "open" : ""}`}
+        className={`chat-btn ${chatOpen ? "openChat" : ""}`}
         onClick={() => {
           addChatroom(user._id);
           toggleChatOpen();
@@ -156,7 +156,7 @@ function Chat() {
         {alarm > 0 && <div className="chat-btn-alarm">{alarm}</div>}
       </div>
 
-      <div className={`chatBox ${chatOpen ? "open" : ""}`}>
+      <div className={`chatBox ${chatOpen ? "openChat" : ""}`}>
         <div className="chatBox-title">
           <div className="title">
             <p>1:1 문의하기</p>

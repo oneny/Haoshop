@@ -91,8 +91,8 @@ exports.getOrdersForAdmin = asyncHandler(async (req, res, next) => {
   const orders = await new Feature(Order.find({}), req.body)
     .pagination()
     .sort()
-    .exec()
-    .getQuery();
+    .getQuery()
+    .exec();
 
   const total = await Order.find({}).countDocuments();
 
@@ -160,6 +160,7 @@ exports.getOrder = asyncHandler(async (req, res, next) => {
 
 exports.updateOrderStatus = asyncHandler(async (req, res, next) => {
   let { _id, type, paymentStatus } = req.body;
+  console.log(req.body);
   if (!type) type = "delivered";
 
   //orderStatus ["ordered", "packed", "shipped", "delivered"] 변경

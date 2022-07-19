@@ -19,14 +19,14 @@
     opacity: 1;
     transition: transform 0.2s ease;
 
-    &.open {
+    &.openChat {
       transition: all 0.4s ease;
       height: 0;
       opacity: 0;
       overflow: hidden;
     }
 
-    &:not(open) {
+    &:not(openChat) {
       transition: all 0.4s ease;
     }
 
@@ -64,7 +64,7 @@
     transition: 0.4s ease;
     overflow: hidden;
 
-    &.open {
+    &.openChat {
       height: 65.5rem;
       opacity: 1;
     }
@@ -196,7 +196,7 @@
       bottom: 0;
       left: 0;
 
-      &.open {
+      &.openChat {
         height: 57.95rem;
         border-radius: 2rem 2rem 0 0;
       }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { clearState, resetPassword } from "../../../slice/authSlice";
+import "./resetPassword.scss";
 
 function ResetPassword() {
   const navigate = useNavigate();
@@ -30,16 +31,12 @@ function ResetPassword() {
 
   return (
     <div className="resetpassword">
-      <form onSubmit={onSumbit}>
+      <div className="resetpassword-title">
         <h3 className="title">Reset Password</h3>
-        {error && <span className="error-message">{error} </span>}
-        {msg && (
-          <span className="success-message">
-            {msg} <Link to="/signin">Login</Link>
-          </span>
-        )}
-        <div className="form-group">
-          <label htmlFor="password">New Password:</label>
+      </div>
+
+      <form onSubmit={onSumbit} className="resetpassword-form">
+        <div className="box">
           <input
             type="password"
             required
@@ -49,9 +46,10 @@ function ResetPassword() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <label htmlFor="password">New Password</label>
         </div>
-        <div className="form-group">
-          <label htmlFor="confirmpassword">Confirm New Password:</label>
+
+        <div className="box">
           <input
             type="password"
             required
@@ -61,10 +59,19 @@ function ResetPassword() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
+          <label htmlFor="confirmpassword">Confirm New Password</label>
         </div>
         <button type="submit">Reset Password</button>
       </form>
-        <button onClick={()=>navigate(`/`)}>홈으로</button>
+
+      <button onClick={() => navigate(`/`)}>Go Home</button>
+      {error && <span className="error-message">{error} </span>}
+      {msg && (
+        <span className="success-message">
+          <p>{msg}</p>
+          <Link to="/signin">Login</Link>
+        </span>
+      )}
     </div>
   );
 }

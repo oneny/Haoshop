@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { updateProduct } from "../../slice/productSlice";
 import publicURL from "../../utils/publicURL";
 import PermMediaIcon from "@mui/icons-material/PermMedia";
+import "../common.scss";
+import { useRef } from "react";
 
 function Product() {
   const navigate = useNavigate();
@@ -20,9 +22,7 @@ function Product() {
   const [category, setCategory] = useState(product.category._id);
   const [productImgs, setProductImgs] = useState(product.productImgs);
 
-  const [discountPrice, setDiscountPrice] = useState(
-    product.discountPrice
-  );
+  const [discountPrice, setDiscountPrice] = useState(product.discountPrice);
   const [code, setCode] = useState(product.code);
   const [color, setColor] = useState(product.color);
   let str = "";
@@ -31,7 +31,12 @@ function Product() {
     if (i === product.stock.length - 1) break;
     str += ",";
   }
+  
   const [stock, setStock] = useState(str);
+  const fileRef = useRef(null);
+  const onClickFileRef = () => {
+    fileRef.current.click();
+  };
 
   const resetState = () => {
     setName(product.name);
@@ -84,101 +89,176 @@ function Product() {
   };
 
   return (
-    <div className="product">
-      <button onClick={() => navigate(-1)}>목록으로</button>
+    <div className="content">
+      <div className="content-top">
+        <div className="content-top-id">
+          <p>ProductId: {_id}</p>
+        </div>
 
-      <form onSubmit={handleSubmit}>
-        <p>productId : {_id}</p>
-        <input
-          placeholder="Name"
-          required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          placeholder="Price"
-          required
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-        />
-        <input
-          placeholder="Description"
-          required
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <input
-          placeholder="Brand"
-          required
-          value={brand}
-          onChange={(e) => setBrand(e.target.value)}
-        />
+        <button onClick={() => navigate(-1)}>목록으로</button>
+      </div>
 
-        <input
-          placeholder="DiscountPrice"
-          required
-          value={discountPrice}
-          onChange={(e) => setDiscountPrice(e.target.value)}
-        />
-        <input
-          placeholder="Code"
-          required
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-        />
-        <input
-          placeholder="Color"
-          required
-          value={color}
-          onChange={(e) => setColor(e.target.value)}
-        />
-        <input
-          placeholder="Stock"
-          required
-          value={stock}
-          onChange={(e) => setStock(e.target.value)}
-        />
-
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
-          {linearCategories.map((c, i) => (
-            <option key={i} value={c._id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
-
-        {productImgs &&
-          productImgs.map((productImg, i) => (
-            <div key={i}>
-              <img
-                src={
-                  productImg instanceof File
-                    ? URL.createObjectURL(productImg)
-                    : publicURL(productImg.fileName)
-                }
-                alt=""
-                height="50"
-              />
-            </div>
-          ))}
-
-        <label htmlFor="file">
-          <PermMediaIcon />
-          <span>Product images</span>
+      <form onSubmit={handleSubmit} className="content-form">
+        <div className="item">
+          <label className="item-left" htmlFor="name">
+            제품명
+          </label>
           <input
+            id="name"
+            placeholder="Name"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+
+        <div className="item">
+          <label className="item-left" htmlFor="price">
+            가격
+          </label>
+          <input
+            id="price"
+            placeholder="Price"
+            required
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+          />
+        </div>
+
+        <div className="item">
+          <label className="item-left" htmlFor="brand">
+            브랜드
+          </label>
+          <input
+            id="brand"
+            placeholder="Brand"
+            required
+            value={brand}
+            onChange={(e) => setBrand(e.target.value)}
+          />
+        </div>
+
+        <div className="item">
+          <label className="item-left" htmlFor="discountPrice">
+            할인가격
+          </label>
+          <input
+            id="discountPrice"
+            placeholder="DiscountPrice"
+            required
+            value={discountPrice}
+            onChange={(e) => setDiscountPrice(e.target.value)}
+          />
+        </div>
+
+        <div className="item">
+          <label className="item-left" htmlFor="code">
+            코드
+          </label>
+          <input
+            id="code"
+            placeholder="Code"
+            required
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+          />
+        </div>
+
+        <div className="item">
+          <label className="item-left" htmlFor="color">
+            컬러
+          </label>
+          <input
+            id="color"
+            placeholder="Color"
+            required
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+          />
+        </div>
+
+        <div className="item">
+          <label className="item-left" htmlFor="stock">
+            재고
+          </label>
+          <input
+            id="stock"
+            placeholder="Stock"
+            required
+            value={stock}
+            onChange={(e) => setStock(e.target.value)}
+          />
+        </div>
+
+        <div className="item">
+          <label className="item-left" htmlFor="cate">
+            카테고리
+          </label>
+          <select
+            id="cate"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            {linearCategories.map((c, i) => (
+              <option key={i} value={c._id}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="item">
+          <label className="item-left" htmlFor="description">
+            설명
+          </label>
+          <textarea
+            id="description"
+            placeholder="Description"
+            required
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
+
+        <div className="item">
+          <label className="item-left">제품 사진</label>
+          <div className="item-img">
+            {productImgs?.map((productImg, i) => (
+              <div key={i} className="item-img-wrapper">
+                <img
+                  src={
+                    productImg instanceof File
+                      ? URL.createObjectURL(productImg)
+                      : publicURL(productImg.fileName)
+                  }
+                  alt=""
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="item">
+          <label className="item-left"></label>
+          <button type="button" className="item-btn" onClick={onClickFileRef}>
+            제품 사진 수정
+          </button>
+          <input
+            ref={fileRef}
             type="file"
             id="file"
             multiple
             accept=".png, .jpeg, .jpg"
-            style={{ display: "none" }}
             onChange={(e) => handleProductImgs(e.target.files)}
           />
-        </label>
+        </div>
 
-        <button type="submit">submit</button>
-        <button type="reset" onClick={resetState}>
-          reset
-        </button>
+        <div className="btnWrapper">
+          <button type="submit">수정</button>
+          <button type="reset" onClick={resetState}>
+            취소
+          </button>
+        </div>
       </form>
     </div>
   );
