@@ -5,7 +5,8 @@ const allowedOrigins = [
   'http://localhost:3000',
   'https://m.stripe.network',
   'https://m.stripe.com/6',
-  'haoshoppingmall.com'
+  'haoshoppingmall.com',
+  'http://3.34.181.180',
 ];
 
 module.exports = allowedOrigins;
