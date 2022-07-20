@@ -5,6 +5,7 @@ $mdSpacing: 16px;
 $lgSpacing: 32px;
 $xlSpacing: 48px;
 $xxlSpacing: 64px;
+$widthWithoutScrollbar: calc(100vw - (100vw - 100%));
 
 // BreakPoint
 $xxl: 91.25em; // 1460px = 91.25em

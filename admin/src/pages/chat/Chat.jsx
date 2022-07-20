@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { io } from "socket.io-client";
 import { clearAlarm, increaseAlarm } from "../../slice/chatSlice";
 import axios from "../../utils/axiosInstance";
-import "./chat.css";
+import "./chat.scss";
 import ChatOnline from "./ChatOnline";
 import Chatroom from "./Chatroom";
 import Message from "./Message";
@@ -22,6 +22,7 @@ function Chat() {
   const [onlineUsers, setOnlineUsers] = useState([]);
 
   const [alarms, setAlarms] = useState([]);
+  const [keyPressed, setKeyPressed] = useState(false);
 
   const socket = useRef();
   const scrollRef = useRef();
@@ -119,6 +120,25 @@ function Chat() {
     }
   };
 
+  const handleTextarea = (e) => {
+    if ((e.altKey || e.ctrlKey) && e.keyCode === 13) {
+      setNewMessage(e.target.value + "\r\n");
+      return e.target.scrollIntoView({
+        block: "end",
+      });
+    } else if (e.keyCode !== 13) {
+      setKeyPressed(true);
+    } else if (e.keyCode === 13 && !keyPressed) {
+      return handleSubmit(e);
+    }
+  };
+
+  const handleKeyPressed = (e) => {
+    if (e.keyCode !== 13) {
+      setKeyPressed(false);
+    }
+  };
+
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -126,74 +146,75 @@ function Chat() {
   return (
     <div className="chat">
       <div className="chatrooms">
-        채팅방 목록
-        {chatrooms?.map((c, i) => (
-          <div
-            key={i}
-            onClick={() => {
-              setCurrentChatroom(c);
-              setAlarms((prev) => prev.filter((alarm) => alarm !== c._id));
-              dispatch(clearAlarm());
-            }}
-          >
-            <Chatroom chatroom={c} />
-            {alarms?.filter((alarm) => alarm === c._id).length}
-          </div>
-        ))}
+        <p>채팅방 목록</p>
+
+        <div className="chatrooms-wrapper">
+          {chatrooms?.map((c, i) => (
+            <div
+              key={i}
+              onClick={() => {
+                setCurrentChatroom(c);
+                setAlarms((prev) => prev.filter((alarm) => alarm !== c._id));
+                dispatch(clearAlarm());
+              }}
+              className="chatrooms-wrapper-item"
+            >
+              <Chatroom chatroom={c} />
+              <p>알림: {alarms?.filter((alarm) => alarm === c._id).length}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="chatBox">
-        <div className="chatBoxWrapper">
-          {currentChatroom ? (
-            <>
-              <div className="chatBoxTop">
-                {messages.map((m, i) => (
-                  <div key={i} ref={scrollRef}>
-                    <Message
-                      message={m}
-                      own={m.sender === user._id}
-                      owner={
-                        m.sender === user._id
-                          ? user
-                          : currentChatroom.members.find(
-                              (member) => member._id === m.sender
-                            )
-                      }
-                    />
-                  </div>
-                ))}
-              </div>
-              <div className="chatBoxBottom">
-                <textarea
-                  className="chatMessageInput"
-                  placeholder="write something..."
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  value={newMessage}
-                ></textarea>
-                <button className="chatSubmitButton" onClick={handleSubmit}>
-                  Send
-                </button>
-              </div>
-            </>
-          ) : (
-            <span className="noChatroom">채팅방 여세요</span>
-          )}
-        </div>
+        {currentChatroom ? (
+          <>
+            <div className="chatBoxTop">
+              {messages.map((m, i) => (
+                <div key={i} ref={scrollRef}>
+                  <Message
+                    message={m}
+                    own={m.sender === user._id}
+                    owner={
+                      m.sender === user._id
+                        ? user
+                        : currentChatroom.members.find(
+                            (member) => member._id === m.sender
+                          )
+                    }
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="chatBoxBottom">
+              <textarea
+                className="chatMessageInput"
+                placeholder="write something..."
+                onChange={(e) => setNewMessage(e.target.value)}
+                onKeyDown={(e) => handleTextarea(e)}
+                onKeyUp={(e) => handleKeyPressed(e)}
+                value={newMessage}
+              ></textarea>
+              <button className="chatSubmitButton" onClick={handleSubmit}>
+                Send
+              </button>
+            </div>
+          </>
+        ) : (
+          <span className="noChatroom">채팅방 여세요</span>
+        )}
       </div>
 
-      <div className="chatOnline">
-        <div className="chatOnlineWrapper">
-          <ChatOnline
-            socket={socket}
-            user={user}
-            onlineUsers={onlineUsers}
-            chatrooms={chatrooms}
-            setChatrooms={setChatrooms}
-            setCurrentChatroom={setCurrentChatroom}
-            setAlarms={setAlarms}
-          />
-        </div>
-      </div>
+      <ChatOnline
+        socket={socket}
+        user={user}
+        onlineUsers={onlineUsers}
+        chatrooms={chatrooms}
+        setChatrooms={setChatrooms}
+        setCurrentChatroom={setCurrentChatroom}
+        setAlarms={setAlarms}
+      />
     </div>
   );
 }

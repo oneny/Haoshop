@@ -131,6 +131,7 @@
         resize: none;
         outline: none;
         border-radius: 1rem;
+        white-space: pre-wrap;
       }
 
       .chatSubmitButton {
@@ -192,7 +193,7 @@
     }
 
     .chatBox {
-      width: 100vw;
+      width: calc(100vw - (100vw - 100%));
       bottom: 0;
       left: 0;
 

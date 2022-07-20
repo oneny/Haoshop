@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { clearAlarm } from "../../slice/chatSlice";
 import axios from "../../utils/axiosInstance";
 import publicURL from "../../utils/publicURL";
-import "./chatOnline.css";
+import "./chatOnline.scss";
 
 function ChatOnline({
   socket,
@@ -42,9 +42,12 @@ function ChatOnline({
     }
   };
 
+  console.log(onlineUsers);
+
   return (
     <div className="chatOnline">
-      접속중
+      <p>접속중</p>
+
       {onlineUsers?.map((o, i) => (
         <div
           className="chatOnlineFriend"

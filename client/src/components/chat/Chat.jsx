@@ -16,11 +16,13 @@ function Chat() {
   const [arrivalMessage, setArrivalMessage] = useState(null);
 
   const [alarm, setAlarm] = useState(0);
+  const [keyPressed, setKeyPressed] = useState(false);
 
   const [chatOpen, toggleChatOpen] = useToggle(false);
 
   const socket = useRef();
   const scrollRef = useRef();
+  const textAreaRef = useRef();
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
@@ -139,6 +141,25 @@ function Chat() {
     }
   };
 
+  const handleTextarea = (e) => {
+    if ((e.altKey || e.ctrlKey) && e.keyCode === 13) {
+      setNewMessage(e.target.value + "\r\n");
+      return e.target.scrollIntoView({
+        block: "end",
+      });
+    } else if (e.keyCode !== 13) {
+      setKeyPressed(true);
+    } else if (e.keyCode === 13 && !keyPressed) {
+      return handleSubmit(e);
+    }
+  };
+
+  const handleKeyPressed = (e) => {
+    if (e.keyCode !== 13) {
+      setKeyPressed(false);
+    }
+  };
+
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [messages]);
@@ -188,10 +209,13 @@ function Chat() {
 
               <div className="chatBoxBottom">
                 <textarea
+                  ref={textAreaRef}
                   className="chatMessageInput"
                   placeholder="write something..."
                   onChange={(e) => setNewMessage(e.target.value)}
                   value={newMessage}
+                  onKeyDown={(e) => handleTextarea(e)}
+                  onKeyUp={(e) => handleKeyPressed(e)}
                 ></textarea>
                 <button className="chatSubmitButton" onClick={handleSubmit}>
                   Send

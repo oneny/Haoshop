@@ -1,7 +1,7 @@
 @import "../../../../variable.scss";
 
 .brandMenu {
-  width: 100vw;
+  width: calc(100vw - (100vw - 100%));
   height: calc(100vh - $headerHeight);
   overflow: auto;
   position: absolute;
