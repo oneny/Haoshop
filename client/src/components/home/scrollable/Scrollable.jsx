@@ -20,11 +20,10 @@ function getShuffle(brands) {
 
 function Scrollable() {
   const brands = useSelector((store) => store.brand.brands);
-  const candidate = Array(brands?.length)
+  const candidate = Array(34)
     .fill()
     .map((e, i) => i);
   const shuffleBrands = useMemo(() => getShuffle(candidate), []);
-  console.log(shuffleBrands);
 
   let images = [...document.querySelectorAll(".scrollable-img")];
 
