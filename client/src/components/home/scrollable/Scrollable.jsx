@@ -9,9 +9,7 @@ function getShuffle(brands) {
   for (let i = 0; i < 3; i++) {
     const shuffle = [];
     for (let j = 0; j < 2; j++) {
-      shuffle.push(
-        brands.splice(Math.floor(Math.random() * brands.length), 1)[0]
-      );
+      shuffle.push(brands.slice(j, j + 1));
     }
     shuffleBrands.push(shuffle);
   }
@@ -24,6 +22,7 @@ function Scrollable() {
     .fill()
     .map((e, i) => i);
   const shuffleBrands = useMemo(() => getShuffle(candidate), []);
+  console.log(shuffleBrands);
 
   let images = [...document.querySelectorAll(".scrollable-img")];
 
@@ -46,6 +45,7 @@ function Scrollable() {
           <div className="scrollable-imgWrapper">
             {shuffleBrands?.map((v, i) => (
               <img
+                key={v}
                 className="scrollable-img"
                 src={publicURL(brands[v]?.banners[0]?.img)}
                 alt=""
