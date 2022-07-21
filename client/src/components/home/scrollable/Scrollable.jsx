@@ -17,7 +17,7 @@ function getShuffle(candidate) {
 
 function Scrollable() {
   const brands = useSelector((store) => store.brand.brands);
-  const candidate = Array(brands.length)
+  const candidate = Array(brands?.length)
     .fill()
     .map((v, i) => i);
   const numbers = useMemo(() => getShuffle(candidate), []);
@@ -38,23 +38,51 @@ function Scrollable() {
         <div className="stickyText-brands">Brands</div>
       </div>
 
-      {numbers.slice(0, 3).map((number, i) => (
-        <section key={number}>
-          <div className="scrollable-imgWrapper">
-            <img
-              className="scrollable-img"
-              src={publicURL(brands[numbers[i * 2]]?.banners[0]?.img)}
-              alt=""
-            />
+      <section>
+        <div className="scrollable-imgWrapper">
+          <img
+            className="scrollable-img"
+            src={publicURL(brands[numbers[0]]?.banners[0]?.img)}
+            alt=""
+          />
 
-            <img
-              className="scrollable-img"
-              src={publicURL(brands[numbers[i * 2 + 1]]?.banners[0]?.img)}
-              alt=""
-            />
-          </div>
-        </section>
-      ))}
+          <img
+            className="scrollable-img"
+            src={publicURL(brands[numbers[1]]?.banners[0]?.img)}
+            alt=""
+          />
+        </div>
+      </section>
+      <section>
+        <div className="scrollable-imgWrapper">
+          <img
+            className="scrollable-img"
+            src={publicURL(brands[numbers[2]]?.banners[0]?.img)}
+            alt=""
+          />
+
+          <img
+            className="scrollable-img"
+            src={publicURL(brands[numbers[3]]?.banners[0]?.img)}
+            alt=""
+          />
+        </div>
+      </section>
+      <section>
+        <div className="scrollable-imgWrapper">
+          <img
+            className="scrollable-img"
+            src={publicURL(brands[numbers[4]]?.banners[0]?.img)}
+            alt=""
+          />
+
+          <img
+            className="scrollable-img"
+            src={publicURL(brands[numbers[5]]?.banners[0]?.img)}
+            alt=""
+          />
+        </div>
+      </section>
     </div>
   );
 }
