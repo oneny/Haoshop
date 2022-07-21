@@ -20,7 +20,13 @@ function Scrollable() {
   const candidate = Array(brands?.length)
     .fill()
     .map((v, i) => i);
-  const numbers = useMemo(() => getShuffle(candidate), []);
+  const numbers = [];
+  for (let i = 0; i < 6; i++) {
+    // candidate 중 하나 랜덤으로 뽑아서 numbers에 push
+    numbers.push(
+      candidate.splice(Math.floor(Math.random() * candidate.length), 1)[0]
+    );
+  }
 
   let images = [...document.querySelectorAll(".scrollable-img")];
 
