@@ -5,14 +5,12 @@
   background-color: #fff;
   position: relative;
   width: calc(100vw - (100vw - 100%));
-  height: 300vh;
-  background-color: aqua;
 
   .stickyText {
     width: calc(100vw - (100vw - 100%));
     height: 300vh;
     position: absolute;
-    background-color: aliceblue;
+    top: 20rem;
 
     &-brands {
       position: sticky;
@@ -30,7 +28,7 @@
 
   section {
     position: relative;
-    width: 100%;
+    width: calc(100vw - (100vw - 100%));
     height: 100vh;
     overflow: hidden;
 
@@ -97,7 +95,7 @@
       top: 0;
 
       &-brands {
-        font-size: 2.5rem;
+        font-size: 3rem;
         position: absolute;
         width: calc(100vw - (100vw - 100%));
 
@@ -111,7 +109,7 @@
 
       .scrollable-imgWrapper {
         flex-direction: column;
-        width: 100%;
+        width: calc(100vw - (100vw - 100%));
         height: 100%;
         padding: 5rem 0;
         row-gap: 10rem;

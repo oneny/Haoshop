@@ -3,10 +3,11 @@ const allowedOrigins = [
   'http://localhost:8800',
   'http://localhost:4000',
   'http://localhost:3000',
+  'http://localhost:3050',
+  "http://localhost:80",
+  "https://localhost:443",
   'https://m.stripe.network',
   'https://m.stripe.com/6',
-  'haoshoppingmall.com',
-  'http://3.34.181.180',
 ];
 
 module.exports = allowedOrigins;

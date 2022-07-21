@@ -37,7 +37,7 @@
 
   .chatBox {
     height: 100%;
-    overflow-y: scroll;
+    overflow: hidden;
     padding-left: 2rem;
     
     .chatBoxTop {
@@ -58,7 +58,7 @@
 
       > button {
         width: 100%;
-        padding: 1.2rem 0;
+        padding: 1rem 0;
         border: none;
         border-radius: 1rem;
         background-color: $black-light;

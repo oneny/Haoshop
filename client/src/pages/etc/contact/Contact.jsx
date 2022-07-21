@@ -19,7 +19,7 @@ function Contact() {
         <li className="left">
           <div className="text">
             <h2>CS CENTER</h2>
-            <p>E-MAIL haoshoppingmall@gmail.com</p>
+            <p>E-MAIL) haoshoppingmall@gmail.com</p>
             <p>MON-SUN 9:00-18:00</p>
             <p>BREAKTIME 12:30-13:30</p>
           </div>

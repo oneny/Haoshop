@@ -4,9 +4,9 @@ import { io } from "socket.io-client";
 import { clearAlarm, increaseAlarm } from "../../slice/chatSlice";
 import axios from "../../utils/axiosInstance";
 import "./chat.scss";
-import ChatOnline from "./ChatOnline";
-import Chatroom from "./Chatroom";
-import Message from "./Message";
+import ChatOnline from "./chatOnline/ChatOnline";
+import Chatroom from "./chatroom/Chatroom";
+import Message from "./message/Message";
 
 function Chat() {
   const dispatch = useDispatch();
@@ -22,7 +22,6 @@ function Chat() {
   const [onlineUsers, setOnlineUsers] = useState([]);
 
   const [alarms, setAlarms] = useState([]);
-  const [keyPressed, setKeyPressed] = useState(false);
 
   const socket = useRef();
   const scrollRef = useRef();
@@ -30,7 +29,8 @@ function Chat() {
 
   useEffect(() => {
     if (user) {
-      socket.current = io("ws://localhost:8800");
+      const socketURI = process.env.NODE_ENV === "production" ? `/socket.io` : `ws://localhost:8800`;
+      socket.current = io(socketURI);
       socket.current.on("getMessage", (data) => {
         setArrivalMessage({
           chatroom: data.chatroomId,
@@ -121,22 +121,9 @@ function Chat() {
   };
 
   const handleTextarea = (e) => {
-    if ((e.altKey || e.ctrlKey) && e.keyCode === 13) {
-      setNewMessage(e.target.value + "\r\n");
-      return e.target.scrollIntoView({
-        block: "end",
-      });
-    } else if (e.keyCode !== 13) {
-      setKeyPressed(true);
-    } else if (e.keyCode === 13 && !keyPressed) {
-      return handleSubmit(e);
-    }
-  };
+    if (e.keyCode !== 13) return;
 
-  const handleKeyPressed = (e) => {
-    if (e.keyCode !== 13) {
-      setKeyPressed(false);
-    }
+    return handleSubmit(e);
   };
 
   useEffect(() => {
@@ -192,10 +179,9 @@ function Chat() {
                 className="chatMessageInput"
                 placeholder="write something..."
                 onChange={(e) => setNewMessage(e.target.value)}
-                onKeyDown={(e) => handleTextarea(e)}
-                onKeyUp={(e) => handleKeyPressed(e)}
                 value={newMessage}
-              ></textarea>
+                onKeyDown={handleTextarea}
+              />
               <button className="chatSubmitButton" onClick={handleSubmit}>
                 Send
               </button>
