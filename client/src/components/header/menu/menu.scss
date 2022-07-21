@@ -3,6 +3,7 @@
 .menu-container {
   max-width: 0;
   overflow: hidden;
+  overscroll-behavior: none;
 }
 
 @media screen and (max-width: $lg) {
