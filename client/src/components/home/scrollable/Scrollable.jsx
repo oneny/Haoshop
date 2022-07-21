@@ -4,25 +4,28 @@ import { useSelector } from "react-redux";
 import publicURL from "../../../utils/publicURL";
 import "./scrollable.scss";
 
-function getShuffle(candidate) {
-  const shuffle = [];
-  for (let i = 0; i < 6; i++) {
-    // candidate 중 하나 랜덤으로 뽑아서 shuffle에 push
-    shuffle.push(
-      candidate.splice(Math.floor(Math.random() * candidate.length), 1)[0]
-    );
+function getShuffle(brands) {
+  const shuffleBrands = [];
+  for (let i = 0; i < 3; i++) {
+    const shuffle = [];
+    for (let j = 0; j < 2; j++) {
+      shuffle.push(
+        brands.splice(Math.floor(Math.random() * brands.length), 1)[0]
+      );
+    }
+    shuffleBrands.push(shuffle);
   }
-  return shuffle;
+
+  return shuffleBrands;
 }
 
 function Scrollable() {
   const brands = useSelector((store) => store.brand.brands);
-  const candidate = Array(brands?.length)
+  const candidate = Array(brands.length)
     .fill()
-    .map((v, i) => i);
-  const numbers = useMemo(() => getShuffle(candidate), [brands]);
-
-  console.log(numbers);
+    .map((e, i) => i);
+  const shuffleBrands = useMemo(() => getShuffle(candidate), []);
+  console.log(shuffleBrands);
 
   let images = [...document.querySelectorAll(".scrollable-img")];
 
@@ -40,7 +43,27 @@ function Scrollable() {
         <div className="stickyText-brands">Brands</div>
       </div>
 
-      {brands && (
+      {shuffleBrands?.map((shuffleBrands, i) => (
+        <section key={i}>
+          <div className="scrollable-imgWrapper">
+            {shuffleBrands?.map((v, i) => (
+              <img
+                className="scrollable-img"
+                src={publicURL(brands[v]?.banners[0]?.img)}
+                alt=""
+              />
+            ))}
+          </div>
+        </section>
+      ))}
+
+      {/* {shuffleBrands?.map((shuffleBrand, i) => (
+        <section key={i}>
+          {shuffleBrand[0].name}
+        </section>
+      ))} */}
+
+      {/* {brands && (
         <>
           <section>
             <div className="scrollable-imgWrapper">
@@ -88,7 +111,7 @@ function Scrollable() {
             </div>
           </section>
         </>
-      )}
+      )} */}
     </div>
   );
 }
