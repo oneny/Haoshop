@@ -20,13 +20,9 @@ function Scrollable() {
   const candidate = Array(brands?.length)
     .fill()
     .map((v, i) => i);
-  const numbers = [];
-  for (let i = 0; i < 6; i++) {
-    // candidate 중 하나 랜덤으로 뽑아서 numbers에 push
-    numbers.push(
-      candidate.splice(Math.floor(Math.random() * candidate.length), 1)[0]
-    );
-  }
+  const numbers = useMemo(() => getShuffle(candidate), [brands]);
+
+  console.log(numbers);
 
   let images = [...document.querySelectorAll(".scrollable-img")];
 
@@ -44,51 +40,55 @@ function Scrollable() {
         <div className="stickyText-brands">Brands</div>
       </div>
 
-      <section>
-        <div className="scrollable-imgWrapper">
-          <img
-            className="scrollable-img"
-            src={publicURL(brands[numbers[0]]?.banners[0]?.img)}
-            alt=""
-          />
+      {brands && (
+        <>
+          <section>
+            <div className="scrollable-imgWrapper">
+              <img
+                className="scrollable-img"
+                src={publicURL(brands[numbers[0]]?.banners[0]?.img)}
+                alt=""
+              />
 
-          <img
-            className="scrollable-img"
-            src={publicURL(brands[numbers[1]]?.banners[0]?.img)}
-            alt=""
-          />
-        </div>
-      </section>
-      <section>
-        <div className="scrollable-imgWrapper">
-          <img
-            className="scrollable-img"
-            src={publicURL(brands[numbers[2]]?.banners[0]?.img)}
-            alt=""
-          />
+              <img
+                className="scrollable-img"
+                src={publicURL(brands[numbers[1]]?.banners[0]?.img)}
+                alt=""
+              />
+            </div>
+          </section>
+          <section>
+            <div className="scrollable-imgWrapper">
+              <img
+                className="scrollable-img"
+                src={publicURL(brands[numbers[2]]?.banners[0]?.img)}
+                alt=""
+              />
 
-          <img
-            className="scrollable-img"
-            src={publicURL(brands[numbers[3]]?.banners[0]?.img)}
-            alt=""
-          />
-        </div>
-      </section>
-      <section>
-        <div className="scrollable-imgWrapper">
-          <img
-            className="scrollable-img"
-            src={publicURL(brands[numbers[4]]?.banners[0]?.img)}
-            alt=""
-          />
+              <img
+                className="scrollable-img"
+                src={publicURL(brands[numbers[3]]?.banners[0]?.img)}
+                alt=""
+              />
+            </div>
+          </section>
+          <section>
+            <div className="scrollable-imgWrapper">
+              <img
+                className="scrollable-img"
+                src={publicURL(brands[numbers[4]]?.banners[0]?.img)}
+                alt=""
+              />
 
-          <img
-            className="scrollable-img"
-            src={publicURL(brands[numbers[5]]?.banners[0]?.img)}
-            alt=""
-          />
-        </div>
-      </section>
+              <img
+                className="scrollable-img"
+                src={publicURL(brands[numbers[5]]?.banners[0]?.img)}
+                alt=""
+              />
+            </div>
+          </section>
+        </>
+      )}
     </div>
   );
 }
