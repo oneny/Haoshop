@@ -59,7 +59,7 @@ export default function CheckoutForm({ order }) {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: process.env.REACT_APP_STRIPE_RETURN_URI
+        return_url: "https://haoshop.site/success"
       },
     });
 
