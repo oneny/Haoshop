@@ -55,7 +55,6 @@ function Cart() {
               dispatch(clearCartItem());
               navigate("/checkout");
             }}
-            disabled={!user}
           >
             결제하기
           </button>

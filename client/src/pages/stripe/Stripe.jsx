@@ -17,7 +17,7 @@ export default function Stripe() {
     async function createPaymentIntent() {
       if (!order) return;
       try {
-        const { data } = await axios.post("/stripe/create-payment-intent", {
+        const { data } = await axios.post("/api/stripe/create-payment-intent", {
           amount: order.paymentPrice,
         });
         setStripeApiKey(data.stripeApiKey);
