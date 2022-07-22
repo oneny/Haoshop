@@ -49,7 +49,12 @@ function ProductModal() {
     form.append("brand", brand);
     form.append("category", category);
 
-    form.append("discountPrice", discountPrice);
+    if (!discountPrice) {
+      form.append("discountPrice", price);
+    } else {
+      form.append("discountPrice", discountPrice);
+    }
+
     form.append("code", code);
     form.append("color", color);
     form.append("stock", stock);
@@ -82,7 +87,7 @@ function ProductModal() {
             dispatch(closeModal()) && resetState();
           }}
         >
-              <Box className="modal-wrapper">
+          <Box className="modal-wrapper">
             <form onSubmit={handleSubmit} className="modal-wrapper-form">
               <p className="form-title">Add New product</p>
 
@@ -108,7 +113,6 @@ function ProductModal() {
                 <input
                   className="form-input"
                   placeholder="DiscountPrice"
-                  required
                   onChange={(e) => setDiscountPrice(e.target.value)}
                 />
                 <input
