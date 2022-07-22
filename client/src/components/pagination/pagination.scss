@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
 
   .pagination-wrapper {
     display: flex;
@@ -20,14 +20,8 @@
   }
 }
 
-@media screen and (max-width: $md) {
+@media screen and(max-width: $md) {
   .pagination-container {
     font-size: $mdFont;
-  }
-}
-
-@media screen and (max-width: $sm) {
-  .pagination-container {
-    font-size: $smFont;
   }
 }

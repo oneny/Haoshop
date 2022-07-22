@@ -1,10 +1,9 @@
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import "./brandMenu.scss";
+import "./mobileBrandMenu.scss";
 
 function BrandMenu({ brandsMenu, toggleBrandsMenu, setMenuOpen }) {
-
   const brands = useSelector((store) => store.brand.brands);
 
   const initial = brands.map((v) => v.name.slice(0, 1).toUpperCase());

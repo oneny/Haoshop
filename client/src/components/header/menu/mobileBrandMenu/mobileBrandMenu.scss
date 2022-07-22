@@ -7,13 +7,31 @@
 @media screen and (max-width: $lg) {
   .brandMenu {
     width: calc(100vw - (100vw - 100%));
-    height: calc(100svh - $headerHeight);
+    height: calc(100vh - $headerHeight);
     overflow: auto;
     position: absolute;
     background-color: #fff;
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
+
+    .brandMenu-wrapper {
+      &::-webkit-scrollbar {
+        width: 2px;
+      }
+  
+      &::-webkit-scrollbar-thumb {
+        background-color: #fff;
+        height: 40%;
+      }
+  
+      &:hover {
+        &::-webkit-scrollbar-thumb {
+          background-color: $line-color;
+        }
+      }
+    }
+
 
     &-back {
       padding: 2rem 8.5rem;
@@ -68,6 +86,8 @@
 
 @media screen and (max-width: $sm) {
   .brandMenu {
+    height: calc(100svh - $headerHeight);
+
     &-back {
       padding: 2rem 4rem;
 

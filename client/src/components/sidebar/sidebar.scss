@@ -17,6 +17,21 @@
     position: sticky;
     top: 0;
     overflow: auto;
+
+    &::-webkit-scrollbar {
+      width: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #fcfcfc;
+      height: 40%;
+    }
+
+    &:hover {
+      &::-webkit-scrollbar-thumb {
+        background-color: $line-color;
+      }
+    }
   }
 
   .categorylist-wrapper {
@@ -142,10 +157,25 @@
       padding: 2rem;
       overflow: auto;
 
+      &::-webkit-scrollbar {
+        width: 2px;
+      }
+  
+      &::-webkit-scrollbar-thumb {
+        background-color: #fcfcfc;
+        height: 40%;
+      }
+  
+      &:hover {
+        &::-webkit-scrollbar-thumb {
+          background-color: $line-color;
+        }
+      }
+
       .black {
         display: block;
         position: fixed;
-        width: calc(100vw - 35rem);
+        width: calc(calc(100vw - (100vw - 100%)) - 35rem);
         height: 100vh;
         z-index: 1000;
         top: 0;

@@ -5,6 +5,7 @@ import { upsertReview } from "../../../../slice/reviewSlice";
 import publicURL from "../../../../utils/publicURL";
 import "./reviewForm.scss";
 
+
 const ratingComments = [
   "아주 좋아요",
   "맘에 들어요",
@@ -100,7 +101,6 @@ function ReviewForm() {
             키
           </label>
           <input
-            type="number"
             placeholder="키 입력"
             required
             value={height}
@@ -112,7 +112,6 @@ function ReviewForm() {
             몸무게
           </label>
           <input
-            type="number"
             id="weight"
             placeholder="몸무게"
             required
