@@ -51,6 +51,7 @@ function Cart() {
           <button
             className="checkout-button-general"
             onClick={() => {
+              if (!user) return alert("로그인 후 이용바랍니다.");
               dispatch(clearCartItem());
               navigate("/checkout");
             }}
@@ -58,11 +59,7 @@ function Cart() {
           >
             결제하기
           </button>
-          <button
-            className="checkout-button-back"
-            onClick={() => navigate(-1)}
-            disabled={!user}
-          >
+          <button className="checkout-button-back" onClick={() => navigate(-1)}>
             쇼핑 계속하기
           </button>
         </div>
