@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import useToggle from "../../../hooks/useToggle";
@@ -12,6 +12,18 @@ function Menu({ menuOpen, setMenuOpen }) {
   const user = localStorage.getItem("user");
   const { pathname } = useLocation();
   const [brandsMenu, toggleBrandsMenu, setBrandsMenu] = useToggle(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const handleWidth = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleWidth);
+    return () => {
+      window.removeEventListener("resize", handleWidth);
+    };
+  }, []);
 
   const logout = () => {
     dispatch(signout());
@@ -23,9 +35,10 @@ function Menu({ menuOpen, setMenuOpen }) {
     setBrandsMenu(false);
   };
 
+  console.log(windowWidth);
 
   useEffect(() => {
-    if (menuOpen) {
+    if (menuOpen  && windowWidth < 1024) {
       document.body.style.cssText = `
       position: fixed; 
       top: -${window.scrollY}px;
@@ -37,7 +50,11 @@ function Menu({ menuOpen, setMenuOpen }) {
         window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
       };
     }
-  }, [menuOpen]);
+  }, [menuOpen, windowWidth]);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
 
   return (
     <div className={`menu-container ${menuOpen ? "menuOpen" : ""}`}>

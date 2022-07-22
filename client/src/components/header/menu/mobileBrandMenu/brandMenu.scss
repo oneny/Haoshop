@@ -1,38 +1,50 @@
 @import "../../../../variable.scss";
 
 .brandMenu {
-  width: calc(100vw - (100vw - 100%));
-  height: calc(100svh - $headerHeight);
-  overflow: auto;
-  position: absolute;
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
+  display: none;
+}
 
-  &-back {
-    padding: 2rem 8.5rem;
-    cursor: pointer;
-
-    .icon {
-      font-size: 1.3rem;
-      transform: translateY(0.1rem);
-    }
-  }
-
-  &-wrapper {
-    max-height: 100%;
+@media screen and (max-width: $lg) {
+  .brandMenu {
+    width: calc(100vw - (100vw - 100%));
+    height: calc(100svh - $headerHeight);
     overflow: auto;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    row-gap: 4rem;
-    padding: 1rem 7rem;
+    position: absolute;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
 
-    .items {
-      display: flex;
-      flex-direction: column;
-      row-gap: 1rem;
-      padding: 0 2rem;
+    &-back {
+      padding: 2rem 8.5rem;
+      cursor: pointer;
+
+      .icon {
+        font-size: 1.3rem;
+        transform: translateY(0.1rem);
+      }
+    }
+
+    &-wrapper {
+      max-height: 100%;
+      overflow: auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      row-gap: 4rem;
+      padding: 1rem 7rem;
+
+      .items {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1rem;
+        padding: 0 2rem;
+
+        &-wrapper {
+          display: flex;
+          flex-direction: column;
+          row-gap: 0.2rem;
+        }
+      }
     }
   }
 }

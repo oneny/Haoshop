@@ -61,7 +61,6 @@ function Cart() {
           <button
             className="checkout-button-back"
             onClick={() => navigate(-1)}
-            disabled={!user}
           >
             쇼핑 계속하기
           </button>

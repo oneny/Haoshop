@@ -9,7 +9,9 @@ function getShuffle(brands) {
   for (let i = 0; i < 3; i++) {
     const shuffle = [];
     for (let j = 0; j < 2; j++) {
-      shuffle.push(brands.slice(j, j + 1));
+      shuffle.push(
+        brands.splice(Math.floor(Math.random() * brands.length), 1)[0]
+      );
     }
     shuffleBrands.push(shuffle);
   }

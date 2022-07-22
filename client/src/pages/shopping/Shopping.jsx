@@ -45,6 +45,10 @@ function Category() {
     cids = createLinearCategory(currentCategory).map((cat) => cat._id);
   }
 
+  const categoryToggleHandler = () => {
+    dispatch(categoryToggle());
+  };
+
   useEffect(() => {
     const payload = {
       cids,
@@ -55,10 +59,6 @@ function Category() {
     };
     dispatch(getProductsByCategories(payload));
   }, [params, brands, perPage, currentPage, sort]);
-
-  const categoryToggleHandler = () => {
-    dispatch(categoryToggle());
-  };
 
   return (
     <>
@@ -75,6 +75,7 @@ function Category() {
           haveFilter={true}
           products={products}
           onChangeSort={onChangeSort}
+          categoryOpen={categoryOpen}
           categoryToggleHandler={categoryToggleHandler}
           isLoading={isLoading}
         />

@@ -8,7 +8,7 @@ import toKRW from "../../utils/toKRW";
 
 function CartItem({ cartItem, onlyInfo = false }) {
   const dispatch = useDispatch();
-  const { _id, name, img, price, qty, size, stock } = cartItem;
+  const { _id, name, color, img, price, qty, size, stock } = cartItem;
   const stockQty = stock?.filter((v) => v.size === size);
 
   const increaseItem = () => {
@@ -29,7 +29,7 @@ function CartItem({ cartItem, onlyInfo = false }) {
         <div className="cartItem-detail">
           <div className="cartItem-detail-left">
             <p>SIZE: {size}</p>
-            <p>COLOR: {name}</p>
+            <p>COLOR: {color}</p>
             <p>PRICE: ₩ {toKRW(price)}</p>
           </div>
           {onlyInfo ? (

@@ -1,14 +1,48 @@
 import AppsOutlinedIcon from "@mui/icons-material/AppsOutlined";
 import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import useAlt from "../../hooks/useAlt";
 import Loading from "../loading/Loading";
 import ProductItem from "./productItem/ProductItem";
 import "./productList.scss";
 
-function ProductList({ haveFilter, products, onChangeSort, categoryToggleHandler, isLoading }) {
-  const [selectedGrid, altSelectedGrid] = useAlt(false)
+function ProductList({
+  haveFilter,
+  products,
+  onChangeSort,
+  categoryOpen,
+  categoryToggleHandler,
+  isLoading,
+}) {
+  const [selectedGrid, altSelectedGrid] = useAlt(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const handleWidth = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleWidth);
+    return () => {
+      window.removeEventListener("resize", handleWidth);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (categoryOpen && windowWidth < 1024) {
+      document.body.style.cssText = `
+      position: fixed; 
+      top: -${window.scrollY}px;
+      overflow-y: scroll;
+      width: 100%;`;
+      return () => {
+        const scrollY = document.body.style.top;
+        document.body.style.cssText = "";
+        window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+      };
+    }
+  }, [categoryOpen, windowWidth]);
 
   return (
     <section>

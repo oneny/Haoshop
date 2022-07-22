@@ -4,6 +4,7 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import "./brandMenu.scss";
 
 function BrandMenu({ brandsMenu, toggleBrandsMenu, setMenuOpen }) {
+
   const brands = useSelector((store) => store.brand.brands);
 
   const initial = brands.map((v) => v.name.slice(0, 1).toUpperCase());
