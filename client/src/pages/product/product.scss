@@ -347,11 +347,12 @@ input[type="number"]::-webkit-inner-spin-button {
 
 @media screen and (max-width: $sm) {
   .product {
-    padding: 1rem 0;
+    padding: 1rem 2rem;
     flex-direction: column;
     font-size: $smFont;
 
     &-left {
+      width: 100%;
       flex-direction: column-reverse;
       row-gap: 0.5rem;
 
@@ -366,6 +367,7 @@ input[type="number"]::-webkit-inner-spin-button {
     }
 
     &-right {
+      width: 100%;
       row-gap: 1rem;
 
       .brand-button {

@@ -55,5 +55,6 @@
   .menu-container {
     font-size: $smFont;
     padding-top: 1rem;
+    height: calc(100svh - $headerHeight);
   }
 }
