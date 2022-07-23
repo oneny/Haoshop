@@ -19,19 +19,18 @@ function Product({ product }) {
         <p>
           {name} {color && `(${color})`}
         </p>
-        <p>
-          <span className={`${discountPrice !== price ? "hasDiscount" : ""}`}>
-            ₩{toKRW(price)}
-          </span>
-          {discountPrice !== price && (
-            <>
-              <span className="discount">₩{toKRW(discountPrice)}</span>{" "}
-              <span style={{ color: "#FF0000" }}>
-                {((1 - discountPrice / price) * 100).toFixed()}%
-              </span>
-            </>
-          )}
+
+        <p className={`${discountPrice !== price ? "hasDiscount" : ""}`}>
+          ₩{toKRW(price)}
         </p>
+        {discountPrice !== price && (
+          <p>
+            <span className="discount">₩{toKRW(discountPrice)}</span>{" "}
+            <span style={{ color: "#FF0000" }}>
+              {((1 - discountPrice / price) * 100).toFixed()}%
+            </span>
+          </p>
+        )}
       </div>
     </Link>
   );
