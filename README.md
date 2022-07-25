@@ -1,14 +1,27 @@
-#HOW ABOUT OOTD
+# HOW ABOUT OOTD 
 <p align="center">
   <br>
   <img src="./client/public/readme.png">
   <br>
 </p>
 
-# 배포 주소
-https://haoshop.site
+## 프로젝트 소개
+- 컨셉
+  - OOTD란 ‘오늘 입은 옷차림’, ‘오늘의 패션’(Outfit Of The Day)의 준말로,
+    당일 또는 특정 상황에서 입은 자신의 옷차림을 촬영하여 소셜미디어 등에 업로드하는 행위를 가리킨다는 뜻으로
+    ‘HOW ABOUT OOTD’는 사용자에게 데일리룩을 추천하고 의류를 판매하는 쇼핑몰
+- 프로젝트 인원: 2명
+- 프로젝트 기간: 2022.05.27(금) ~ 2022.07.25(월) / 2달
+- 역할: 프론트엔드 및 UI 개발
 
-# 사용 기술
+## 
+
+## 배포 주소
+https://haoshop.site
+  - 테스트 ID: await@gmail.com / PW: 123456
+  - 테스트 카드: 4242-4242-4242-4242
+
+## 사용 기술
 ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
@@ -20,7 +33,27 @@ https://haoshop.site
 ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
 ![SASS](https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white)
 
-# AWS EC2(UBUNTU) 배포
+## 배운 점
+### 1. 트렌디한 기술 활용
+  - JSP에서 REACT로, CSS에서 SCSS로, CSS 속성인 FLOAT에서 FLEX, GRID를 사용해서 이번 프로젝트에 좀 더 트렌디한 기술들을 프로젝트에 적용함.
+### 2. 상태 관리
+  - Redux Toolkit을 이용해서 하나의 Store를 가지고 상태를 효율적으로 관리함.
+  - Slice로 백엔드에 API 요청을 통해 상태를 관리하는 것을 직접 만들면서 그 흐름을 이해할 수 있었음.
+  - 다음 프로젝트 시에 상태 관리로 react query도 활용해 볼 예정.
+  - 하지만 React가 단방향으로 상태를 관리하다보니 코드의 줄이 길어지는 느낌을 받음.
+
+## 아쉬운 점
+### 1. 컴포넌트 세분화
+  - 리액트의 장점이 컴포넌트 재사용이지만 이를 적극적으로 활용하지 못했던 것 같음.
+    다음에는 SASS에서 styled-component나 emotion을 활용해서 컴포넌트를 모아두는 파일을 만들고 UI를 만들어볼 예정.
+### 2. LOADING 시 화면 표시
+  - 데이터를 가져오는 동안에 사용자에게 알릴 loading 컴포넌트를 만들기만 하고 기간에 쫓겨 만들다보니 제대로 적용하지 못했음. 
+### 3. SSR 활용
+  - 쇼핑몰 페이지를 CSR로 만들면서 느낀 점이 렌더링하는데 있어
+    로그인, 컨택트, 상품 상세 페이지와 같이 상품 등록 후 크게 바뀔 일 없는 경우 등에 SSR로 만드는 것이 좀 더 속도도 빠르고 효율적이라고 생각하게 됨.
+### 3. Typescrip
+
+## AWS EC2(UBUNTU) 배포
 
 ### 1. 보안 그룹 설정
 ```
