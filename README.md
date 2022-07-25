@@ -1,3 +1,10 @@
+#HOW ABOUT OOTD
+<p align="center">
+  <br>
+  <img src="./client/public/readme.png">
+  <br>
+</p>
+
 # 배포 주소
 https://haoshop.site
 
@@ -57,9 +64,9 @@ npm install
 ```
 sudo npm install pm2 -g
 
-pm2 start apps/shop/socket/index.js
+pm2 start apps/haoshop/socket/index.js
 
-pm2 start apps/shop/backend/server.js
+pm2 start apps/haoshop/backend/server.js
 
 sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u ubuntu --hp /home/ubuntu
 
@@ -67,7 +74,7 @@ pm2 save
 ```
 
 - pm2 명령어
-  - pm2 start apps/shop/backend/server.js --name [name입력]
+  - pm2 start apps/haoshop/backend/server.js --name [name입력]
   - pm2 stop 0[id or name]
   - pm2 delete [id or name]
   - pm2 status
@@ -77,7 +84,7 @@ pm2 save
 
 ### 7. client
 ```
-cd apps/shop/client
+cd apps/haoshop/client
 
 sudo npm install
 
@@ -112,11 +119,11 @@ server {
         listen 80;
         listen [::]:80;
 
-        root /home/ubuntu/apps/shop/client/build;
+        root /home/ubuntu/apps/haoshop/client/build;
 
         index index.html;
 
-        server_name _ 13.52.254.187;
+        server_name www.haoshop.site haoshop.site 43.200.176.59;
 
         location / {
                 try_files $uri /index.html;
@@ -201,9 +208,6 @@ user root;
 ```
 - 수정 후 리스타트: sudo systemctl restart nginx
 
-
-
-
 ### 15. Enable Firewall
 ```
 sudo ufw status
@@ -237,11 +241,11 @@ server {
         listen 80;
         listen [::]:80;
 
-        root /home/ubuntu/apps/shop/client/build;
+        root /home/ubuntu/apps/haoshop/client/build;
 
         index index.html;
 
-        server_name _ 13.52.254.187;
+        server_name www.haoshop.site haoshop.site 43.200.176.59;
 
         location / {
                 try_files $uri /index.html;
