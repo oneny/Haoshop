@@ -95,10 +95,11 @@
       top: 0;
 
       &-brands {
+        height: max-content;
         font-size: 3rem;
         position: absolute;
         width: calc(100vw - (100vw - 100%));
-
+        
         justify-content: center;
         align-items: start;
       }

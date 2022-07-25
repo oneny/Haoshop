@@ -11,7 +11,7 @@
     overflow: hidden;
     height: calc(100vh - $headerHeight);
     position: relative;
-    z-index: 1001;
+    z-index: 3001;
     transition: opacity 0.2s ease-out;
     background-color: #fff;
     display: flex;
