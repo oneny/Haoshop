@@ -50,7 +50,7 @@ function App() {
           <Route path="lookbooks/:id" element={<Lookbook />} />
           <Route path="products/:id" element={<Product />} />
           <Route path="cart" element={<Cart />} />
-          <Route path="contact" element={<Contact />} />\
+          <Route path="contact" element={<Contact />} />
           <Route element={<ProtectedRoute allowedRoles={[ROLES.USER]} />}>
             <Route path="checkout" element={<Checkout />} />
             <Route path="success" element={<Success />} />
