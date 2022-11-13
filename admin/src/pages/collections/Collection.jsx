@@ -104,11 +104,12 @@ function Collection() {
           <label htmlFor="name" className="item-left">
             컬렉션명
           </label>
-          <input
+          <textarea
             className="relatedProducts"
             placeholder="Name"
             required
             value={name}
+            rows="2"
             onChange={(e) => setName(e.target.value)}
           />
         </div>

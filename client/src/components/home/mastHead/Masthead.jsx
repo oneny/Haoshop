@@ -48,7 +48,7 @@ function Masthead({ scrollY }) {
             <div className={`masthead-slide ${idx === 0 ? "active" : ""}`} key={idx}>
               <img src={`/assets/mainbg${idx}.jpeg`} alt="" loading={`${idx < 2 ? "eager" : "lazy"}`} />
               <div className="masthead-mainText">
-                <strong>HOW ABOUT OOTD</strong>
+                <strong>프로젝트용입니다.</strong>
                 <div className="masthead-mainText-num">
                   0 <span>{idx+1}</span>
                 </div>
